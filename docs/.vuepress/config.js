@@ -1,7 +1,6 @@
 module.exports = {
   title: '王昊的个人博客',
   description: '前端',
-  dest: 'public',
   themeConfig: {
     // 导航栏
     nav: [
