@@ -5,33 +5,36 @@ module.exports = {
     // 导航栏
     nav: [
       { text: '主页', link: '/' },
-      { text: '技术', link: '/dev/' },
+      { text: '技术', link: '/dev/'},
       { text: '随笔', link: '/essay/' },
       { text: '关于', link: '/about/' },
       { 
-        text: '链接', 
+        text: '资源', 
         items: [
           {text: 'Google', link: 'https://google.com' },
+          {text: 'Github', link: 'https://github.com/' },
+          {text: '阿里巴巴图标库', link: 'http://www.iconfont.cn/' },
+          {text: 'Apizza', link: 'https://apizza.net/' },
+          {text: 'Codewars', link: 'https://www.codewars.com/' },
+          {text: 'LeetCode', link: 'https://leetcode-cn.com/' },
+          {text: '阮一峰', link: 'http://www.ruanyifeng.com/home.html' },
+          {text: '张鑫旭', link: 'https://www.zhangxinxu.com/wordpress/' },
+          {text: '廖雪峰', link: 'https://www.liaoxuefeng.com/' },
         ]
       }
     ],
     // 自动生成侧边栏
-    sidebar: 'auto',
+    // sidebar: 'auto',
     sidebarDepth: 3,
     // 侧边栏
-    // sidebar: [
-    //   {
-    //     title: 'Group 1',
-    //     collapsable: false,
-    //     children: [
-    //       '/'
-    //     ]
-    //   },
-    //   {
-    //     title: 'Group 2',
-    //     children: [ /* ... */ ]
-    //   }
-    // ],
+    sidebar: {
+      '/dev/': [
+        '小程序开发填坑总结'
+      ],
+      '/essay/': [
+
+      ]
+    },
     // 侧边栏显示全部标题
     displayAllHeaders: false,
     // 侧边栏动态更新活动标题链接
