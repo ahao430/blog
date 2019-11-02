@@ -4,7 +4,6 @@ module.exports = {
   themeConfig: {
     // 导航栏
     nav: [
-      { text: '主页', link: '/' },
       { text: '技术', link: '/dev/'},
       { text: '随笔', link: '/essay/' },
       { text: '关于', link: '/about/' },
@@ -31,6 +30,12 @@ module.exports = {
       '/dev/': [
         '小程序开发填坑总结',
         '公众号h5自定义分享',
+        '小程序使用async和await',
+        'chrome插件开发',
+        'rollup使用',
+        'jsPdf生成pdf',
+        // 'jsdoc生成文档',
+        'vue的provide和inject方法',
       ],
       '/essay/': [
 
