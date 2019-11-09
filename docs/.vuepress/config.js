@@ -37,6 +37,8 @@ module.exports = {
         // 'jsdoc生成文档',
         'vue的provide和inject方法',
         'vue刷新页面',
+        'nvm版本管理',
+        'npm源管理',
       ],
       '/essay/': [
 

@@ -1,0 +1,59 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
+
+PATH: 
+  C:\Users\wanghao\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\wanghao\bin;C:\Python27;C:\Python27\Scripts;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;D:\Program Files\adt\sdk\tools;D:\Program Files\adt\sdk\platform-tools;D:\Program Files\adt\sdk\eclipse\plugins\org.apache.ant_1.8.3.v201301120609\bin;C:\Program Files\Java\jdk1.8.0_102\bin;C:\Program Files\Java\jdk1.8.0_102\jre\bin;C:\Users\wanghao\AppData\Local\Programs\Python\Python35-32;C:\wamp\bin\php\php5.5.12;C:\Users\wanghao\AppData\Local\Android\sdk\tools;C:\Users\wanghao\AppData\Local\Android\sdk\platform-tools;C:\Program Files\Java\jdk1.8.0_102jre\bin;D:\MongoDB\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin;D:\flutter\bin;D:\adt\sdk\platform-tools;C:\Windows\Microsoft.NET\Framework64\v4.0.30319;C:\;D:\adt\sdk\tools;C:\Program Files\Dart\dart-sdk\bin;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\ProgramData\chocolatey\bin;C:\Program Files\Intel\WiFi\bin;C:\Program Files\Common Files\Intel\WirelessCommon;C:\Program Files\nodejs;C:\Program Files\TortoiseGit\bin;C:\RailsInstaller\Git\cmd;C:\RailsInstaller\Ruby2.2.0\bin;C:\Users\wanghao\AppData\Local\Microsoft\WindowsApps;C:\Users\wanghao\AppData\Local\atom\bin;C:\Users\wanghao\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\Users\wanghao\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\wanghao\AppData\Local\Yarn\bin;C:\tools\dart-sdk\bin;C:\Users\wanghao\AppData\Roaming\Pub\Cache\bin;C:\Program Files\Intel\WiFi\bin;C:\Program Files\Common Files\Intel\WirelessCommon;C:\Users\wanghao\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+
+Yarn version: 
+  1.12.3
+
+Node version: 
+  12.11.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, mkdir 'D:\workspace\blog\node_modules\postcss-filter-plugins\node_modules\chalk\node_modules'
+
+npm manifest: 
+  {
+    "name": "blog",
+    "version": "1.0.0",
+    "description": "my blog",
+    "main": "index.js",
+    "scripts": {
+      "dev": "vuepress dev docs",
+      "build": "vuepress build docs",
+      "deploy": "bash deploy.sh",
+      "new": "yubisaki post -p docs/blog --page"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/lewiscutey/vuepress-template.git"
+    },
+    "keywords": [
+      "vuepress",
+      "vuepress-template",
+      "vuepress-theme",
+      "vuepress-theme-yubisaki"
+    ],
+    "author": "lewis",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/lewiscutey/vuepress-template/issues"
+    },
+    "homepage": "https://github.com/lewiscutey/vuepress-template#readme",
+    "dependencies": {
+      "markdown-it-imsize": "^2.0.1",
+      "markdown-it-task-lists": "^2.1.1",
+      "vuepress": "^0.14.11",
+      "vuepress-theme-yubisaki": "^3.1.9"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
