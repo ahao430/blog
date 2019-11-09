@@ -1,11 +1,34 @@
 {
-  "devDependencies": {
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "vuepress": "^1.2.0"
-  },
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "my blog",
+  "main": "index.js",
   "scripts": {
     "dev": "vuepress dev docs",
     "build": "vuepress build docs",
-    "deploy": "bash deploy.sh"
+    "deploy": "bash deploy.sh",
+    "new": "yubisaki post -p docs/blog --page"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lewiscutey/vuepress-template.git"
+  },
+  "keywords": [
+    "vuepress",
+    "vuepress-template",
+    "vuepress-theme",
+    "vuepress-theme-yubisaki"
+  ],
+  "author": "lewis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lewiscutey/vuepress-template/issues"
+  },
+  "homepage": "https://github.com/lewiscutey/vuepress-template#readme",
+  "dependencies": {
+    "markdown-it-imsize": "^2.0.1",
+    "markdown-it-task-lists": "^2.1.1",
+    "vuepress": "^0.14.11",
+    "vuepress-theme-yubisaki": "^3.1.9"
   }
 }
