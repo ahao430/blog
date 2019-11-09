@@ -29,8 +29,8 @@ export default {
 ## 代码实现
 ````js
 <template>
-  <div class="my-select">
-    <div class="selected option" @click="handleToggleSelect" @blur="onBlur" tabIndex="1">
+  <div class="my-select" @blur="onBlur" tabIndex="1">
+    <div class="selected option" @click="handleToggleSelect">
       <slot name="select">
         <my-option :label="label" :value="value" :placeholder="placeholder" type="selected"></my-option>
       </slot>
@@ -81,10 +81,7 @@ export default {
   methods: {
     handleToggleSelect (e) {
       this.isOptionsShow = !this.isOptionsShow;
-      e.target.focus();
       this.$emit('click');
-      e.stopPropagation();
-      e.preventDefault();
     },
     onOptionSelect (val) {
       this.$emit('change', val.value);
@@ -140,6 +137,7 @@ export default {
   }
 }
 </style>
+
 ````
 ````js
 <template>
@@ -164,7 +162,7 @@ export default {
     },
     type: {
       type: String,
-      value: '',
+      default: '',
     },
   },
   data () {
@@ -182,8 +180,9 @@ export default {
     }
   },
   methods: {
-    handleSelectOption () {
+    handleSelectOption (e) {
       if (this.type !== 'selected') {
+        // debugger;
         this.select.onOptionSelect(this);
       }
     },
@@ -206,4 +205,5 @@ export default {
   }
 }
 </style>
+
 ````
