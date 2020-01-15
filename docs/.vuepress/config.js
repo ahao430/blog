@@ -37,6 +37,7 @@ module.exports = {
         // 'jsdoc生成文档',
         'vue的provide和inject方法',
         'vue刷新页面',
+        'vue-cli项目的环境编译',
         'nvm版本管理',
         'npm源管理',
         '外卖小程序首页商品列表和购物车的优化',
