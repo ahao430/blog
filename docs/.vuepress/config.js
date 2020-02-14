@@ -42,6 +42,7 @@ module.exports = {
         'npm源管理',
         '外卖小程序首页商品列表和购物车的优化',
         'svg的响应式',
+        'python生成pdf报告'
       ],
       '/essay/': [
 
