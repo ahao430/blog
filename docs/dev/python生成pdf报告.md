@@ -187,6 +187,27 @@ reportlab是Python的一个标准库，可以画图、画表格、编辑文字�
   story.append(table_table)
   ````
   其中，repeatRows表示如果表格分页，顶部重复的行数。
+  另外，遇到表格单元格文字过长导致页面显示不下的问题。试了下加入\n可以实现换行。故通过工具函数对字符串定长添加\n来定制解决。
+  ````python
+  # 计算字符串宽度
+  def getStrLength (txt):
+    lenTxt = len(txt) 
+    lenTxt_utf8 = len(txt.encode('utf-8')) 
+    size = int((lenTxt_utf8 - lenTxt)/2 + lenTxt)
+    return size
+
+  def addLF2Str (txt, interval):
+    res = ''
+    l = 0
+    for c in txt:
+      lc = len(c.encode('utf-8'))
+      res += c
+      l += lc
+      if l >= interval:
+        l = 0
+        res += '\n'
+    return res
+  ````
 * 画图
   ````python
   from reportlab.graphics.shapes import Drawing, Rect, String, Line, Circle, Ellipse,ArcPath, Group
