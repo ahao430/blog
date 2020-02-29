@@ -266,6 +266,32 @@ make_snapshot(snapshot, bar.render(), "bar.png")
 ````
 make_snapshot将渲染的图形保存为图片，再用Image读取这个图片，append到story中即可。这里涉及到调用chromeDriver，频繁开关耗费时间，对其做了一些优化。
 
+## 遇到的问题
+* 文字换行
+  表格中有时会遇到返回的字段文字太长，导致表格超出页面。试了一下，插入\n可以解决。这样就可以写一个函数，指定字符串达到某个宽度自动插入\n来解决。
+  ````python
+  def getStrLength (txt):
+    lenTxt = len(txt)
+    lenTxt_utf8 = len(txt.encode('utf-8'))
+    size = int((lenTxt_utf8 - lenTxt)/2 + lenTxt)
+    return size
+
+  def addLF2Str (txt, interval):
+      res = ''
+      l = 0
+      for c in txt:
+          lc = len(c.encode('utf-8'))
+          res += c
+          l += lc
+          if l >= interval:
+              l = 0
+              res += '\n'
+      return res
+  ````
+* 自动中英文字体
+  虽然reportlab可以注册中文字体解决中文显示问题，但是实际开发中遇到一个问题，就是中文字体自带的英文并不好看，而reportlab并不像网页一样可以设置一系列字体自动适应。虽然可以注册多个字体，但是对一个字符串只能指定一种。而实际自动生成代码时，并不知道服务端返回的数据是中文还是英文。
+  最后想到一个办法，把中文字体的英文部分替换成需要的英文字体应该就可以了，上网搜了[一个合并字体的工具](https://github.com/nowar-fonts/Warcraft-Font-Merger/releases/tag/v0.3.3)成功实现。
+
 ## 代码实现
 项目结构如下：
 ````
