@@ -1,0 +1,2505 @@
+{
+  "docs": [
+    {
+      "id": 275463418,
+      "doc_id": "vx1u80byk06elvb9",
+      "updated": 1782619062000,
+      "properties": {
+        "title": "在手机端继续电脑的claude code会话",
+        "urlname": "vx1u80byk06elvb9",
+        "date": "2026-06-28 00:14:14",
+        "updated": "2026-06-28 11:57:42",
+        "cover": "https://cdn.nlark.com/yuque/0/2026/jpeg/373268/1782579133751-c8f3578d-9d94-4a97-ba9e-bc59a9eb89d3.jpeg",
+        "description": "平时在电脑上用 Claude Code 做开发时，一个很自然的需求是：人不在电脑前时，能不能在手机上继续和它交互，让任务不中断。实际做下来会发现，这件事本身有两个前提问题：Claude Code 的会话不能跨设备直接迁移手机和电脑之间缺少稳定的连接方式一些尝试过但不太理想的方案远程控制电脑最直..."
+      },
+      "catalog": [],
+      "realName": "在手机端继续电脑的claude code会话",
+      "relativePath": "/在手机端继续电脑的claude code会话.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 272911693,
+      "doc_id": "lfa8g61lz2mowtou",
+      "updated": 1781693137000,
+      "properties": {
+        "title": "中转站大模型使用教程",
+        "urlname": "lfa8g61lz2mowtou",
+        "date": "2026-06-07 18:56:39",
+        "updated": "2026-06-17 18:45:37",
+        "cover": "https://cdn.nlark.com/yuque/0/2026/png/373268/1780830637452-e53d2d34-e9ba-4d6b-929c-2bbd01fe7953.png"
+      },
+      "catalog": [
+        {
+          "title": "AI",
+          "doc_id": "lfa8g61lz2mowtou"
+        }
+      ],
+      "realName": "中转站大模型使用教程",
+      "relativePath": "/中转站大模型使用教程.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 273736357,
+      "doc_id": "lp4m3x6svryizpvv",
+      "updated": 1781406515000,
+      "properties": {
+        "title": "服务器ip被墙",
+        "urlname": "lp4m3x6svryizpvv",
+        "date": "2026-06-13 17:30:44",
+        "updated": "2026-06-14 11:08:35",
+        "cover": "https://cdn.nlark.com/yuque/0/2026/png/373268/1781343212526-9a83a362-c9c4-4cb9-8c00-79163e46eb2f.png",
+        "description": "今天用Royal TSX连接racknerd发现连不上，在终端ping服务器ip也超时。去https://ping.pe/检查了一下，服务器ip在国内被墙了。racknerd是可以提工单更换ip。新购买72小时内可以免费换一次。后续要3美元一次。这里我的网站服务是通过cloudflare小黄云..."
+      },
+      "catalog": [
+        {
+          "title": "VPS服务器配置",
+          "doc_id": "lp4m3x6svryizpvv"
+        }
+      ],
+      "realName": "服务器ip被墙",
+      "relativePath": "/服务器ip被墙.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 270130782,
+      "doc_id": "exurw93pxe0mua9h",
+      "updated": 1781405283000,
+      "properties": {
+        "title": "英国giffgaff",
+        "urlname": "exurw93pxe0mua9h",
+        "date": "2026-05-17 12:19:51",
+        "updated": "2026-06-14 10:48:03",
+        "cover": "https://cdn.nlark.com/yuque/0/2026/jpeg/373268/1781405272767-a163dcb1-cbf3-4aa5-823b-bfd7f8007ed5.jpeg",
+        "description": "安卓手机模拟esim手机：https://linux.do/t/topic/1836313giffgaff esim申请注册教程：https://linux.do/t/topic/1618353后续更换esim卡："
+      },
+      "catalog": [
+        {
+          "title": "esim",
+          "doc_id": "exurw93pxe0mua9h"
+        }
+      ],
+      "realName": "英国giffgaff",
+      "relativePath": "/英国giffgaff.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 273746441,
+      "doc_id": "kd7w3cf91a9bdq3c",
+      "updated": 1781359152000,
+      "properties": {
+        "title": "客户端脚本",
+        "urlname": "kd7w3cf91a9bdq3c",
+        "date": "2026-06-13 20:18:22",
+        "updated": "2026-06-13 21:59:12",
+        "description": "📎frp-start.sh📎frpc-stop.sh📎frpc-status.sh"
+      },
+      "catalog": [
+        {
+          "title": "VPS服务器配置",
+          "doc_id": "kd7w3cf91a9bdq3c"
+        },
+        {
+          "title": "frp服务配置",
+          "doc_id": "kd7w3cf91a9bdq3c"
+        }
+      ],
+      "realName": "客户端脚本",
+      "relativePath": "/客户端脚本.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 273744963,
+      "doc_id": "gwybcw1pu10tkkfx",
+      "updated": 1781352752000,
+      "properties": {
+        "title": "frp服务配置",
+        "urlname": "gwybcw1pu10tkkfx",
+        "date": "2026-06-13 19:50:52",
+        "updated": "2026-06-13 20:12:32",
+        "description": "用claude code在服务端安装配置了frps，生成token配置给客户端。配置域名解析和nginx。在客户端用claude code安装配置了frpc，填写服务端配置的token，端口号刚刚这样只有一个固定的域名，同一时间只能用一个。考虑可以多个域名同时启用，并且客户端可以快速选择配置，..."
+      },
+      "catalog": [
+        {
+          "title": "VPS服务器配置",
+          "doc_id": "gwybcw1pu10tkkfx"
+        }
+      ],
+      "realName": "frp服务配置",
+      "relativePath": "/frp服务配置.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 273745056,
+      "doc_id": "rkwd783sax39ska0",
+      "updated": 1781352220000,
+      "properties": {
+        "title": "服务端",
+        "urlname": "rkwd783sax39ska0",
+        "date": "2026-06-13 19:52:48",
+        "updated": "2026-06-13 20:03:40",
+        "description": "用 frp + Nginx + Cloudflare 搭建内网穿透:把内网网站安全地暴露到公网一、安装 frps 查最新版本(本文使用 0.69.1):https://github.com/fatedier/frp/releases# 下载并解压(按需替换版本号和架构,这里是 linux am..."
+      },
+      "catalog": [
+        {
+          "title": "VPS服务器配置",
+          "doc_id": "rkwd783sax39ska0"
+        },
+        {
+          "title": "frp服务配置",
+          "doc_id": "rkwd783sax39ska0"
+        }
+      ],
+      "realName": "服务端",
+      "relativePath": "/服务端.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 272790257,
+      "doc_id": "wqyt8gy0u6mdtpxo",
+      "updated": 1780753122000,
+      "properties": {
+        "title": "服务器安装cc",
+        "urlname": "wqyt8gy0u6mdtpxo",
+        "date": "2026-06-06 09:59:37",
+        "updated": "2026-06-06 21:38:42",
+        "description": "安装claude codecurl -fsSL https://claude.ai/install.sh | bash再配置环境变量echo 'export PATH=\"$HOME/.local/bin:$PATH\"' &gt;&gt; ~/.bashrc &amp;&amp; source ~/.bashrc接下来配置..."
+      },
+      "catalog": [
+        {
+          "title": "VPS服务器配置",
+          "doc_id": "wqyt8gy0u6mdtpxo"
+        }
+      ],
+      "realName": "服务器安装cc",
+      "relativePath": "/服务器安装cc.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 272789567,
+      "doc_id": "tpl94de8pa8xmglm",
+      "updated": 1780710834000,
+      "properties": {
+        "title": "送中和warp",
+        "urlname": "tpl94de8pa8xmglm",
+        "date": "2026-06-06 09:47:01",
+        "updated": "2026-06-06 09:53:54",
+        "cover": "https://cdn.nlark.com/yuque/0/2026/png/373268/1780710660759-aa0466ec-96ff-46bf-89ec-0947ea80ecf8.png",
+        "description": "原贴：https://idcflare.com/t/topic/78205/84新手购买VPS后，最头疼的就是IP送中（Google全家桶IP定位中国）送中有好处也有弊端，好处就是看youtube完全没有广告！弊端就是无法使用Gemini（其他ai都可以用）Racknerd CCS这类"
+      },
+      "catalog": [
+        {
+          "title": "VPS服务器配置",
+          "doc_id": "tpl94de8pa8xmglm"
+        }
+      ],
+      "realName": "送中和warp",
+      "relativePath": "/送中和warp.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 272799940,
+      "doc_id": "qouqc4cbop0n1gq1",
+      "updated": 1780720108000,
+      "properties": {
+        "title": "探针",
+        "urlname": "qouqc4cbop0n1gq1",
+        "date": "2026-06-06 12:27:24",
+        "updated": "2026-06-06 12:28:28",
+        "cover": "https://cdn.nlark.com/yuque/0/2026/png/373268/1780720069939-1fb4bb6e-d3be-49e4-9363-93378793d0ea.png",
+        "description": "先装了哪吒不太好配置，换成komari了。效果不错。教程： https://linux.do/t/topic/849466/仓库： https://github.com/komari-monitor/komari"
+      },
+      "catalog": [
+        {
+          "title": "VPS服务器配置",
+          "doc_id": "qouqc4cbop0n1gq1"
+        }
+      ],
+      "realName": "探针",
+      "relativePath": "/探针.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 272837075,
+      "doc_id": "wo5d62c7cuvw9qnh",
+      "updated": 1780795268000,
+      "properties": {
+        "title": "certbot续签https证书",
+        "urlname": "wo5d62c7cuvw9qnh",
+        "date": "2026-06-06 21:38:46",
+        "updated": "2026-06-07 09:21:08",
+        "cover": "https://cdn.nlark.com/yuque/0/2026/png/373268/1780753423818-179f1843-3525-4e2f-9856-f239c93f64b4.png",
+        "description": "可以用let's encrypt的免费https证书，但是每三个月要续签一次。这里让claude code写一个自动续签的脚本，用到certbot。token申请我们的域名服务器已经托管给cloudflare了。这里需要在cloudflare创建一个token，用这个token的权限去续订。获..."
+      },
+      "catalog": [
+        {
+          "title": "VPS服务器配置",
+          "doc_id": "wo5d62c7cuvw9qnh"
+        }
+      ],
+      "realName": "certbot续签https证书",
+      "relativePath": "/certbot续签https证书.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 272789133,
+      "doc_id": "wp3xugg4l8gapkqu",
+      "updated": 1780710205000,
+      "properties": {
+        "title": "梯子",
+        "urlname": "wp3xugg4l8gapkqu",
+        "date": "2026-06-06 09:38:41",
+        "updated": "2026-06-06 09:43:25",
+        "description": "命令：bash "
+      },
+      "catalog": [
+        {
+          "title": "VPS服务器配置",
+          "doc_id": "wp3xugg4l8gapkqu"
+        }
+      ],
+      "realName": "梯子",
+      "relativePath": "/梯子.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 272788009,
+      "doc_id": "gx3g65of5lnm2egm",
+      "updated": 1780708562000,
+      "properties": {
+        "title": "BBR加速",
+        "urlname": "gx3g65of5lnm2egm",
+        "date": "2026-06-06 09:15:11",
+        "updated": "2026-06-06 09:16:02",
+        "description": "一键安装命令：bash "
+      },
+      "catalog": [
+        {
+          "title": "VPS服务器配置",
+          "doc_id": "gx3g65of5lnm2egm"
+        }
+      ],
+      "realName": "BBR加速",
+      "relativePath": "/BBR加速.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 260113357,
+      "doc_id": "yzyhd8hlk6hsudxd",
+      "updated": 1773106493000,
+      "properties": {
+        "title": "服务安装检测和开机重启",
+        "urlname": "yzyhd8hlk6hsudxd",
+        "date": "2026-03-08 14:38:43",
+        "updated": "2026-03-10 09:34:53",
+        "description": "什么是 systemdsystemd 是 Linux 系统里的一个 系统管理器和服务管理工具。简单理解：👉 它负责启动、停止和管理系统里的各种服务。例如：Web 服务器（nginx）数据库（mysql）Docker这些程序如果作为 后台服务运行"
+      },
+      "catalog": [
+        {
+          "title": "VPS服务器配置",
+          "doc_id": "yzyhd8hlk6hsudxd"
+        }
+      ],
+      "realName": "服务安装检测和开机重启",
+      "relativePath": "/服务安装检测和开机重启.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 269120488,
+      "doc_id": "ufdhi79o0omvx8eb",
+      "updated": 1779871650000,
+      "properties": {
+        "title": "服务器备份",
+        "urlname": "ufdhi79o0omvx8eb",
+        "date": "2026-05-10 09:45:32",
+        "updated": "2026-05-27 16:47:30",
+        "description": "^# VPS 自动备份方案 — rsnapshot + rclone + OneDrive适用环境：Ubuntu 24.04 LTS / Oracle Cloud ARM VPS备份目标：所有服务配置、账号数据、数据库、SSL 证书远程存储：OneDrive（可通过 rclone 扩展其他网盘..."
+      },
+      "catalog": [
+        {
+          "title": "VPS服务器配置",
+          "doc_id": "ufdhi79o0omvx8eb"
+        }
+      ],
+      "realName": "服务器备份",
+      "relativePath": "/服务器备份.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 270130253,
+      "doc_id": "fr3bnt0v2ziv9uz7",
+      "updated": 1779871650000,
+      "properties": {
+        "title": "德国沃丰达",
+        "urlname": "fr3bnt0v2ziv9uz7",
+        "date": "2026-05-17 12:12:42",
+        "updated": "2026-05-27 16:47:30",
+        "cover": "https://cdn.nlark.com/yuque/0/2026/jpeg/62155216/1775817818459-3a55e624-a79c-44d9-b62b-5dc71274dbfc.jpg.jpeg",
+        "description": "第一步：申请免费 eSIM打开德国沃达丰的官网申请页面：https://www.vodafone.de/freikarten/callya-classic-form/直接开始申请，选择"
+      },
+      "catalog": [
+        {
+          "title": "esim",
+          "doc_id": "fr3bnt0v2ziv9uz7"
+        }
+      ],
+      "realName": "德国沃丰达",
+      "relativePath": "/德国沃丰达.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 260112722,
+      "doc_id": "vgvmrzgct52o64v6",
+      "updated": 1772979456000,
+      "properties": {
+        "title": "服务器IP质量检测",
+        "urlname": "vgvmrzgct52o64v6",
+        "date": "2026-03-08 14:34:01",
+        "updated": "2026-03-08 22:17:36",
+        "cover": "https://cdn.nlark.com/yuque/0/2026/png/373268/1772951728746-6af8d22a-1104-4e8e-86c7-1bdb63b22d79.png",
+        "description": "可以用下面的脚本测试一下ChatGPT等平台等解锁情况：https://github.com/xykt/IPQuality不会用的直接执行下面的命令：sudo -i bash "
+      },
+      "catalog": [
+        {
+          "title": "VPS服务器配置",
+          "doc_id": "vgvmrzgct52o64v6"
+        }
+      ],
+      "realName": "服务器IP质量检测",
+      "relativePath": "/服务器IP质量检测.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 248847384,
+      "doc_id": "vycl3qtl2rdepqdx",
+      "updated": 1781539238000,
+      "properties": {
+        "title": "使用Claude Code项目开发",
+        "urlname": "vycl3qtl2rdepqdx",
+        "date": "2025-12-15 09:50:15",
+        "updated": "2026-06-16 00:00:38",
+        "cover": "https://cdn.nlark.com/yuque/0/2025/png/373268/1765632876962-4c3b6135-d499-4efc-ac97-4962b6823396.png",
+        "description": "1. AI IDE vs AI CLI从Cursor开始，各种AI IDE层出不穷，且已经达到了生产力级别。各家的AI IDE都是基于VSCode改造，接入claude等大模型编程。然后Anthropic公司推出了claude code，开启了AI IDE。后面open ai和谷歌也跟上，分别..."
+      },
+      "catalog": [],
+      "realName": "使用Claude Code项目开发",
+      "relativePath": "/使用Claude Code项目开发.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 195609924,
+      "doc_id": "zwu0ac51w0r0t0i2",
+      "updated": 1749052822000,
+      "properties": {
+        "title": "序列帧动画css实现",
+        "urlname": "zwu0ac51w0r0t0i2",
+        "date": "2024-11-22 15:52:24",
+        "updated": "2025-06-05 00:00:22",
+        "cover": "https://cdn.nlark.com/yuque/0/2024/png/373268/1732535719730-b51d246d-ec40-44f4-95fd-49e848829bea.png",
+        "description": "1. 实现原理1.1. 雪碧图（sprite）雪碧图也叫精灵图， 是一种CSS图像合成技术。通俗来说：将小图标合并在一起之后的图片称作雪碧图，每个小图标的使用配合background-position来获取。雪碧图的作用有两个：减少图片资源的请求数，提升页面加载速度制作序列帧动画这里我们要用第..."
+      },
+      "catalog": [],
+      "realName": "序列帧动画css实现",
+      "relativePath": "/序列帧动画css实现.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 243772843,
+      "doc_id": "hgf4ik3v4bv5z92i",
+      "updated": 1778169644000,
+      "properties": {
+        "title": "基于lit-html开发轻量h5",
+        "urlname": "hgf4ik3v4bv5z92i",
+        "date": "2025-11-07 11:20:16",
+        "updated": "2026-05-08 00:00:44",
+        "cover": "https://cdn.nlark.com/yuque/0/2025/png/373268/1762427173735-6d1e6366-7fd0-479b-8f43-d06d957ef1a7.png",
+        "description": "1. lit-html介绍1.1. 什么是lit-htmllit-html是一个轻量的模板引擎，是lit框架的一部分。lit-html是基于原生es6模板字符串，可以单独在原生js中使用，是一个轻量高效的模板引擎。1.2. lit-html的特性lit-html的核心特性：高效的更新：lit-..."
+      },
+      "catalog": [],
+      "realName": "基于lit-html开发轻量h5",
+      "relativePath": "/基于lit-html开发轻量h5.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 219563445,
+      "doc_id": "pt4m4aocq4rnc1es",
+      "updated": 1763222432000,
+      "properties": {
+        "title": "【小程序】sjs事件动态调整元素位置",
+        "urlname": "pt4m4aocq4rnc1es",
+        "date": "2025-05-14 15:30:08",
+        "updated": "2025-11-16 00:00:32",
+        "cover": "https://cdn.nlark.com/yuque/0/2025/png/373268/1747205612062-af267770-4de9-4475-8e0c-a7e9e77a0728.png",
+        "description": "需求描述之前写过一篇利用sjs在小程序实现无卡顿元素拖拽的分享：【小程序】小程序sjs事件及拖拽组件开发。这次需求做了一个气泡提示的容器组件，需要在遇到屏幕边缘时动态向内调整气泡的位置，就想到利用sjs事件来实现。要求：气泡箭头对准该功能中间位置当气泡箭头无法居中位于功能，靠近页面左/右边缘时..."
+      },
+      "catalog": [],
+      "realName": "【小程序】sjs事件动态调整元素位置",
+      "relativePath": "/【小程序】sjs事件动态调整元素位置.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 178327143,
+      "doc_id": "ua56gwcqgzvkhuan",
+      "updated": 1737129618000,
+      "properties": {
+        "title": "gulp-replace预编译注入环境变量",
+        "urlname": "ua56gwcqgzvkhuan",
+        "date": "2024-07-17 15:35:09",
+        "updated": "2025-01-18 00:00:18",
+        "description": "需求：在小程序使用pagespy，不希望带入到生产环境。期望在编译时而非运行时，动态判断环境注入代码。要动态注入的代码：import PageSpy from '@huolala-tech/page-spy-alipay';  (function () {   const uid = my.g..."
+      },
+      "catalog": [],
+      "realName": "gulp-replace预编译注入环境变量",
+      "relativePath": "/gulp-replace预编译注入环境变量.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 169209985,
+      "doc_id": "sg2fv4vgbnyzxy9h",
+      "updated": 1715431315000,
+      "properties": {
+        "title": "贝塞尔曲线在前端的应用",
+        "urlname": "sg2fv4vgbnyzxy9h",
+        "date": "2024-05-11 14:20:00",
+        "updated": "2024-05-11 20:41:55",
+        "cover": "https://cdn.nlark.com/yuque/0/2024/png/373268/1715412323654-d71c1cee-0861-41ab-8836-ccfa109945e9.png",
+        "description": "贝塞尔曲线介绍贝塞尔曲线（Bezier Curve）在计算机图形领域应用非常广泛，比如我们熟知的 CSS 动画、 Canvas 以及 Photoshop 等都可以看到贝塞尔曲线的身影。百度百科：https://baike.baidu.com/item/%E8%B4%9D%E5%A1%9E%E5..."
+      },
+      "catalog": [],
+      "realName": "贝塞尔曲线在前端的应用",
+      "relativePath": "/贝塞尔曲线在前端的应用.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 168879882,
+      "doc_id": "ompzqgk9ws2butmk",
+      "updated": 1715245263000,
+      "properties": {
+        "title": "JS颜色处理",
+        "urlname": "ompzqgk9ws2butmk",
+        "date": "2024-05-09 10:53:56",
+        "updated": "2024-05-09 17:01:03",
+        "cover": "https://cdn.nlark.com/yuque/0/2024/gif/373268/1715242231779-325fd6c9-62ce-4df1-8e1f-0393ee33519b.gif",
+        "description": "主题切换平时我们开发时，颜色一般写在css里，用less或者sass预处理器的话，还有变量和函数功能，可以设置一个主题色，再利用lighten函数和darken函数得到一系列设置，非常方便不同的主题处理。SCSS切换主题预处理器是在编译阶段执行，我们如果想要动态切换主题的话，需要编译生成多套主..."
+      },
+      "catalog": [],
+      "realName": "JS颜色处理",
+      "relativePath": "/JS颜色处理.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 173016095,
+      "doc_id": "kq12glo06a2fxsel",
+      "updated": 1718101847000,
+      "properties": {
+        "title": "draft.js定制富文本编辑器",
+        "urlname": "kq12glo06a2fxsel",
+        "date": "2024-06-09 17:54:26",
+        "updated": "2024-06-11 18:30:47",
+        "cover": "https://cdn.nlark.com/yuque/0/2024/png/373268/1718074685358-5dc04a56-06d7-480b-a1d9-9acab92b92dc.png",
+        "description": "有一个需求：需要在输入框中输入/时弹出自定义下拉弹窗，选择组件并插入到输入框。下拉弹窗是双层，且子目录支持输入文本过滤。同时插入的块在删除时应该整体删除。这个弹窗和插入整体感觉跟语雀的功能很像。一般的富文本编辑器可以插入特定的样式，但是整体自定义组件显示是不支持的，尤其是插入的块退格时作为整体..."
+      },
+      "catalog": [],
+      "realName": "draft.js定制富文本编辑器",
+      "relativePath": "/draft.js定制富文本编辑器.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 164848010,
+      "doc_id": "gbbeyzv0ciqrg9ni",
+      "updated": 1712647861000,
+      "properties": {
+        "title": "小程序返回拦截实现",
+        "urlname": "gbbeyzv0ciqrg9ni",
+        "date": "2024-04-09 15:30:54",
+        "updated": "2024-04-09 15:31:01",
+        "cover": "https://cdn.nlark.com/yuque/0/2024/png/373268/1706165656828-b7e3b2e3-a33b-404c-bed1-955c703ea855.png",
+        "description": "1. my.enableAlertBeforeUnload方法（2.7.17）文档：https://opendocs.alipay.com/mini/api/my.enableAlertBeforeUnloadmy.enableAlertBeforeUnload 开启小程序页面返回询问对话框。..."
+      },
+      "catalog": [],
+      "realName": "小程序返回拦截实现",
+      "relativePath": "/小程序返回拦截实现.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 164847842,
+      "doc_id": "rzhpki1pu4gc48n2",
+      "updated": 1712647840000,
+      "properties": {
+        "title": "基于ali-oss开发图片上传小工具",
+        "urlname": "rzhpki1pu4gc48n2",
+        "date": "2024-04-09 15:30:08",
+        "updated": "2024-04-09 15:30:40",
+        "cover": "https://cdn.nlark.com/yuque/0/2024/png/373268/1712643803843-9703f00a-bae9-4763-88f5-f4da03f0ceca.png",
+        "description": "ali-oss sdk(nodejs版)：https://help.aliyun.com/zh/oss/developer-reference/getting-started-with-oss-sdk-for-node-js?spm=a2c4g.11186623.0.0.e1137efd32A..."
+      },
+      "catalog": [],
+      "realName": "基于ali-oss开发图片上传小工具",
+      "relativePath": "/基于ali-oss开发图片上传小工具.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 167032475,
+      "doc_id": "ok5zhfi8nobmx7zm",
+      "updated": 1713944603000,
+      "properties": {
+        "title": "unplugin-auto-import优化项目依赖",
+        "urlname": "ok5zhfi8nobmx7zm",
+        "date": "2024-04-24 15:43:14",
+        "updated": "2024-04-24 15:43:23",
+        "description": "前端项目中，模块化管理可以方便我们管理代码，但是有些公用的依赖项需要在每个页面和组件重复引入，较为繁琐。尤其是中台项目，每个页面都要引入一堆UI框架的组件。我们可以通过配置插件来实现自动引入，这样用的时候直接就能用，代码上方少了一堆依赖看着也清晰不少。自动依赖的实现是通过一个unplugin-..."
+      },
+      "catalog": [],
+      "realName": "unplugin-auto-import优化项目依赖",
+      "relativePath": "/unplugin-auto-import优化项目依赖.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 146173080,
+      "doc_id": "dg17gtmy73k7atqn",
+      "updated": 1734095923000,
+      "properties": {
+        "title": "Automa插件使用",
+        "urlname": "dg17gtmy73k7atqn",
+        "date": "2023-11-07 17:31:27",
+        "updated": "2024-12-13 21:18:43",
+        "cover": "https://cdn.nlark.com/yuque/0/2023/png/373268/1699349698379-5671ba9a-c9f8-434c-8a82-1e0eef70bcf5.png",
+        "description": "Automa是一个chrome扩展，通过拖拽0代码实现工作流，模拟网页的各种点击、表单填写等操作，使用时点击插件脚本一键执行，或者设置定时执行，从而简化我们的工作。功能介绍官方文档地址：https://docs.automa.site/。界面新建一个插件，界面如上图。左侧面版有一些列组件可供选..."
+      },
+      "catalog": [],
+      "realName": "Automa插件使用",
+      "relativePath": "/Automa插件使用.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 144885555,
+      "doc_id": "fehgq2nysamik3g0",
+      "updated": 1698321512000,
+      "properties": {
+        "title": "小程序商家后台脚本实现批量添加域名",
+        "urlname": "fehgq2nysamik3g0",
+        "date": "2023-10-26 19:58:16",
+        "updated": "2023-10-26 19:58:32",
+        "cover": "https://cdn.nlark.com/yuque/0/2023/png/373268/1698320797962-ed854967-5174-432b-a6ef-42f0e035c497.png",
+        "description": "业务需求在多个小程序后台批量添加域名，每个小程序要添加几十个。需要重复如下操作：点击图上添加按钮，出现弹窗。在弹窗输入要添加的域名，点击确认提交。弹出通知弹窗，再次点击确认。重复上述操作，添加不同的域名几十个域名*几个小程序，操作量有点大，考虑用脚本实现。思路考虑用按键精灵，发现mac不支持考..."
+      },
+      "catalog": [],
+      "realName": "小程序商家后台脚本实现批量添加域名",
+      "relativePath": "/小程序商家后台脚本实现批量添加域名.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 141684544,
+      "doc_id": "qztgzigntl5ebfaz",
+      "updated": 1696752614000,
+      "properties": {
+        "title": "前端项目中图标的使用和管理",
+        "urlname": "qztgzigntl5ebfaz",
+        "date": "2023-10-08 14:29:33",
+        "updated": "2023-10-08 16:10:14",
+        "cover": "https://cdn.nlark.com/yuque/0/2023/png/373268/1696746826524-29e0674f-6bcb-412c-9194-f60b4d87a2b9.png",
+        "description": "在前端项目中，会用到很多小图标，这些图标很小，但是数量会很多，比如导航、按钮等等，其中很多在不同项目还会重复用到。使用方式1. 直接使用图片最简单的图片使用方式，就是UI给出的图片，在代码中使用img标签，或者background属性来引用。引用的图片可以维护在项目本地，也可以放到cdn。2...."
+      },
+      "catalog": [],
+      "realName": "前端项目中图标的使用和管理",
+      "relativePath": "/前端项目中图标的使用和管理.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 138614026,
+      "doc_id": "plr7bnpecdamm18s",
+      "updated": 1694074412000,
+      "properties": {
+        "title": "小程序本地iconfont工具开发",
+        "urlname": "plr7bnpecdamm18s",
+        "date": "2023-09-07 15:38:10",
+        "updated": "2023-09-07 16:13:32",
+        "cover": "https://cdn.nlark.com/yuque/0/2023/gif/373268/1694074125468-188fb792-e49e-449e-a7ff-f906669c1ceb.gif",
+        "description": "npm包：https://www.npmjs.com/package/miniapp-svg2iconfontgithub: https://github.com/ahao430/miniapp-svg2iconfont#readme基于svgtofont开发。背景：平时小程序开发过程中，UI..."
+      },
+      "catalog": [],
+      "realName": "小程序本地iconfont工具开发",
+      "relativePath": "/小程序本地iconfont工具开发.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 125015044,
+      "doc_id": "cuwg4od2x55yvxyr",
+      "updated": 1684312374000,
+      "properties": {
+        "title": "开发一个婚礼请柬小程序",
+        "urlname": "cuwg4od2x55yvxyr",
+        "date": "2023-05-17 14:51:05",
+        "updated": "2023-05-17 16:32:54",
+        "cover": "https://cdn.nlark.com/yuque/0/2023/jpeg/373268/1684312094506-3cb10284-8788-4783-b559-94993f1c36f9.jpeg",
+        "description": "前段时间给自己开发了一个婚礼请柬微信小程序，后端直接采用微信小程序的云开发能力。项目代码：https://github.com/ahao430/wedding-miniapp小程序码：因为服务已经过期了，图片都看不了了，所以就放心挂出来了😁1. 初始化项目，测试云函数在微信小程序开发工具中，..."
+      },
+      "catalog": [],
+      "realName": "开发一个婚礼请柬小程序",
+      "relativePath": "/开发一个婚礼请柬小程序.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 135491567,
+      "doc_id": "ghiumuoxruq6tg3w",
+      "updated": 1691375421000,
+      "properties": {
+        "title": "一次code review发现的对象排序问题",
+        "urlname": "ghiumuoxruq6tg3w",
+        "date": "2023-08-07 09:57:57",
+        "updated": "2023-08-07 10:30:21",
+        "description": "问题一次代码review中，发现代码如下：export const sortByASCII = (obj) =&gt; {     let arr = Object.keys(obj);     let sortArr = arr.sort();     let sortObj = {};     ..."
+      },
+      "catalog": [],
+      "realName": "一次code review发现的对象排序问题",
+      "relativePath": "/一次code review发现的对象排序问题.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 136433838,
+      "doc_id": "rmgnfx1y5stgs7im",
+      "updated": 1692151700000,
+      "properties": {
+        "title": "SVGA动画替换图层元素",
+        "urlname": "rmgnfx1y5stgs7im",
+        "date": "2023-08-16 10:07:55",
+        "updated": "2023-08-16 10:08:20",
+        "description": "之前写了一篇关于SVGA和Lottie动画使用的，现在有一个新的需求，要实现一个效果比较炫的引导动画，想用SVGA实现，但是要求里面的一些数字是动态可配的。查了下SVGA支持替换图层，跟UI配合调研成功替换，用了两种SVGA库来实现。UI准备：UI在出图的时候，对图层做好命名，导出SVGA后，..."
+      },
+      "catalog": [],
+      "realName": "SVGA动画替换图层元素",
+      "relativePath": "/SVGA动画替换图层元素.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 124204688,
+      "doc_id": "rkomcy7g4ao16agw",
+      "updated": 1683865756000,
+      "properties": {
+        "title": "终端交互实现多项目编译",
+        "urlname": "rkomcy7g4ao16agw",
+        "date": "2023-05-09 11:14:02",
+        "updated": "2023-05-12 12:29:16",
+        "cover": "https://cdn.nlark.com/yuque/0/2023/gif/373268/1683615747578-a913d375-1993-490f-b745-fc58a152ef5c.gif",
+        "description": "需要在一套小程序代码中输出多个小程序。之前是通过在npm srcipts配置环境变量，然后编译代码中通过process.env获取：scripts: {   \"dev:dev\": \"cross-env NODE-ENV=dev gulp-dev\",   \"dev:test\": \"cross-e..."
+      },
+      "catalog": [],
+      "realName": "终端交互实现多项目编译",
+      "relativePath": "/终端交互实现多项目编译.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 117845015,
+      "doc_id": "wx3msdrh107ydql5",
+      "updated": 1679552229000,
+      "properties": {
+        "title": "h5播放视频",
+        "urlname": "wx3msdrh107ydql5",
+        "date": "2023-03-14 10:15:09",
+        "updated": "2023-03-23 14:17:09",
+        "cover": "https://cdn.nlark.com/yuque/0/2023/png/373268/1678773367656-ada84a6f-2546-487c-b97e-111f7b319bae.png",
+        "description": "一个在h5页面播放视频的需求。最先采用了video标签的方案，后改为使用JSMpeg。video标签方案使用html原生的video标签播放。video标签文档：https://www.runoob.com/tags/tag-video.html使用如下：   "
+      },
+      "catalog": [],
+      "realName": "h5播放视频",
+      "relativePath": "/h5播放视频.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 119545685,
+      "doc_id": "tbrh8b0y7quh0g2k",
+      "updated": 1679913587000,
+      "properties": {
+        "title": "封装一个js业务sdk",
+        "urlname": "tbrh8b0y7quh0g2k",
+        "date": "2023-03-27 10:32:34",
+        "updated": "2023-03-27 18:39:47",
+        "cover": "https://cdn.nlark.com/yuque/0/2023/png/373268/1679913049739-a1e63a1f-6f29-416d-a650-ad73e82a6cdb.png",
+        "description": "github: https://github.com/ahao430/sdk-demonpm仓库：https://www.npmjs.com/package/@ahao430/sdk-demo1. 需求开发一个sdk，将业务接口都放进去，活动项目和小程序通过npm安装，实现快速调用。2. 分析..."
+      },
+      "catalog": [],
+      "realName": "封装一个js业务sdk",
+      "relativePath": "/封装一个js业务sdk.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 118346830,
+      "doc_id": "iyv6929xgfovxg8k",
+      "updated": 1679028230000,
+      "properties": {
+        "title": "在mac开发一个脚本执行FFMpeg编译",
+        "urlname": "iyv6929xgfovxg8k",
+        "date": "2023-03-17 11:19:16",
+        "updated": "2023-03-17 12:43:50",
+        "cover": "https://cdn.nlark.com/yuque/0/2023/gif/373268/1679027748629-88177202-02be-4251-9f90-ee95fa9b757d.gif",
+        "description": "项目中采用JSMpeg方案播放视频，需要用到FFMpeg转码。调研了市面上FFMpeg封装的应用，要么收费，要么配置不够，为了方便产品运营（避免以后转换视频的工作都落到自己头上），研究了下用bash写了个脚本，又用mac的command双击执行。1. FFMpeg命令安装FFMpeg，配置环境..."
+      },
+      "catalog": [],
+      "realName": "在mac开发一个脚本执行FFMpeg编译",
+      "relativePath": "/在mac开发一个脚本执行FFMpeg编译.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 112018984,
+      "doc_id": "egug269lpkcx6wnz",
+      "updated": 1673851250000,
+      "properties": {
+        "title": "利用阿里oss处理图片",
+        "urlname": "egug269lpkcx6wnz",
+        "date": "2023-01-16 13:50:24",
+        "updated": "2023-01-16 14:40:50",
+        "cover": "https://cdn.nlark.com/yuque/0/2023/png/373268/1673851144719-e68a808c-d4a8-4aa3-8723-eb43eea852a3.png",
+        "description": "oss图片处理能力我们平时存储图片一般都是用的阿里oss服务，阿里oss除了存储文件外，还有很多其他功能。比如可以通过拼接url后缀，来对图片进行处理。官方文档在这里：https://help.aliyun.com/document_detail/144582.html。可以看到，支持很多处理..."
+      },
+      "catalog": [],
+      "realName": "利用阿里oss处理图片",
+      "relativePath": "/利用阿里oss处理图片.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 112047486,
+      "doc_id": "seweda12lwiggo33",
+      "updated": 1673947200000,
+      "properties": {
+        "title": "开发一个网页版节拍器",
+        "urlname": "seweda12lwiggo33",
+        "date": "2023-01-16 17:38:15",
+        "updated": "2023-01-17 17:20:00",
+        "cover": "https://cdn.nlark.com/yuque/0/2023/png/373268/1673864213186-6c9a2060-a95f-4dbf-8681-1b35f25a6297.png",
+        "description": "平时练尤克里里经常用到节拍器，突发奇想自己用js开发一个。最后实现的效果如下：https://ahao430.github.io/metronome/。代码见github仓库：https://github.com/ahao430/metronome。1. 需求分析节拍器主要是可以设定不同的速度..."
+      },
+      "catalog": [],
+      "realName": "开发一个网页版节拍器",
+      "relativePath": "/开发一个网页版节拍器.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 111668284,
+      "doc_id": "yacg7a7q9cx6xf6o",
+      "updated": 1673489735000,
+      "properties": {
+        "title": "github自动部署分支到pages",
+        "urlname": "yacg7a7q9cx6xf6o",
+        "date": "2023-01-12 10:09:43",
+        "updated": "2023-01-12 10:15:35",
+        "description": "在代码根目录新建.github/workflows/目录，新建一个任意名称后缀yml的文件。内容如下：name: CI on:   push:     branches:     - main  # 这里是要自动部署的分支名，有提交的时候就会触发action jobs:   job:     ..."
+      },
+      "catalog": [],
+      "realName": "github自动部署分支到pages",
+      "relativePath": "/github自动部署分支到pages.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 109540976,
+      "doc_id": "ggcqg5s7rml64mqg",
+      "updated": 1671185640000,
+      "properties": {
+        "title": "Svga和lottie动画在h5的使用",
+        "urlname": "ggcqg5s7rml64mqg",
+        "date": "2022-12-16 12:05:33",
+        "updated": "2022-12-16 18:14:00",
+        "cover": "https://cdn.nlark.com/yuque/0/2022/gif/373268/1671185609352-c292c19a-69a8-48cf-bfcb-149c1635d832.gif",
+        "description": "需求需要在h5页面中做复杂动效，调研了几种常用的方案，跟UI一起尝试。调研占用内存对比：从大到小： 视频＞序列帧＞GIF＞APNG/WEBP＞LOTTIE/SVGA质量稳定对比：从差到好： 视频＜GIF＜序列帧＜APNG/WEBP＜LOTTIE/SVGA支持AE动效对比：从多到少：视频＞GIF..."
+      },
+      "catalog": [],
+      "realName": "Svga和lottie动画在h5的使用",
+      "relativePath": "/Svga和lottie动画在h5的使用.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 104930474,
+      "doc_id": "dm6f8r",
+      "updated": 1667472922000,
+      "properties": {
+        "title": "React拖拽效果实现",
+        "urlname": "dm6f8r",
+        "date": "2022-11-03 18:54:59",
+        "updated": "2022-11-03 18:55:22",
+        "cover": "https://cdn.nlark.com/yuque/0/2022/gif/373268/1652065378606-491a337c-f87e-403c-b69a-02ad9d444183.gif",
+        "description": "原生js中，我们可以通过onDrag和onDrop事件来实现拖拽效果。而在react中，有一个强大的库，react-dnd，对拖拽相关能力进行了封装。react-dnd强大的好处是高度自由性，但是各种代码需要去手动实现。我们海星二期装修页面需要实现一个拖拽（排序和复制），这里我们选择一个基于r..."
+      },
+      "catalog": [],
+      "realName": "React拖拽效果实现",
+      "relativePath": "/React拖拽效果实现.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 88975017,
+      "doc_id": "ok82zp",
+      "updated": 1660034913000,
+      "properties": {
+        "title": "遍历项目打包代码部署",
+        "urlname": "ok82zp",
+        "date": "2022-08-09 15:31:33",
+        "updated": "2022-08-09 16:48:33",
+        "cover": "https://cdn.nlark.com/yuque/0/2022/png/373268/1660030707584-8fc7025f-bde7-4baa-a0a7-202f593d66d1.png",
+        "description": "原项目是在webpack里配置entry为列表，遍历多个活动页面打包。现改造项目拆分为独立的项目，又想能够在需要时遍历所有项目打包，所以在根目录加了一个build命令，并写了一个脚本去执行。命令：{   \"name\": \"@mono/dsp\",   \"version\": \"0.1.0\",   ..."
+      },
+      "catalog": [],
+      "realName": "遍历项目打包代码部署",
+      "relativePath": "/遍历项目打包代码部署.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 84904469,
+      "doc_id": "sx8yi5",
+      "updated": 1659089690000,
+      "properties": {
+        "title": "在vue中开发一个命令式调用的弹窗组件",
+        "urlname": "sx8yi5",
+        "date": "2022-07-29 10:53:21",
+        "updated": "2022-07-29 18:14:50",
+        "description": "活动需求要做一个顶部弹窗图片的toast效果，想起element中通过命令调用toast组件的方式，去调研一番，实现了一个类似效果。相关api：核心需要用到两个api：Vue.extend方法，通过模板创建Vue构造器：https://cn.vuejs.org/v2/api/?#Vue-ext..."
+      },
+      "catalog": [],
+      "realName": "在vue中开发一个命令式调用的弹窗组件",
+      "relativePath": "/在vue中开发一个命令式调用的弹窗组件.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 84823859,
+      "doc_id": "yugc6h",
+      "updated": 1658999546000,
+      "properties": {
+        "title": "在less中使用循环和js随机生成样式",
+        "urlname": "yugc6h",
+        "date": "2022-07-28 15:59:00",
+        "updated": "2022-07-28 17:12:26",
+        "cover": "https://cdn.nlark.com/yuque/0/2022/gif/373268/1658995713584-bce615e5-ba53-46a1-842c-1b95c79629f5.gif",
+        "description": "最近做一个果树活动，其中有一段金币红包下落的动画是用css写的。批量生成了多个金币和红包元素，起始位置随机。但是如果手动写一大堆样式代码就太不方便了，记得less可以写循环，又搜了一下less可以用js生成随机变量。于是实现如下：批量生成红包和元素 ..."
+      },
+      "catalog": [],
+      "realName": "在less中使用循环和js随机生成样式",
+      "relativePath": "/在less中使用循环和js随机生成样式.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 61288818,
+      "doc_id": "pignxh",
+      "updated": 1637907440000,
+      "properties": {
+        "title": "【小程序】支付宝小程序sjs事件及拖拽组件开发",
+        "urlname": "pignxh",
+        "date": "2021-11-26 14:12:22",
+        "updated": "2021-11-26 14:17:20",
+        "description": "背景：之前做小程序浮标时尝试做过拖拽效果，但是跟自带原生客服、调试等组件的体验相差甚远。发现sjs文档中有事件响应，尝试用sjs事件开发拖拽组件，真机效果完美（模拟器还是有穿透效果）。js开发拖拽组件      之前用js开发拖拽组件，实际上是在组件的data中设置位置数据，监听onTouch..."
+      },
+      "catalog": [],
+      "realName": "【小程序】支付宝小程序sjs事件及拖拽组件开发",
+      "relativePath": "/【小程序】支付宝小程序sjs事件及拖拽组件开发.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 52938023,
+      "doc_id": "nwvxw3",
+      "updated": 1631153935000,
+      "properties": {
+        "title": "【gulp】gulp中写入内存到流中并输出文件",
+        "urlname": "nwvxw3",
+        "date": "2021-09-08 19:05:33",
+        "updated": "2021-09-09 10:18:55",
+        "description": "当前的小程序脚手架中，写了不同环境的配置文件，再通过环境变量读取指定的配置文件输出到dist。// gulpfile.js const ENV = process.env.NODE_ENV  gulp.task('env', done =&gt; {     return gulp.src(`./c..."
+      },
+      "catalog": [],
+      "realName": "【gulp】gulp中写入内存到流中并输出文件",
+      "relativePath": "/【gulp】gulp中写入内存到流中并输出文件.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 52243528,
+      "doc_id": "df3o9o",
+      "updated": 1630319523000,
+      "properties": {
+        "title": "基于git-submodule和monorepo的活动统一仓库管理",
+        "urlname": "df3o9o",
+        "date": "2021-08-30 18:29:35",
+        "updated": "2021-08-30 18:32:03",
+        "cover": "https://cdn.nlark.com/yuque/0/2021/png/373268/1630318684241-7df23fac-c6ef-4cce-83e9-ae877f34ef48.png",
+        "description": "创建仓库创建仓库创建了四个仓库，分别命名活动总仓库，vue分仓库，react分仓库，gulp分仓库。执行git submodule进行组织拉取总仓库代码，在终端中执行git submodule命令，添加分仓库git submodule add xxx 。这样就将分仓库关联进来了。主仓库提交代码..."
+      },
+      "catalog": [],
+      "realName": "基于git-submodule和monorepo的活动统一仓库管理",
+      "relativePath": "/基于git-submodule和monorepo的活动统一仓库管理.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 62234155,
+      "doc_id": "bm45ys",
+      "updated": 1639017209000,
+      "properties": {
+        "title": "前博客，懒得转移了",
+        "urlname": "bm45ys",
+        "date": "2021-12-09 10:33:11",
+        "updated": "2021-12-09 10:33:29",
+        "description": "https://ahao430.github.io/dev/"
+      },
+      "catalog": [],
+      "realName": "前博客，懒得转移了",
+      "relativePath": "/前博客，懒得转移了.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 45963601,
+      "doc_id": "wper80",
+      "updated": 1621927966000,
+      "properties": {
+        "title": "使用责任链模式优化业务代码",
+        "urlname": "wper80",
+        "date": "2021-05-25 15:31:59",
+        "updated": "2021-05-25 15:32:46",
+        "description": "现有业务中，存在大量复杂的判断，如弹窗逻辑，内部有一系列复杂的if判断，不同弹窗之间存在优先级，当上级弹窗符合条件时代码判断终止，否则继续向下级判断。function modal (option) { \t// 追偿   if (isRecovery === '0' || isRecovery ..."
+      },
+      "catalog": [],
+      "realName": "使用责任链模式优化业务代码",
+      "relativePath": "/使用责任链模式优化业务代码.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 46947725,
+      "doc_id": "lwtzu4",
+      "updated": 1623317083000,
+      "properties": {
+        "title": "mac配置mysql",
+        "urlname": "lwtzu4",
+        "date": "2021-06-10 16:59:39",
+        "updated": "2021-06-10 17:24:43",
+        "description": "1. 安装直接运行brew install mysql报错。去mysql.com下载社区版安装2. 环境变量cd ~ vi ~/.bash_profile添加两行path：export PATH=$PATH:/usr/locol/mysql/bin  export PATH=$PATH:/us..."
+      },
+      "catalog": [],
+      "realName": "mac配置mysql",
+      "relativePath": "/mac配置mysql.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 26536114,
+      "doc_id": "pzk811",
+      "updated": 1617949141000,
+      "properties": {
+        "title": "【小程序】小程序状态管理及分包问题",
+        "urlname": "pzk811",
+        "date": "2020-12-28 13:11:21",
+        "updated": "2021-04-09 14:19:01",
+        "cover": "https://cdn.nlark.com/yuque/0/2020/png/373268/1609136503829-6ac7d3cc-dcce-4e1b-99df-855e48232657.png",
+        "description": "当前小程序项目全局状态及逻辑判断太复杂，尝试引入状态管理优化逻辑，同时将重复的逻辑判断放到getters中。这里我们使用mobx4，因为mobx使用了小程序不兼容的proxy。mobx4介绍主要是这几个api：observablegetautorunaction我们引入observable创建..."
+      },
+      "catalog": [],
+      "realName": "【小程序】小程序状态管理及分包问题",
+      "relativePath": "/【小程序】小程序状态管理及分包问题.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 33622389,
+      "doc_id": "xomkg8",
+      "updated": 1616725848000,
+      "properties": {
+        "title": "Jest单元测试使用",
+        "urlname": "xomkg8",
+        "date": "2021-03-26 10:29:41",
+        "updated": "2021-03-26 10:30:48",
+        "cover": "https://cdn.nlark.com/yuque/0/2021/png/373268/1616667931785-81c6221b-1d8a-4001-a909-6778a143ec2d.png",
+        "description": "在小程序中尝试引入jest进行简单的单元测试。安装 yarn add -D jest配置在package.json添加test命令，执行jest；在项目根目录新建test目录，用于存放test文件；在根目录增加jest.config.js文件，设置jest配置。配置文档配置问题新建一个测试文件..."
+      },
+      "catalog": [],
+      "realName": "Jest单元测试使用",
+      "relativePath": "/Jest单元测试使用.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 12652576,
+      "doc_id": "xzza4x",
+      "updated": 1599183547000,
+      "properties": {
+        "title": "【工程化】通过shell同时启动多个项目",
+        "urlname": "xzza4x",
+        "date": "2020-09-04 09:19:46",
+        "updated": "2020-09-04 09:39:07",
+        "description": "近期做了一个h5页面拼装demo项目，里面包含了前台、后台、简易服务端三个子项目。其中后台用iframe嵌套了前台h5页面做预览用，前后台又依赖服务端，每次启动都要依次运行三个服务。那么能否一次开启这三个服务呢？需求分析需要在根目录中执行子目录的npm命令开启服务我们希望开启三个cmd窗口来监..."
+      },
+      "catalog": [],
+      "realName": "【工程化】通过shell同时启动多个项目",
+      "relativePath": "/【工程化】通过shell同时启动多个项目.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 8369173,
+      "doc_id": "ga6hsx",
+      "updated": 1592535226000,
+      "properties": {
+        "title": "【小程序】长列表组件实现——无限下拉加载",
+        "urlname": "ga6hsx",
+        "date": "2020-06-18 10:55:30",
+        "updated": "2020-06-19 10:53:46",
+        "cover": "https://cdn.nlark.com/yuque/0/2020/gif/373268/1592533933864-e14a7cbd-9d00-41b2-8baa-49b4336436df.gif",
+        "description": "移动端的列表页加载，一般是下拉加载更多，当翻页较多时，页面渲染节点太多，就会造成页面卡顿。需要对长列表进行优化，达到无限下拉。在微信小程序的扩展组件有一个recycle-view实现的长列表，支付宝没有长列表组件，需要我们自己开发。实现原理长列表渲染节点过多造成卡顿。实际上我们只需要渲染可视区..."
+      },
+      "catalog": [],
+      "realName": "【小程序】长列表组件实现——无限下拉加载",
+      "relativePath": "/【小程序】长列表组件实现——无限下拉加载.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 8363679,
+      "doc_id": "lq8axs",
+      "updated": 1622971869000,
+      "properties": {
+        "title": "【部署】ssl证书配置",
+        "urlname": "lq8axs",
+        "date": "2020-06-18 09:25:06",
+        "updated": "2021-06-06 17:31:09",
+        "cover": "https://cdn.nlark.com/yuque/0/2020/png/373268/1592409054697-fc18b1f3-8ef8-44c6-9a54-42f785e0bb6c.png",
+        "description": "1. 相关说明SSL证书分为个人DV、企业OV、企业EV三类。免费SSL证书都是DV。个人的一般三个月就要续期，且安全性较差。EV最安全，适合银行等客户使用。证书的域名又有单域名和通配。购买证书网站：https://www.getssl.cn/2. 购买证书这里以阿里云为例。登录阿里云，菜单选..."
+      },
+      "catalog": [],
+      "realName": "【部署】ssl证书配置",
+      "relativePath": "/【部署】ssl证书配置.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 9894478,
+      "doc_id": "lb1uwf",
+      "updated": 1597046875000,
+      "properties": {
+        "title": "【vue】基于vue-cli的后台项目框架搭建",
+        "urlname": "lb1uwf",
+        "date": "2020-07-20 10:22:33",
+        "updated": "2020-08-10 16:07:55",
+        "description": "最近搭建了一套基于vue-cli的后台项目。vue-cli3，安装vue全家桶UI采用的是ant-design-vue考虑到主题切换需求，css采用了vue-styled-componentsnpm scripts配置多环境引入immer.js操作对象安装mockjs方便开发引入了storyb..."
+      },
+      "catalog": [],
+      "realName": "【vue】基于vue-cli的后台项目框架搭建",
+      "relativePath": "/【vue】基于vue-cli的后台项目框架搭建.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 8363603,
+      "doc_id": "mbxn1c",
+      "updated": 1592443411000,
+      "properties": {
+        "title": "ssl证书配置",
+        "urlname": "mbxn1c",
+        "date": "2020-06-18 09:23:26",
+        "updated": "2020-06-18 09:23:31",
+        "cover": "https://cdn.nlark.com/yuque/0/2020/png/373268/1592409054697-fc18b1f3-8ef8-44c6-9a54-42f785e0bb6c.png",
+        "description": "1. 相关说明SSL证书分为个人DV、企业OV、企业EV三类。免费SSL证书都是DV。个人的一般三个月就要续期，且安全性较差。EV最安全，适合银行等客户使用。证书的域名又有单域名和通配。购买证书网站：https://www.getssl.cn/2. 购买证书这里以阿里云为例。登录阿里云，菜单选..."
+      },
+      "catalog": [],
+      "realName": "ssl证书配置",
+      "relativePath": "/ssl证书配置.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 29425731,
+      "doc_id": "cbnzkx",
+      "updated": 1609412025000,
+      "properties": {
+        "title": "【小程序、工程化】gulp介绍及小程序工程构建",
+        "urlname": "cbnzkx",
+        "date": "2020-12-31 18:53:27",
+        "updated": "2020-12-31 18:53:45",
+        "description": "从零开始介绍下gulp的使用，及小程序的工程化搭建。gulp介绍gulp是一款基于流的思想，执行一系列预设任务的工具。将工作拆解为一个个的任务，并通过流的传递来链式调用执行。gulp vs webpack我们现在常用的webpack是一款打包工具，二者在思想上不同，但是又能实现很多相同的功能。..."
+      },
+      "catalog": [],
+      "realName": "【小程序、工程化】gulp介绍及小程序工程构建",
+      "relativePath": "/【小程序、工程化】gulp介绍及小程序工程构建.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 7314576,
+      "doc_id": "nrqy66",
+      "updated": 1592284811000,
+      "properties": {
+        "title": "【git】git本地代码管理",
+        "urlname": "nrqy66",
+        "date": "2020-05-21 16:56:58",
+        "updated": "2020-06-16 13:20:11",
+        "description": "之前使用git都是pull和push，对commit没有整理，合并提交到线上后，commit记录比较杂乱。对commit进行整理后再提交，可以更清晰的查看代码。前期准备一个在线关卡式的学习网址：链接，可以学习git的各项命令。一个git commit的包：git cz。使用它代替git com..."
+      },
+      "catalog": [],
+      "realName": "【git】git本地代码管理",
+      "relativePath": "/【git】git本地代码管理.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 8212634,
+      "doc_id": "mxopgo",
+      "updated": 1592066017000,
+      "properties": {
+        "title": "【vue】vue项目配置优化",
+        "urlname": "mxopgo",
+        "date": "2020-06-13 23:58:09",
+        "updated": "2020-06-14 00:33:37",
+        "cover": "https://cdn.nlark.com/yuque/0/2020/png/373268/1592064074336-63dbeba4-dafa-4785-a26f-c4427a670fa9.png",
+        "description": "1. 环境变量vue-cli支持环境变量，vur-cli-service命令可以通过--mode读取不同的配置文件，从而读取不同的变量。在项目根目录新建.env.开头的配置文件：.env.build-prod文件：NODE_ENV=production VUE_APP_ENV=prod在pac..."
+      },
+      "catalog": [],
+      "realName": "【vue】vue项目配置优化",
+      "relativePath": "/【vue】vue项目配置优化.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 8005620,
+      "doc_id": "go6l1y",
+      "updated": 1621655027000,
+      "properties": {
+        "title": "【小程序】开发及兼容问题汇总(欢迎补充)",
+        "urlname": "go6l1y",
+        "date": "2020-06-08 14:46:46",
+        "updated": "2021-05-22 11:43:47",
+        "description": "1. 框架问题组件中使用setData等api报错在多层组件嵌套中，有些异步操作时页面已经销毁，此时组件执行相关代码就会报错。因此，在深层组件中，最好对一些操作尤其是异步操作，先判断this.$page是否存在。修改导航栏文字颜色导航栏文字颜色不可直接设置，但是可以通过my.setNaviga..."
+      },
+      "catalog": [],
+      "realName": "【小程序】开发及兼容问题汇总(欢迎补充)",
+      "relativePath": "/【小程序】开发及兼容问题汇总(欢迎补充).md",
+      "docPath": "docs"
+    },
+    {
+      "id": 8005593,
+      "doc_id": "do5ps8",
+      "updated": 1591978299000,
+      "properties": {
+        "title": "【小程序】实现一个transition组件",
+        "urlname": "do5ps8",
+        "date": "2020-06-08 14:46:35",
+        "updated": "2020-06-13 00:11:39",
+        "cover": "https://cdn.nlark.com/yuque/__graphviz/d0a4f6357aefab640fde1ccb1d808120.svg",
+        "description": "在小程序实现一个transition组件，实现类似vue和react的transition的过渡效果。分析vue的transition是接收一个name，以这个name在过渡的几个阶段生成不同的class。然后对这几个class设置相应的css3的transition或animation动画，..."
+      },
+      "catalog": [],
+      "realName": "【小程序】实现一个transition组件",
+      "relativePath": "/【小程序】实现一个transition组件.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 7314578,
+      "doc_id": "gruf8b",
+      "updated": 1590051437000,
+      "properties": {
+        "title": "【小程序】小程序CMS页面拼装的实现",
+        "urlname": "gruf8b",
+        "date": "2020-05-21 16:56:58",
+        "updated": "2020-05-21 16:57:17",
+        "cover": "https://cdn.nlark.com/yuque/__graphviz/ef18bb79fce936529e264fc4b9af5848.svg",
+        "description": "现在页面组件化和配置化是一个比较流行的产品设计。我们的小程序最近也有这方面的需求。CMS原理一般的拼装页面常见于一些第三方服务平台，类似有赞等，这些平台面向的客户是商家，实际上是商家用户在商家后台拼装好页面后，保存配置，然后重新生成代码发版。客户接收到更新后，看到新的小程序页面。而我们做为自身..."
+      },
+      "catalog": [],
+      "realName": "【小程序】小程序CMS页面拼装的实现",
+      "relativePath": "/【小程序】小程序CMS页面拼装的实现.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 7314577,
+      "doc_id": "ebmy8m",
+      "updated": 1617092676000,
+      "properties": {
+        "title": "【小程序】在小程序实现一个tab组件",
+        "urlname": "ebmy8m",
+        "date": "2020-05-21 16:56:58",
+        "updated": "2021-03-30 16:24:36",
+        "cover": "https://cdn.nlark.com/yuque/0/2020/gif/373268/1589868080887-6bce49f5-174e-40ba-90d7-9c7cc40a6aa9.gif",
+        "description": "如图，项目迭代中需求开发一个tab页，可以左右滑动切换，全屏，上面tab可点击切换，横向超过一屏时，选中项要自动居中；内部嵌套一个分组商品组件，同样滑动切换，高度自适应（异步），下拉时要吸顶，小球要有动画效果。支付宝小程序提供的tab组件不满足需求，自己实现功能后，对其中公共部分抽出一个tab..."
+      },
+      "catalog": [],
+      "realName": "【小程序】在小程序实现一个tab组件",
+      "relativePath": "/【小程序】在小程序实现一个tab组件.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 7314573,
+      "doc_id": "mp5emh",
+      "updated": 1592901117000,
+      "properties": {
+        "title": "【工具】支付宝小程序anymock的使用",
+        "urlname": "mp5emh",
+        "date": "2020-05-21 16:56:58",
+        "updated": "2020-06-23 16:31:57",
+        "cover": "https://cdn.nlark.com/yuque/0/2020/png/373268/1588043969339-d930b0b5-547a-4b60-b307-87da5f683e8e.png",
+        "description": "在前后端分离开发的过程中，经常使用mock来进行开发，这方面的工具有在项目代码中开发环境下引入mockjs来做mock服务，或是使用线上mock服务平台如rap、apizza等。这些服务最大的一个问题是，要么全部接口启用mock，要么全部接口不使用mock。如果是在新项目比较方便，但是对于半路..."
+      },
+      "catalog": [],
+      "realName": "【工具】支付宝小程序anymock的使用",
+      "relativePath": "/【工具】支付宝小程序anymock的使用.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 7314572,
+      "doc_id": "kezhlh",
+      "updated": 1608105956000,
+      "properties": {
+        "title": "【小程序】小程序消息队列的封装",
+        "urlname": "kezhlh",
+        "date": "2020-05-21 16:56:58",
+        "updated": "2020-12-16 16:05:56",
+        "cover": "https://cdn.nlark.com/yuque/0/2020/png/373268/1587950609790-ba75d0d7-191a-4c05-8686-7311330d3504.png",
+        "description": "消息队列在支付宝小程序中，由于并发数量的限制，同时发送多个请求的话，有可能会造成请求的丢失，因此封装一个消息队列，对超过5条的进行中请求做排队处理。代码实现如下：const MAX_COUNT = 5  class Alipay {   static queue = []   static c..."
+      },
+      "catalog": [],
+      "realName": "【小程序】小程序消息队列的封装",
+      "relativePath": "/【小程序】小程序消息队列的封装.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 7314575,
+      "doc_id": "unluy7",
+      "updated": 1670844893000,
+      "properties": {
+        "title": "【小程序】小程序ajax工具类的封装",
+        "urlname": "unluy7",
+        "date": "2020-05-21 16:56:58",
+        "updated": "2022-12-12 19:34:53",
+        "description": "之前在小程序中封装了ajax工具，并对消息队列做了处理。但是其中很多业务代码混杂再其中，故对其进一步抽象化，将业务代码分离出来。业务代码主要存在于request的请求和响应阶段，仿照axios做一个拦截器，将其中的业务代码通过拦截器传递进来执行。改写为类首先对Alipay工具类进行改造，将公用..."
+      },
+      "catalog": [],
+      "realName": "【小程序】小程序ajax工具类的封装",
+      "relativePath": "/【小程序】小程序ajax工具类的封装.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 7314571,
+      "doc_id": "dpbtcq",
+      "updated": 1681369261000,
+      "properties": {
+        "title": "【小程序】小程序mixin的实现和全局组件",
+        "urlname": "dpbtcq",
+        "date": "2020-05-21 16:56:58",
+        "updated": "2023-04-13 15:01:01",
+        "description": "mixin有时候我们需要在页面注入一些公用的数据和方法，这就需要mixin的实现。在小程序中，组件支持mixins；对页面的mixin注入，可以通过重写Page方法来实现。如果需要按需引入mixins，我们可以在页面增加mixins属性，再在mixin中按需引入，这里我就简单的对所有页面统一引..."
+      },
+      "catalog": [],
+      "realName": "【小程序】小程序mixin的实现和全局组件",
+      "relativePath": "/【小程序】小程序mixin的实现和全局组件.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 7314570,
+      "doc_id": "pge6z3",
+      "updated": 1592536291000,
+      "properties": {
+        "title": "【规范】前端团队代码规范及git提交检测",
+        "urlname": "pge6z3",
+        "date": "2020-05-21 16:56:58",
+        "updated": "2020-06-19 11:11:31",
+        "description": "在团队开发中，需要对代码风格进行统一；同时，好的代码风格也有利于阅读和维护。下面从ide和eslint的配置，以及git-commit预检测来介绍。VSCODE配置现在vscode使用最多，其他编辑器也可类似配置。editorconfigvscode本身可以设置tab转换为空格。使用edito..."
+      },
+      "catalog": [],
+      "realName": "【规范】前端团队代码规范及git提交检测",
+      "relativePath": "/【规范】前端团队代码规范及git提交检测.md",
+      "docPath": "docs"
+    }
+  ],
+  "catalog": [
+    {
+      "type": "DOC",
+      "title": "在手机端继续电脑的claude code会话",
+      "uuid": "BZ9FB5SUk3lc3gmI",
+      "url": "vx1u80byk06elvb9",
+      "prev_uuid": "",
+      "sibling_uuid": "DgwTo28luO0h6ylj",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 275463418,
+      "level": 0,
+      "id": 275463418,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "TITLE",
+      "title": "AI",
+      "uuid": "DgwTo28luO0h6ylj",
+      "url": "",
+      "prev_uuid": "BZ9FB5SUk3lc3gmI",
+      "sibling_uuid": "AYAhoh5c3ft9U4y6",
+      "child_uuid": "ie654opBIo8EU41q",
+      "parent_uuid": "",
+      "doc_id": "",
+      "level": 0,
+      "id": "",
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "中转站大模型使用教程",
+      "uuid": "ie654opBIo8EU41q",
+      "url": "lfa8g61lz2mowtou",
+      "prev_uuid": "DgwTo28luO0h6ylj",
+      "sibling_uuid": "",
+      "child_uuid": "",
+      "parent_uuid": "DgwTo28luO0h6ylj",
+      "doc_id": 272911693,
+      "level": 1,
+      "id": 272911693,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "TITLE",
+      "title": "esim",
+      "uuid": "AYAhoh5c3ft9U4y6",
+      "url": "",
+      "prev_uuid": "DgwTo28luO0h6ylj",
+      "sibling_uuid": "mUKkYrxly7KEv9W6",
+      "child_uuid": "N4pKXS_9ykUE7zKe",
+      "parent_uuid": "",
+      "doc_id": "",
+      "level": 0,
+      "id": "",
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "德国沃丰达",
+      "uuid": "N4pKXS_9ykUE7zKe",
+      "url": "fr3bnt0v2ziv9uz7",
+      "prev_uuid": "AYAhoh5c3ft9U4y6",
+      "sibling_uuid": "-h2Go_I8a87TuKBy",
+      "child_uuid": "",
+      "parent_uuid": "AYAhoh5c3ft9U4y6",
+      "doc_id": 270130253,
+      "level": 1,
+      "id": 270130253,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "英国giffgaff",
+      "uuid": "-h2Go_I8a87TuKBy",
+      "url": "exurw93pxe0mua9h",
+      "prev_uuid": "N4pKXS_9ykUE7zKe",
+      "sibling_uuid": "",
+      "child_uuid": "",
+      "parent_uuid": "AYAhoh5c3ft9U4y6",
+      "doc_id": 270130782,
+      "level": 1,
+      "id": 270130782,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "TITLE",
+      "title": "VPS服务器配置",
+      "uuid": "mUKkYrxly7KEv9W6",
+      "url": "",
+      "prev_uuid": "AYAhoh5c3ft9U4y6",
+      "sibling_uuid": "IDmx_BgVD7W8iuTu",
+      "child_uuid": "gPZYFucCKQgRfaEm",
+      "parent_uuid": "",
+      "doc_id": "",
+      "level": 0,
+      "id": "",
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "frp服务配置",
+      "uuid": "gPZYFucCKQgRfaEm",
+      "url": "gwybcw1pu10tkkfx",
+      "prev_uuid": "mUKkYrxly7KEv9W6",
+      "sibling_uuid": "o_5Lr21-oDsDChju",
+      "child_uuid": "5bY5mpWudAcULqGl",
+      "parent_uuid": "mUKkYrxly7KEv9W6",
+      "doc_id": 273744963,
+      "level": 1,
+      "id": 273744963,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "服务端",
+      "uuid": "5bY5mpWudAcULqGl",
+      "url": "rkwd783sax39ska0",
+      "prev_uuid": "gPZYFucCKQgRfaEm",
+      "sibling_uuid": "FUUr4cDDqEVtqRse",
+      "child_uuid": "",
+      "parent_uuid": "gPZYFucCKQgRfaEm",
+      "doc_id": 273745056,
+      "level": 2,
+      "id": 273745056,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "客户端",
+      "uuid": "FUUr4cDDqEVtqRse",
+      "url": "vn90ofi20d9fttkw",
+      "prev_uuid": "5bY5mpWudAcULqGl",
+      "sibling_uuid": "7F-f9AGIOlzAWkww",
+      "child_uuid": "",
+      "parent_uuid": "gPZYFucCKQgRfaEm",
+      "doc_id": 273745059,
+      "level": 2,
+      "id": 273745059,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "客户端脚本",
+      "uuid": "7F-f9AGIOlzAWkww",
+      "url": "kd7w3cf91a9bdq3c",
+      "prev_uuid": "FUUr4cDDqEVtqRse",
+      "sibling_uuid": "",
+      "child_uuid": "",
+      "parent_uuid": "gPZYFucCKQgRfaEm",
+      "doc_id": 273746441,
+      "level": 2,
+      "id": 273746441,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "服务器ip被墙",
+      "uuid": "o_5Lr21-oDsDChju",
+      "url": "lp4m3x6svryizpvv",
+      "prev_uuid": "gPZYFucCKQgRfaEm",
+      "sibling_uuid": "k1CDAd1NGZfxgEIf",
+      "child_uuid": "",
+      "parent_uuid": "mUKkYrxly7KEv9W6",
+      "doc_id": 273736357,
+      "level": 1,
+      "id": 273736357,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "服务器安装cc",
+      "uuid": "k1CDAd1NGZfxgEIf",
+      "url": "wqyt8gy0u6mdtpxo",
+      "prev_uuid": "o_5Lr21-oDsDChju",
+      "sibling_uuid": "g2U04aqK6p2MXZja",
+      "child_uuid": "",
+      "parent_uuid": "mUKkYrxly7KEv9W6",
+      "doc_id": 272790257,
+      "level": 1,
+      "id": 272790257,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "服务器IP质量检测",
+      "uuid": "g2U04aqK6p2MXZja",
+      "url": "vgvmrzgct52o64v6",
+      "prev_uuid": "k1CDAd1NGZfxgEIf",
+      "sibling_uuid": "4bJRGoTBxPpdfP6-",
+      "child_uuid": "",
+      "parent_uuid": "mUKkYrxly7KEv9W6",
+      "doc_id": 260112722,
+      "level": 1,
+      "id": 260112722,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "BBR加速",
+      "uuid": "4bJRGoTBxPpdfP6-",
+      "url": "gx3g65of5lnm2egm",
+      "prev_uuid": "g2U04aqK6p2MXZja",
+      "sibling_uuid": "4hODWpTf61bbPIPk",
+      "child_uuid": "",
+      "parent_uuid": "mUKkYrxly7KEv9W6",
+      "doc_id": 272788009,
+      "level": 1,
+      "id": 272788009,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "送中和warp",
+      "uuid": "4hODWpTf61bbPIPk",
+      "url": "tpl94de8pa8xmglm",
+      "prev_uuid": "4bJRGoTBxPpdfP6-",
+      "sibling_uuid": "QO9hZ6f5jZlGMuPu",
+      "child_uuid": "",
+      "parent_uuid": "mUKkYrxly7KEv9W6",
+      "doc_id": 272789567,
+      "level": 1,
+      "id": 272789567,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "梯子",
+      "uuid": "QO9hZ6f5jZlGMuPu",
+      "url": "wp3xugg4l8gapkqu",
+      "prev_uuid": "4hODWpTf61bbPIPk",
+      "sibling_uuid": "S-9FmD0MOMc7Fi4_",
+      "child_uuid": "",
+      "parent_uuid": "mUKkYrxly7KEv9W6",
+      "doc_id": 272789133,
+      "level": 1,
+      "id": 272789133,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "探针",
+      "uuid": "S-9FmD0MOMc7Fi4_",
+      "url": "qouqc4cbop0n1gq1",
+      "prev_uuid": "QO9hZ6f5jZlGMuPu",
+      "sibling_uuid": "15cCQzsHH-V65mFe",
+      "child_uuid": "",
+      "parent_uuid": "mUKkYrxly7KEv9W6",
+      "doc_id": 272799940,
+      "level": 1,
+      "id": 272799940,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "服务安装检测和开机重启",
+      "uuid": "15cCQzsHH-V65mFe",
+      "url": "yzyhd8hlk6hsudxd",
+      "prev_uuid": "S-9FmD0MOMc7Fi4_",
+      "sibling_uuid": "Nw58WuGyLciFvvRG",
+      "child_uuid": "",
+      "parent_uuid": "mUKkYrxly7KEv9W6",
+      "doc_id": 260113357,
+      "level": 1,
+      "id": 260113357,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "certbot续签https证书",
+      "uuid": "Nw58WuGyLciFvvRG",
+      "url": "wo5d62c7cuvw9qnh",
+      "prev_uuid": "15cCQzsHH-V65mFe",
+      "sibling_uuid": "4vTJ9ir7ZYf6R0fz",
+      "child_uuid": "",
+      "parent_uuid": "mUKkYrxly7KEv9W6",
+      "doc_id": 272837075,
+      "level": 1,
+      "id": 272837075,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "服务器备份",
+      "uuid": "4vTJ9ir7ZYf6R0fz",
+      "url": "ufdhi79o0omvx8eb",
+      "prev_uuid": "Nw58WuGyLciFvvRG",
+      "sibling_uuid": "",
+      "child_uuid": "",
+      "parent_uuid": "mUKkYrxly7KEv9W6",
+      "doc_id": 269120488,
+      "level": 1,
+      "id": 269120488,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "使用Claude Code项目开发",
+      "uuid": "IDmx_BgVD7W8iuTu",
+      "url": "vycl3qtl2rdepqdx",
+      "prev_uuid": "mUKkYrxly7KEv9W6",
+      "sibling_uuid": "22l5GDh8lymNe4Rp",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 248847384,
+      "level": 0,
+      "id": 248847384,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "基于lit-html开发轻量h5",
+      "uuid": "22l5GDh8lymNe4Rp",
+      "url": "hgf4ik3v4bv5z92i",
+      "prev_uuid": "IDmx_BgVD7W8iuTu",
+      "sibling_uuid": "H9Z45WZEHwlCM0B2",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 243772843,
+      "level": 0,
+      "id": 243772843,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【小程序】sjs事件动态调整元素位置",
+      "uuid": "H9Z45WZEHwlCM0B2",
+      "url": "pt4m4aocq4rnc1es",
+      "prev_uuid": "22l5GDh8lymNe4Rp",
+      "sibling_uuid": "wT9oad7j_5lXfUnD",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 219563445,
+      "level": 0,
+      "id": 219563445,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "序列帧动画css实现",
+      "uuid": "wT9oad7j_5lXfUnD",
+      "url": "zwu0ac51w0r0t0i2",
+      "prev_uuid": "H9Z45WZEHwlCM0B2",
+      "sibling_uuid": "Ywt6vfqKDi_BWovN",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 195609924,
+      "level": 0,
+      "id": 195609924,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "gulp-replace预编译注入环境变量",
+      "uuid": "Ywt6vfqKDi_BWovN",
+      "url": "ua56gwcqgzvkhuan",
+      "prev_uuid": "wT9oad7j_5lXfUnD",
+      "sibling_uuid": "xnae0AE1jy706qOY",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 178327143,
+      "level": 0,
+      "id": 178327143,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "draft.js定制富文本编辑器",
+      "uuid": "xnae0AE1jy706qOY",
+      "url": "kq12glo06a2fxsel",
+      "prev_uuid": "Ywt6vfqKDi_BWovN",
+      "sibling_uuid": "G_OrD4y1wLxO5ZwP",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 173016095,
+      "level": 0,
+      "id": 173016095,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "贝塞尔曲线在前端的应用",
+      "uuid": "G_OrD4y1wLxO5ZwP",
+      "url": "sg2fv4vgbnyzxy9h",
+      "prev_uuid": "xnae0AE1jy706qOY",
+      "sibling_uuid": "XCzmtEbSTK0JntD1",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 169209985,
+      "level": 0,
+      "id": 169209985,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "JS颜色处理",
+      "uuid": "XCzmtEbSTK0JntD1",
+      "url": "ompzqgk9ws2butmk",
+      "prev_uuid": "G_OrD4y1wLxO5ZwP",
+      "sibling_uuid": "d9Pe5ZNcrA9IzCwC",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 168879882,
+      "level": 0,
+      "id": 168879882,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "unplugin-auto-import优化项目依赖",
+      "uuid": "d9Pe5ZNcrA9IzCwC",
+      "url": "ok5zhfi8nobmx7zm",
+      "prev_uuid": "XCzmtEbSTK0JntD1",
+      "sibling_uuid": "oDbZiDT362_Tcv00",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 167032475,
+      "level": 0,
+      "id": 167032475,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "小程序返回拦截实现",
+      "uuid": "oDbZiDT362_Tcv00",
+      "url": "gbbeyzv0ciqrg9ni",
+      "prev_uuid": "d9Pe5ZNcrA9IzCwC",
+      "sibling_uuid": "j9LB6X8LCR8lk_vp",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 164848010,
+      "level": 0,
+      "id": 164848010,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "基于ali-oss开发图片上传小工具",
+      "uuid": "j9LB6X8LCR8lk_vp",
+      "url": "rzhpki1pu4gc48n2",
+      "prev_uuid": "oDbZiDT362_Tcv00",
+      "sibling_uuid": "q_yLIfOIZKS7Ge7y",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 164847842,
+      "level": 0,
+      "id": 164847842,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "Automa插件使用",
+      "uuid": "q_yLIfOIZKS7Ge7y",
+      "url": "dg17gtmy73k7atqn",
+      "prev_uuid": "j9LB6X8LCR8lk_vp",
+      "sibling_uuid": "CpHCbOfsep9zFgXv",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 146173080,
+      "level": 0,
+      "id": 146173080,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "小程序商家后台脚本实现批量添加域名",
+      "uuid": "CpHCbOfsep9zFgXv",
+      "url": "fehgq2nysamik3g0",
+      "prev_uuid": "q_yLIfOIZKS7Ge7y",
+      "sibling_uuid": "tHDUs4OEFrIZ3tHk",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 144885555,
+      "level": 0,
+      "id": 144885555,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "前端项目中图标的使用和管理",
+      "uuid": "tHDUs4OEFrIZ3tHk",
+      "url": "qztgzigntl5ebfaz",
+      "prev_uuid": "CpHCbOfsep9zFgXv",
+      "sibling_uuid": "4HgoLjgucyUOC7dt",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 141684544,
+      "level": 0,
+      "id": 141684544,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "小程序本地iconfont工具开发",
+      "uuid": "4HgoLjgucyUOC7dt",
+      "url": "plr7bnpecdamm18s",
+      "prev_uuid": "tHDUs4OEFrIZ3tHk",
+      "sibling_uuid": "eJBKvxG46GmEaVoq",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 138614026,
+      "level": 0,
+      "id": 138614026,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "SVGA动画替换图层元素",
+      "uuid": "eJBKvxG46GmEaVoq",
+      "url": "rmgnfx1y5stgs7im",
+      "prev_uuid": "4HgoLjgucyUOC7dt",
+      "sibling_uuid": "qc62XndV7y3pUOSz",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 136433838,
+      "level": 0,
+      "id": 136433838,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "一次code review发现的对象排序问题",
+      "uuid": "qc62XndV7y3pUOSz",
+      "url": "ghiumuoxruq6tg3w",
+      "prev_uuid": "eJBKvxG46GmEaVoq",
+      "sibling_uuid": "L917wRFZN9XYayVi",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 135491567,
+      "level": 0,
+      "id": 135491567,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "antv/s2表格的使用",
+      "uuid": "L917wRFZN9XYayVi",
+      "url": "vq3n7bnm2m31pdb3",
+      "prev_uuid": "qc62XndV7y3pUOSz",
+      "sibling_uuid": "sWG_SpBEftJvZOnr",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 131582512,
+      "level": 0,
+      "id": 131582512,
+      "open_window": 1,
+      "visible": 0
+    },
+    {
+      "type": "DOC",
+      "title": "开发一个婚礼请柬小程序",
+      "uuid": "sWG_SpBEftJvZOnr",
+      "url": "cuwg4od2x55yvxyr",
+      "prev_uuid": "L917wRFZN9XYayVi",
+      "sibling_uuid": "UoO9Uep9G3hgyV1B",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 125015044,
+      "level": 0,
+      "id": 125015044,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "终端交互实现多项目编译",
+      "uuid": "UoO9Uep9G3hgyV1B",
+      "url": "rkomcy7g4ao16agw",
+      "prev_uuid": "sWG_SpBEftJvZOnr",
+      "sibling_uuid": "odKkWQ1P9XjXLvYG",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 124204688,
+      "level": 0,
+      "id": 124204688,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "封装一个js业务sdk",
+      "uuid": "odKkWQ1P9XjXLvYG",
+      "url": "tbrh8b0y7quh0g2k",
+      "prev_uuid": "UoO9Uep9G3hgyV1B",
+      "sibling_uuid": "MTzCrlj7cfqXNfAs",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 119545685,
+      "level": 0,
+      "id": 119545685,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "在mac开发一个脚本执行FFMpeg编译",
+      "uuid": "MTzCrlj7cfqXNfAs",
+      "url": "iyv6929xgfovxg8k",
+      "prev_uuid": "odKkWQ1P9XjXLvYG",
+      "sibling_uuid": "9PTdvfrsbVo8reR1",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 118346830,
+      "level": 0,
+      "id": 118346830,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "h5播放视频",
+      "uuid": "9PTdvfrsbVo8reR1",
+      "url": "wx3msdrh107ydql5",
+      "prev_uuid": "MTzCrlj7cfqXNfAs",
+      "sibling_uuid": "hJessyibwwNWaaHC",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 117845015,
+      "level": 0,
+      "id": 117845015,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "开发一个网页版节拍器",
+      "uuid": "hJessyibwwNWaaHC",
+      "url": "seweda12lwiggo33",
+      "prev_uuid": "9PTdvfrsbVo8reR1",
+      "sibling_uuid": "Aui-WYc95nG5Ex6B",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 112047486,
+      "level": 0,
+      "id": 112047486,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "利用阿里oss处理图片",
+      "uuid": "Aui-WYc95nG5Ex6B",
+      "url": "egug269lpkcx6wnz",
+      "prev_uuid": "hJessyibwwNWaaHC",
+      "sibling_uuid": "W-DXqe-clmupkkVP",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 112018984,
+      "level": 0,
+      "id": 112018984,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "github自动部署分支到pages",
+      "uuid": "W-DXqe-clmupkkVP",
+      "url": "yacg7a7q9cx6xf6o",
+      "prev_uuid": "Aui-WYc95nG5Ex6B",
+      "sibling_uuid": "IO6KSaL9xLqRFPwg",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 111668284,
+      "level": 0,
+      "id": 111668284,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "Svga和lottie动画在h5的使用",
+      "uuid": "IO6KSaL9xLqRFPwg",
+      "url": "ggcqg5s7rml64mqg",
+      "prev_uuid": "W-DXqe-clmupkkVP",
+      "sibling_uuid": "DgeF0rzpj1WTaSIp",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 109540976,
+      "level": 0,
+      "id": 109540976,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "React拖拽效果实现",
+      "uuid": "DgeF0rzpj1WTaSIp",
+      "url": "dm6f8r",
+      "prev_uuid": "IO6KSaL9xLqRFPwg",
+      "sibling_uuid": "t-R1YanmsbPmkwz8",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 104930474,
+      "level": 0,
+      "id": 104930474,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "Json动态生成表单页面实现",
+      "uuid": "t-R1YanmsbPmkwz8",
+      "url": "yq11ki",
+      "prev_uuid": "DgeF0rzpj1WTaSIp",
+      "sibling_uuid": "3-Qo2ug1xR2PA4N-",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 104876015,
+      "level": 0,
+      "id": 104876015,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "遍历项目打包代码部署",
+      "uuid": "3-Qo2ug1xR2PA4N-",
+      "url": "ok82zp",
+      "prev_uuid": "t-R1YanmsbPmkwz8",
+      "sibling_uuid": "cKvX_W2ALMClxHp1",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 88975017,
+      "level": 0,
+      "id": 88975017,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "h5页面的摇一摇及兼容问题",
+      "uuid": "cKvX_W2ALMClxHp1",
+      "url": "ug7esp",
+      "prev_uuid": "3-Qo2ug1xR2PA4N-",
+      "sibling_uuid": "Fj3rPoSRSHVURxnQ",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 88382068,
+      "level": 0,
+      "id": 88382068,
+      "open_window": 1,
+      "visible": 0
+    },
+    {
+      "type": "DOC",
+      "title": "在vue中开发一个命令式调用的弹窗组件",
+      "uuid": "Fj3rPoSRSHVURxnQ",
+      "url": "sx8yi5",
+      "prev_uuid": "cKvX_W2ALMClxHp1",
+      "sibling_uuid": "QcekxQ3z5v-5KZfa",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 84904469,
+      "level": 0,
+      "id": 84904469,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "在less中使用循环和js随机生成样式",
+      "uuid": "QcekxQ3z5v-5KZfa",
+      "url": "yugc6h",
+      "prev_uuid": "Fj3rPoSRSHVURxnQ",
+      "sibling_uuid": "gAYFvX_mUDWIkADY",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 84823859,
+      "level": 0,
+      "id": 84823859,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "页面关闭后发送埋点",
+      "uuid": "gAYFvX_mUDWIkADY",
+      "url": "tgkush",
+      "prev_uuid": "QcekxQ3z5v-5KZfa",
+      "sibling_uuid": "kERxeD0uEtMlnGQV",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 80645324,
+      "level": 0,
+      "id": 80645324,
+      "open_window": 1,
+      "visible": 0
+    },
+    {
+      "type": "DOC",
+      "title": "前端工程化",
+      "uuid": "kERxeD0uEtMlnGQV",
+      "url": "bv0b8b",
+      "prev_uuid": "gAYFvX_mUDWIkADY",
+      "sibling_uuid": "s_lo00jaQWPkIvUY",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 80645131,
+      "level": 0,
+      "id": 80645131,
+      "open_window": 1,
+      "visible": 0
+    },
+    {
+      "type": "DOC",
+      "title": "前博客，懒得转移了",
+      "uuid": "s_lo00jaQWPkIvUY",
+      "url": "bm45ys",
+      "prev_uuid": "kERxeD0uEtMlnGQV",
+      "sibling_uuid": "M2YqRhAWgjBxNk1A",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 62234155,
+      "level": 0,
+      "id": 62234155,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【小程序】支付宝小程序sjs事件及拖拽组件开发",
+      "uuid": "M2YqRhAWgjBxNk1A",
+      "url": "pignxh",
+      "prev_uuid": "s_lo00jaQWPkIvUY",
+      "sibling_uuid": "DsLNIgpSf8UeHwN8",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 61288818,
+      "level": 0,
+      "id": 61288818,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【gulp】gulp中写入内存到流中并输出文件",
+      "uuid": "DsLNIgpSf8UeHwN8",
+      "url": "nwvxw3",
+      "prev_uuid": "M2YqRhAWgjBxNk1A",
+      "sibling_uuid": "1t10Arc7Ig3KWFrM",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 52938023,
+      "level": 0,
+      "id": 52938023,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "基于git-submodule和monorepo的活动统一仓库管理",
+      "uuid": "1t10Arc7Ig3KWFrM",
+      "url": "df3o9o",
+      "prev_uuid": "DsLNIgpSf8UeHwN8",
+      "sibling_uuid": "mjm0d7Q2Y6gomgYT",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 52243528,
+      "level": 0,
+      "id": 52243528,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "mac配置mysql",
+      "uuid": "mjm0d7Q2Y6gomgYT",
+      "url": "lwtzu4",
+      "prev_uuid": "1t10Arc7Ig3KWFrM",
+      "sibling_uuid": "GaPuRS8qJWxk3Wjy",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 46947725,
+      "level": 0,
+      "id": 46947725,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "使用责任链模式优化业务代码",
+      "uuid": "GaPuRS8qJWxk3Wjy",
+      "url": "wper80",
+      "prev_uuid": "mjm0d7Q2Y6gomgYT",
+      "sibling_uuid": "0WHRGPDtSJwzYtc9",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 45963601,
+      "level": 0,
+      "id": 45963601,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "Jest单元测试使用",
+      "uuid": "0WHRGPDtSJwzYtc9",
+      "url": "xomkg8",
+      "prev_uuid": "GaPuRS8qJWxk3Wjy",
+      "sibling_uuid": "C83kgXyEsQCV2VUN",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 33622389,
+      "level": 0,
+      "id": 33622389,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【小程序、工程化】gulp介绍及小程序工程构建",
+      "uuid": "C83kgXyEsQCV2VUN",
+      "url": "cbnzkx",
+      "prev_uuid": "0WHRGPDtSJwzYtc9",
+      "sibling_uuid": "E0UVbJ0TefPN8Jrs",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 29425731,
+      "level": 0,
+      "id": 29425731,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【小程序】小程序状态管理及分包问题",
+      "uuid": "E0UVbJ0TefPN8Jrs",
+      "url": "pzk811",
+      "prev_uuid": "C83kgXyEsQCV2VUN",
+      "sibling_uuid": "Y8dfIsA1JD7oMuF7",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 26536114,
+      "level": 0,
+      "id": 26536114,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【工程化】通过shell同时启动多个项目",
+      "uuid": "Y8dfIsA1JD7oMuF7",
+      "url": "xzza4x",
+      "prev_uuid": "E0UVbJ0TefPN8Jrs",
+      "sibling_uuid": "fjA7eFtpfkY2xajs",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 12652576,
+      "level": 0,
+      "id": 12652576,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【vue】基于vue-cli的后台项目框架搭建",
+      "uuid": "fjA7eFtpfkY2xajs",
+      "url": "lb1uwf",
+      "prev_uuid": "Y8dfIsA1JD7oMuF7",
+      "sibling_uuid": "OVp7Fo_uGI-UjBNK",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 9894478,
+      "level": 0,
+      "id": 9894478,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【小程序】长列表组件实现——无限下拉加载",
+      "uuid": "OVp7Fo_uGI-UjBNK",
+      "url": "ga6hsx",
+      "prev_uuid": "fjA7eFtpfkY2xajs",
+      "sibling_uuid": "_QlOHWpQpbyzSs-x",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 8369173,
+      "level": 0,
+      "id": 8369173,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【部署】ssl证书配置",
+      "uuid": "_QlOHWpQpbyzSs-x",
+      "url": "lq8axs",
+      "prev_uuid": "OVp7Fo_uGI-UjBNK",
+      "sibling_uuid": "dEh6upDxpT8qYmuE",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 8363679,
+      "level": 0,
+      "id": 8363679,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【vue】vue项目配置优化",
+      "uuid": "dEh6upDxpT8qYmuE",
+      "url": "mxopgo",
+      "prev_uuid": "_QlOHWpQpbyzSs-x",
+      "sibling_uuid": "1073150:N05SnsvKOi3UUdla",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 8212634,
+      "level": 0,
+      "id": 8212634,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【小程序】开发及兼容问题汇总(欢迎补充)",
+      "uuid": "1073150:N05SnsvKOi3UUdla",
+      "url": "go6l1y",
+      "prev_uuid": "dEh6upDxpT8qYmuE",
+      "sibling_uuid": "1073150:2cMGvU8QucgnuY6q",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 8005620,
+      "level": 0,
+      "id": 8005620,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【小程序】实现一个transition组件",
+      "uuid": "1073150:2cMGvU8QucgnuY6q",
+      "url": "do5ps8",
+      "prev_uuid": "1073150:N05SnsvKOi3UUdla",
+      "sibling_uuid": "1073150:oKuGbA5gnsJBjAh8",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 8005593,
+      "level": 0,
+      "id": 8005593,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【小程序】小程序CMS页面拼装的实现",
+      "uuid": "1073150:oKuGbA5gnsJBjAh8",
+      "url": "gruf8b",
+      "prev_uuid": "1073150:2cMGvU8QucgnuY6q",
+      "sibling_uuid": "1073150:A4xqPFx0E3_8R96d",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 7314578,
+      "level": 0,
+      "id": 7314578,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【小程序】在小程序实现一个tab组件",
+      "uuid": "1073150:A4xqPFx0E3_8R96d",
+      "url": "ebmy8m",
+      "prev_uuid": "1073150:oKuGbA5gnsJBjAh8",
+      "sibling_uuid": "1073150:R73832CoOanEiyG9",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 7314577,
+      "level": 0,
+      "id": 7314577,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【git】git本地代码管理",
+      "uuid": "1073150:R73832CoOanEiyG9",
+      "url": "nrqy66",
+      "prev_uuid": "1073150:A4xqPFx0E3_8R96d",
+      "sibling_uuid": "1073150:UOiBUiXJ3q9MXiU5",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 7314576,
+      "level": 0,
+      "id": 7314576,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【小程序】小程序ajax工具类的封装",
+      "uuid": "1073150:UOiBUiXJ3q9MXiU5",
+      "url": "unluy7",
+      "prev_uuid": "1073150:R73832CoOanEiyG9",
+      "sibling_uuid": "1073150:mn7YcLWJouLsvHrt",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 7314575,
+      "level": 0,
+      "id": 7314575,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【工具】支付宝小程序anymock的使用",
+      "uuid": "1073150:mn7YcLWJouLsvHrt",
+      "url": "mp5emh",
+      "prev_uuid": "1073150:UOiBUiXJ3q9MXiU5",
+      "sibling_uuid": "1073150:FkDlYPE6oRkmhhz2",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 7314573,
+      "level": 0,
+      "id": 7314573,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【小程序】小程序消息队列的封装",
+      "uuid": "1073150:FkDlYPE6oRkmhhz2",
+      "url": "kezhlh",
+      "prev_uuid": "1073150:mn7YcLWJouLsvHrt",
+      "sibling_uuid": "1073150:WtvN-nILkux04vpN",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 7314572,
+      "level": 0,
+      "id": 7314572,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【小程序】小程序mixin的实现和全局组件",
+      "uuid": "1073150:WtvN-nILkux04vpN",
+      "url": "dpbtcq",
+      "prev_uuid": "1073150:FkDlYPE6oRkmhhz2",
+      "sibling_uuid": "1073150:cst3gF1UezBn8ldC",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 7314571,
+      "level": 0,
+      "id": 7314571,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【规范】前端团队代码规范及git提交检测",
+      "uuid": "1073150:cst3gF1UezBn8ldC",
+      "url": "pge6z3",
+      "prev_uuid": "1073150:WtvN-nILkux04vpN",
+      "sibling_uuid": "kHxIfgYgucAgCZH7",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 7314570,
+      "level": 0,
+      "id": 7314570,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "ssl证书配置",
+      "uuid": "kHxIfgYgucAgCZH7",
+      "url": "mbxn1c",
+      "prev_uuid": "1073150:cst3gF1UezBn8ldC",
+      "sibling_uuid": "",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 8363603,
+      "level": 0,
+      "id": 8363603,
+      "open_window": 1,
+      "visible": 1
+    }
+  ]
+}
