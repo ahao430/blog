@@ -57,8 +57,13 @@ for (const d of docs) {
       .filter(Boolean)
       .join('\n') + '\n';
   }
-  // 用 raw 包裹正文：避免正文里的 {{ }} / {% %} 被 Hexo(Nunjucks) 当模板解析而报错
-  const out = fm + '{% raw %}\n' + body + '\n{% endraw %}\n';
+ // 转义 Nunjucks 冲突字符，避免被当模板解析。在 hexo generate 后由 scripts/escape-restore.js 还原
+ body = body
+   .replace(/\{\{/g, '‹‹')
+   .replace(/\}\}/g, '››')
+   .replace(/\{%/g, '‹%')
+   .replace(/%\}/g, '%›');
+ const out = fm + body + '\n';
   const outName = (d.realName || title) + '.md';
   fs.writeFileSync(path.join(postsDir, outName), out, 'utf8');
   count++;
