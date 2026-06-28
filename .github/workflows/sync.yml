@@ -34,6 +34,9 @@ jobs:
           YUQUE_PASSWORD: ${{ secrets.YUQUE_PASSWORD }}
         run: elog sync
 
+      - name: Build README index
+        run: node scripts/build-readme.cjs
+
       - name: Commit & Push
         run: |
           git config user.name  "github-actions[bot]"
