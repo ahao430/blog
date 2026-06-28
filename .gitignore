@@ -5,10 +5,11 @@
 # Node
 node_modules/
 
-# Hexo（后续接入）
+# Hexo
 db.json
 public/
 .deploy_git/
+source/_posts/
 
 # OS
 .DS_Store

@@ -35,7 +35,7 @@ jobs:
         run: elog sync
 
       - name: Build README index
-        run: node scripts/build-readme.cjs
+        run: node tools/build-readme.cjs
 
       - name: Commit & Push
         run: |

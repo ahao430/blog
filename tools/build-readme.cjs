@@ -38,7 +38,7 @@ const lines = [];
 lines.push('# ahao430 的博客');
 lines.push('');
 lines.push(
-  '> 本目录由 `scripts/build-readme.cjs` 在每次语雀同步后**自动生成**，请勿手动编辑。部署 / 同步说明见 [`DEPLOY.md`](./DEPLOY.md)。'
+  '> 本目录由 `tools/build-readme.cjs` 在每次语雀同步后**自动生成**，请勿手动编辑。部署 / 同步说明见 [`DEPLOY.md`](./DEPLOY.md)。'
 );
 lines.push('');
 lines.push(`共 **${rows.length}** 篇文章 · 目录生成时间：${genTime} UTC`);
