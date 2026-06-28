@@ -1,23 +1,6 @@
 {
   "docs": [
     {
-      "id": 275463500,
-      "doc_id": "blog-project-setup",
-      "updated": 1782681600000,
-      "properties": {
-        "title": "从语雀到GitHub Pages：自动同步部署博客全流程",
-        "urlname": "blog-project-setup",
-        "date": "2026-06-28 12:00:00",
-        "updated": "2026-06-28 12:00:00",
-        "cover": "",
-        "description": "从语雀写作到 GitHub Pages 发布的全自动流水线搭建记录"
-      },
-      "catalog": [],
-      "realName": "从语雀到GitHub-Pages-自动同步部署博客全流程",
-      "relativePath": "/从语雀到GitHub-Pages-自动同步部署博客全流程.md",
-      "docPath": "docs"
-    },
-    {
       "id": 275463418,
       "doc_id": "vx1u80byk06elvb9",
       "updated": 1782619062000,
@@ -37,12 +20,12 @@
     {
       "id": 272911693,
       "doc_id": "lfa8g61lz2mowtou",
-      "updated": 1781693137000,
+      "updated": 1782640081000,
       "properties": {
         "title": "中转站大模型使用教程",
         "urlname": "lfa8g61lz2mowtou",
         "date": "2026-06-07 18:56:39",
-        "updated": "2026-06-17 18:45:37",
+        "updated": "2026-06-28 17:48:01",
         "cover": "https://cdn.nlark.com/yuque/0/2026/png/373268/1780830637452-e53d2d34-e9ba-4d6b-929c-2bbd01fe7953.png"
       },
       "catalog": [
@@ -1300,15 +1283,46 @@
       "realName": "【规范】前端团队代码规范及git提交检测",
       "relativePath": "/【规范】前端团队代码规范及git提交检测.md",
       "docPath": "docs"
+    },
+    {
+      "id": 275529878,
+      "doc_id": "dk1c1ozlzl6365lu",
+      "updated": 1782649610000,
+      "properties": {
+        "title": "从语雀到GitHub-Pages-自动同步部署博客全流程",
+        "urlname": "dk1c1ozlzl6365lu",
+        "date": "2026-06-28 17:56:54",
+        "updated": "2026-06-28 20:26:50",
+        "description": "项目背景一直用语雀写笔记和技术文档，但语雀的公开分享体验一般，也没有独立域名。于是搭建了一套自动化流水线：语雀写作 → Elog 同步 → GitHub Actions → Hexo 构建 → GitHub Pages 发布，全程自动，零成本。源码仓库：github.com/ahao430/b..."
+      },
+      "catalog": [],
+      "realName": "从语雀到GitHub-Pages-自动同步部署博客全流程",
+      "relativePath": "/从语雀到GitHub-Pages-自动同步部署博客全流程.md",
+      "docPath": "docs"
     }
   ],
   "catalog": [
     {
       "type": "DOC",
+      "title": "从语雀到GitHub-Pages-自动同步部署博客全流程",
+      "uuid": "K-SObhsN1AtiaBIj",
+      "url": "dk1c1ozlzl6365lu",
+      "prev_uuid": "",
+      "sibling_uuid": "BZ9FB5SUk3lc3gmI",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 275529878,
+      "level": 0,
+      "id": 275529878,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
       "title": "在手机端继续电脑的claude code会话",
       "uuid": "BZ9FB5SUk3lc3gmI",
       "url": "vx1u80byk06elvb9",
-      "prev_uuid": "",
+      "prev_uuid": "K-SObhsN1AtiaBIj",
       "sibling_uuid": "DgwTo28luO0h6ylj",
       "child_uuid": "",
       "parent_uuid": "",
