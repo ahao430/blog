@@ -2,6 +2,8 @@
 
 🌐 在线访问：<https://blog.ahao430.site/>
 
+📂 [GitHub](https://github.com/ahao430/blog) · 📝 [语雀](https://www.yuque.com/ahao430/zsnfd6)
+
 > 本目录由 `tools/build-readme.cjs` 在每次语雀同步后**自动生成**，请勿手动编辑。部署 / 同步说明见 [`DEPLOY.md`](./DEPLOY.md)。
 
 共 **72** 篇文章 · 目录生成时间：2026-06-28 09:00:28 UTC
