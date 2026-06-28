@@ -1,0 +1,164 @@
+# --------------------------------------
+# Butterfly Theme Configuration
+# --------------------------------------
+
+# Navigation
+nav:
+  display_title: true
+  fixed: false
+
+menu:
+  Home: / || fas fa-home
+  Archives: /archives || fas fa-archive
+  GitHub: https://github.com/ahao430/blog || fab fa-github
+  语雀: https://www.yuque.com/ahao430/zsnfd6 || fas fa-book
+
+# Social (bottom of aside card)
+social:
+  fab fa-github: https://github.com/ahao430/blog || GitHub
+
+# Favicon
+favicon: /img/favicon.png
+
+# Avatar (aside card)
+avatar:
+  img: /img/butterfly-icon.png
+  effect: false
+
+# Posts
+post_meta:
+  page:
+    date_type: updated
+    date_format: date
+    categories: true
+    tags: false
+    label: true
+  post:
+    position: left
+    date_type: both
+    date_format: date
+    categories: true
+    tags: true
+    label: true
+
+# Index page layout
+index_layout: 5
+
+# TOC
+toc:
+  post: true
+  page: false
+  number: true
+  style_simple: false
+  scroll_percent: true
+
+# Footer
+footer:
+  owner:
+    enable: true
+    since: 2020
+  copyright:
+    enable: true
+    version: true
+
+# Aside
+aside:
+  enable: true
+  mobile: false
+  position: right
+  display:
+    archive: true
+    tag: false
+    category: true
+  card_author:
+    enable: true
+    description: 个人技术博客
+    button:
+      enable: true
+      icon: fab fa-github
+      text: GitHub
+      link: https://github.com/ahao430
+  card_announcement:
+    enable: true
+    content: 记录技术学习与踩坑经验
+  card_recent_post:
+    enable: true
+    limit: 5
+    sort: updated
+  card_categories:
+    enable: true
+    limit: 8
+    expand: none
+  card_archives:
+    enable: true
+    type: monthly
+    format: MMMM YYYY
+    order: -1
+    limit: 8
+  card_webinfo:
+    enable: true
+    post_count: true
+    last_push_date: true
+
+# Dark mode
+darkmode:
+  enable: true
+  button: true
+  autoChangeMode: 1
+
+# Reading mode
+readmode: true
+
+# Code blocks
+code_blocks:
+  theme: light
+  macStyle: false
+  copy: true
+  language: true
+
+# Copyright
+post_copyright:
+  enable: true
+  license: CC BY-NC-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+# Comments - Utterances
+comments:
+  use: Utterances
+  text: true
+  lazyload: true
+
+utterances:
+  repo: ahao430/blog
+  issue_term: pathname
+  light_theme: github-light
+  dark_theme: photon-dark
+
+# Copy button
+copy:
+  enable: true
+
+# Anchor
+anchor:
+  auto_update: false
+  click_to_scroll: false
+
+# Beautify
+rounded_corners_ui: true
+
+# Enter transitions
+enter_transitions: true
+
+# Display mode
+display_mode: light
+
+# Lightbox for images
+lightbox:
+
+# CSS prefix
+css_prefix: true
+
+# Inject (add referrer fix)
+inject:
+  head:
+    - <meta name="referrer" content="no-referrer">
