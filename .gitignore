@@ -1,4 +1,16 @@
-.DS_Store
+# Elog
+.elog.env
+.elog/cache/
+
+# Node
 node_modules/
-dist/
-npm-debug.log
+
+# Hexo（后续接入）
+db.json
+public/
+.deploy_git/
+
+# OS
+.DS_Store
+Thumbs.db
+*.log

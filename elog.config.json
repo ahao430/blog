@@ -1,0 +1,21 @@
+{
+  "writing": {
+    "platform": "yuque-pwd",
+    "yuque-pwd": {
+      "host": "https://www.yuque.com",
+      "login": "ahao430",
+      "repo": "zsnfd6",
+      "onlyPublic": false,
+      "onlyPublished": true,
+      "linebreak": false
+    }
+  },
+  "deploy": {
+    "platform": "local",
+    "local": {
+      "outputDir": "docs",
+      "filename": "title",
+      "skipDrawFrontmatter": false
+    }
+  }
+}
