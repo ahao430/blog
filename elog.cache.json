@@ -1,6 +1,23 @@
 {
   "docs": [
     {
+      "id": 275463500,
+      "doc_id": "blog-project-setup",
+      "updated": 1782681600000,
+      "properties": {
+        "title": "从语雀到GitHub Pages：自动同步部署博客全流程",
+        "urlname": "blog-project-setup",
+        "date": "2026-06-28 12:00:00",
+        "updated": "2026-06-28 12:00:00",
+        "cover": "",
+        "description": "从语雀写作到 GitHub Pages 发布的全自动流水线搭建记录"
+      },
+      "catalog": [],
+      "realName": "从语雀到GitHub-Pages-自动同步部署博客全流程",
+      "relativePath": "/从语雀到GitHub-Pages-自动同步部署博客全流程.md",
+      "docPath": "docs"
+    },
+    {
       "id": 275463418,
       "doc_id": "vx1u80byk06elvb9",
       "updated": 1782619062000,
