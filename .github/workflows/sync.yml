@@ -4,7 +4,9 @@ on:
   schedule:
     # 每 6 小时同步一次（17 分，避开整点）
     - cron: '17 */6 * * *'
-  workflow_dispatch: # 支持手动触发，首次验证用
+  workflow_dispatch:
+  repository_dispatch:
+    types: [sync-yuque]
 
 permissions:
   contents: write
