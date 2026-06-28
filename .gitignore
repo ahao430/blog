@@ -11,6 +11,10 @@ public/
 .deploy_git/
 source/_posts/
 
+# IDE / Claude
+.claude/
+.vscode/
+
 # OS
 .DS_Store
 Thumbs.db
