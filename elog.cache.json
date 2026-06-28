@@ -1287,27 +1287,116 @@
     {
       "id": 275529878,
       "doc_id": "dk1c1ozlzl6365lu",
-      "updated": 1782649610000,
+      "updated": 1782653080000,
       "properties": {
         "title": "从语雀到GitHub-Pages-自动同步部署博客全流程",
         "urlname": "dk1c1ozlzl6365lu",
         "date": "2026-06-28 17:56:54",
-        "updated": "2026-06-28 20:26:50",
+        "updated": "2026-06-28 21:24:40",
         "description": "项目背景一直用语雀写笔记和技术文档，但语雀的公开分享体验一般，也没有独立域名。于是搭建了一套自动化流水线：语雀写作 → Elog 同步 → GitHub Actions → Hexo 构建 → GitHub Pages 发布，全程自动，零成本。源码仓库：github.com/ahao430/b..."
       },
       "catalog": [],
       "realName": "从语雀到GitHub-Pages-自动同步部署博客全流程",
       "relativePath": "/从语雀到GitHub-Pages-自动同步部署博客全流程.md",
       "docPath": "docs"
+    },
+    {
+      "id": 275542147,
+      "doc_id": "ot28vq8lrwobb2k5",
+      "updated": 1782653402000,
+      "properties": {
+        "title": "【开源】cc-touchbar",
+        "urlname": "ot28vq8lrwobb2k5",
+        "date": "2026-06-28 21:27:40",
+        "updated": "2026-06-28 21:30:02",
+        "cover": "https://cdn.nlark.com/yuque/0/2026/jpeg/373268/1782653378306-e1953cfa-983f-4fcf-8749-4e1814e5ca37.jpeg",
+        "description": "https://github.com/ahao430/cc-touchbar自用macbook m1。这两天想要好好利用一下touchbar，想到用来展示claude code编程时候的一些模型和会话信息正合适。用AI实现了一个，支持m芯片和intel芯片，支持touchbar的机型。如图，展..."
+      },
+      "catalog": [
+        {
+          "title": "开源项目",
+          "doc_id": "ot28vq8lrwobb2k5"
+        }
+      ],
+      "realName": "【开源】cc-touchbar",
+      "relativePath": "/【开源】cc-touchbar.md",
+      "docPath": "docs"
+    },
+    {
+      "id": 275542332,
+      "doc_id": "lol1aezg7a798cu1",
+      "updated": 1782653567000,
+      "properties": {
+        "title": "【开源-浏览器AI侧边栏插件】",
+        "urlname": "lol1aezg7a798cu1",
+        "date": "2026-06-28 21:30:04",
+        "updated": "2026-06-28 21:32:47",
+        "cover": "https://cdn.nlark.com/yuque/0/2026/png/373268/1782653526491-1ebd6d16-13ec-48e7-94f5-64ab30c7a77d.png",
+        "description": "https://github.com/ahao430/simple-ai-assistant-crxvibe开发了一个浏览器插件的AI侧边栏，支持聊天对话、文案生成、图片生成、gif生成。设置中可以配置模型，支持webdav备份。"
+      },
+      "catalog": [
+        {
+          "title": "开源项目",
+          "doc_id": "lol1aezg7a798cu1"
+        }
+      ],
+      "realName": "【开源-浏览器AI侧边栏插件】",
+      "relativePath": "/【开源-浏览器AI侧边栏插件】.md",
+      "docPath": "docs"
     }
   ],
   "catalog": [
+    {
+      "type": "TITLE",
+      "title": "开源项目",
+      "uuid": "x4kKvZP3JOQtlOfi",
+      "url": "",
+      "prev_uuid": "",
+      "sibling_uuid": "K-SObhsN1AtiaBIj",
+      "child_uuid": "Y8y2V3WfhzLxA8cQ",
+      "parent_uuid": "",
+      "doc_id": "",
+      "level": 0,
+      "id": "",
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【开源-浏览器AI侧边栏插件】",
+      "uuid": "Y8y2V3WfhzLxA8cQ",
+      "url": "lol1aezg7a798cu1",
+      "prev_uuid": "x4kKvZP3JOQtlOfi",
+      "sibling_uuid": "a7aUwz3W9J9Tjys_",
+      "child_uuid": "",
+      "parent_uuid": "x4kKvZP3JOQtlOfi",
+      "doc_id": 275542332,
+      "level": 1,
+      "id": 275542332,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
+      "title": "【开源】cc-touchbar",
+      "uuid": "a7aUwz3W9J9Tjys_",
+      "url": "ot28vq8lrwobb2k5",
+      "prev_uuid": "Y8y2V3WfhzLxA8cQ",
+      "sibling_uuid": "",
+      "child_uuid": "",
+      "parent_uuid": "x4kKvZP3JOQtlOfi",
+      "doc_id": 275542147,
+      "level": 1,
+      "id": 275542147,
+      "open_window": 1,
+      "visible": 1
+    },
     {
       "type": "DOC",
       "title": "从语雀到GitHub-Pages-自动同步部署博客全流程",
       "uuid": "K-SObhsN1AtiaBIj",
       "url": "dk1c1ozlzl6365lu",
-      "prev_uuid": "",
+      "prev_uuid": "x4kKvZP3JOQtlOfi",
       "sibling_uuid": "BZ9FB5SUk3lc3gmI",
       "child_uuid": "",
       "parent_uuid": "",

@@ -6,10 +6,12 @@
 
 > 本目录由 `tools/build-readme.cjs` 在每次语雀同步后**自动生成**，请勿手动编辑。部署 / 同步说明见 [`DEPLOY.md`](./DEPLOY.md)。
 
-共 **73** 篇文章 · 目录生成时间：2026-06-28 13:10:48 UTC
+共 **75** 篇文章 · 目录生成时间：2026-06-28 13:33:32 UTC
 
 | 更新时间 | 标题 |
 | --- | --- |
+| 2026-06-28 | [【开源-浏览器AI侧边栏插件】](docs/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91.md) |
+| 2026-06-28 | [【开源】cc-touchbar](docs/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-touchbar.md) |
 | 2026-06-28 | [从语雀到GitHub-Pages-自动同步部署博客全流程](docs/%E4%BB%8E%E8%AF%AD%E9%9B%80%E5%88%B0GitHub-Pages-%E8%87%AA%E5%8A%A8%E5%90%8C%E6%AD%A5%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%85%A8%E6%B5%81%E7%A8%8B.md) |
 | 2026-06-28 | [中转站大模型使用教程](docs/%E4%B8%AD%E8%BD%AC%E7%AB%99%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.md) |
 | 2026-06-28 | [在手机端继续电脑的claude code会话](docs/%E5%9C%A8%E6%89%8B%E6%9C%BA%E7%AB%AF%E7%BB%A7%E7%BB%AD%E7%94%B5%E8%84%91%E7%9A%84claude%20code%E4%BC%9A%E8%AF%9D.md) |

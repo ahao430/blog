@@ -296,11 +296,9 @@ git tag deploy-v4 && git push origin deploy-v4
 >
 
 ## 油猴脚本：一键同步按钮
-
-上述方式还需要在 GitHub 网页上操作，不够顺手。更进一步，用 **GitHub Actions 的 `repository_dispatch` Webhook** 来触发同步，然后写一个油猴脚本在语雀页面上嵌入同步按钮。
+上述方式还需要在 GitHub 网页上操作，不够顺手。更进一步，用 **GitHub Actions 的 **`repository_dispatch`** Webhook** 来触发同步，然后写一个油猴脚本在语雀页面上嵌入同步按钮。
 
 ### 配置 Webhook 触发
-
 在 `sync.yml` 中添加 `repository_dispatch` 触发器：
 
 ```yaml
@@ -314,7 +312,7 @@ on:
 
 Webhook 端点：
 
-```
+```plain
 POST https://api.github.com/repos/ahao430/blog/dispatches
 Authorization: Bearer <GITHUB_TOKEN>
 Content-Type: application/json
@@ -323,18 +321,18 @@ Content-Type: application/json
 ```
 
 ### 创建 GitHub Token
-
 1. 打开 [github.com/settings/tokens](https://github.com/settings/tokens) → **Generate new token (classic)**
 2. 勾选 `repo` 权限
 3. 生成后复制 Token
 
 > 如果创建 Fine-grained token，Repository permissions 需要 **Contents** 和 **Administration** 都设为 Read and write。`repository_dispatch` API 端点要求 Administration 权限。
+>
 
 ### 安装油猴脚本
-
 脚本地址：[greasyfork.org/zh-CN/scripts/584709](https://greasyfork.org/zh-CN/scripts/584709-webhook-%E8%A7%A6%E5%8F%91)
 
 安装后在脚本配置中：
+
 1. 填入上一步生成的 GitHub Token
 2. 配置语雀地址匹配规则（如 `https://www.yuque.com/ahao430/*`）
 
