@@ -37,6 +37,8 @@ const genTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
 const lines = [];
 lines.push('# ahao430 的博客');
 lines.push('');
+lines.push('🌐 在线访问：<https://blog.ahao430.site/>');
+lines.push('');
 lines.push(
   '> 本目录由 `tools/build-readme.cjs` 在每次语雀同步后**自动生成**，请勿手动编辑。部署 / 同步说明见 [`DEPLOY.md`](./DEPLOY.md)。'
 );

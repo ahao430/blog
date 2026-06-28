@@ -1,0 +1,5 @@
+# 主题配置覆盖（与 hexo-theme-landscape 默认 _config.yml 深合并）
+menu:
+  Home: /
+  Archives: /archives
+  GitHub: https://github.com/ahao430/blog
