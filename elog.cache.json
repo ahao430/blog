@@ -1360,15 +1360,46 @@
       "realName": "发现一个不错的ssh客户端",
       "relativePath": "/发现一个不错的ssh客户端.md",
       "docPath": "docs"
+    },
+    {
+      "id": 275791211,
+      "doc_id": "khd8a0cxfqex4qkn",
+      "updated": 1782793635000,
+      "properties": {
+        "title": "otty终端app",
+        "urlname": "khd8a0cxfqex4qkn",
+        "date": "2026-06-30 12:24:34",
+        "updated": "2026-06-30 12:27:15",
+        "description": "https://otty.sh/之前typora团队新出品的终端应用。可以在一个界面上通过tab管理多个终端。然后发现搭配上tmux相当好用啊。现在claude code每个项目都用tmux启动，隐藏，然后再在otty上单开一个窗口恢复。一个界面实现我所有claude code会话的管理。"
+      },
+      "catalog": [],
+      "realName": "otty终端app",
+      "relativePath": "/otty终端app.md",
+      "docPath": "docs"
     }
   ],
   "catalog": [
     {
       "type": "DOC",
+      "title": "otty终端app",
+      "uuid": "QPnai2XtL_A9OYfM",
+      "url": "khd8a0cxfqex4qkn",
+      "prev_uuid": "",
+      "sibling_uuid": "tPUiuwbOZOBGgeJ5",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 275791211,
+      "level": 0,
+      "id": 275791211,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
       "title": "发现一个不错的ssh客户端",
       "uuid": "tPUiuwbOZOBGgeJ5",
       "url": "nbedmkmtdyl08yg2",
-      "prev_uuid": "",
+      "prev_uuid": "QPnai2XtL_A9OYfM",
       "sibling_uuid": "x4kKvZP3JOQtlOfi",
       "child_uuid": "",
       "parent_uuid": "",
