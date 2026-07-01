@@ -1376,6 +1376,28 @@
       "realName": "otty终端app",
       "relativePath": "/otty终端app.md",
       "docPath": "docs"
+    },
+    {
+      "id": 275979064,
+      "doc_id": "cypz2qhn5p8kk5cy",
+      "updated": 1782893853000,
+      "properties": {
+        "title": "【开源】cc-statusline",
+        "urlname": "cypz2qhn5p8kk5cy",
+        "date": "2026-07-01 16:12:53",
+        "updated": "2026-07-01 16:17:33",
+        "cover": "https://cdn.nlark.com/yuque/0/2026/png/373268/1782893621287-9a7ffd5b-62f4-4dc7-a6f2-8f03629db35d.png",
+        "description": "https://github.com/ahao430/cc-statusline又搓了一个自定义statusline，没有touchbar的用户可以用这个。一键安装curl -fsSL https://raw.githubusercontent.com/ahao430/cc-statuslin..."
+      },
+      "catalog": [
+        {
+          "title": "开源项目",
+          "doc_id": "cypz2qhn5p8kk5cy"
+        }
+      ],
+      "realName": "【开源】cc-statusline",
+      "relativePath": "/【开源】cc-statusline.md",
+      "docPath": "docs"
     }
   ],
   "catalog": [
@@ -1416,7 +1438,7 @@
       "url": "",
       "prev_uuid": "tPUiuwbOZOBGgeJ5",
       "sibling_uuid": "K-SObhsN1AtiaBIj",
-      "child_uuid": "Y8y2V3WfhzLxA8cQ",
+      "child_uuid": "1KfL_BTsGRWjz2YK",
       "parent_uuid": "",
       "doc_id": "",
       "level": 0,
@@ -1426,10 +1448,25 @@
     },
     {
       "type": "DOC",
+      "title": "【开源】cc-statusline",
+      "uuid": "1KfL_BTsGRWjz2YK",
+      "url": "cypz2qhn5p8kk5cy",
+      "prev_uuid": "x4kKvZP3JOQtlOfi",
+      "sibling_uuid": "Y8y2V3WfhzLxA8cQ",
+      "child_uuid": "",
+      "parent_uuid": "x4kKvZP3JOQtlOfi",
+      "doc_id": 275979064,
+      "level": 1,
+      "id": 275979064,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
       "title": "【开源-浏览器AI侧边栏插件】",
       "uuid": "Y8y2V3WfhzLxA8cQ",
       "url": "lol1aezg7a798cu1",
-      "prev_uuid": "x4kKvZP3JOQtlOfi",
+      "prev_uuid": "1KfL_BTsGRWjz2YK",
       "sibling_uuid": "a7aUwz3W9J9Tjys_",
       "child_uuid": "",
       "parent_uuid": "x4kKvZP3JOQtlOfi",
