@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>中转站大模型使用教程 | ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="购买中转站服务注册账号 充值额度用户管理可以看到余额。钱包管理可以使用兑换码充值，也可以找我直接改额度。这里的额度只是用户使用大模型计费用的，没有余额时限制使用，不是上游模型真实可用额度。  查看可用模型模型广场查看  创建令牌在令牌管理创建令牌   令牌和模型使用方法在需要使用大模型的地方填入配置。 :::infobaseURL:   https:&#x2F;&#x2F;newapi.ahao430.site,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="中转站大模型使用教程">
+<meta property="og:url" content="https://blog.ahao430.site/2026/06/07/%E4%B8%AD%E8%BD%AC%E7%AB%99%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="购买中转站服务注册账号 充值额度用户管理可以看到余额。钱包管理可以使用兑换码充值，也可以找我直接改额度。这里的额度只是用户使用大模型计费用的，没有余额时限制使用，不是上游模型真实可用额度。  查看可用模型模型广场查看  创建令牌在令牌管理创建令牌   令牌和模型使用方法在需要使用大模型的地方填入配置。 :::infobaseURL:   https:&#x2F;&#x2F;newapi.ahao430.site,">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:published_time" content="2026-06-07T10:56:39.000Z">
+<meta property="article:modified_time" content="2026-06-28T09:48:01.000Z">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "中转站大模型使用教程",
+  "url": "https://blog.ahao430.site/2026/06/07/%E4%B8%AD%E8%BD%AC%E7%AB%99%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/",
+  "image": "https://blog.ahao430.site/img/butterfly-icon.png",
+  "datePublished": "2026-06-07T10:56:39.000Z",
+  "dateModified": "2026-06-28T09:48:01.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ahao430",
+      "url": "https://blog.ahao430.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/2026/06/07/%E4%B8%AD%E8%BD%AC%E7%AB%99%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '中转站大模型使用教程',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">中转站大模型使用教程</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">中转站大模型使用教程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-06-07T10:56:39.000Z" title="发表于 2026-06-07 18:56:39">2026-06-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-06-28T09:48:01.000Z" title="更新于 2026-06-28 17:48:01">2026-06-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI/">AI</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="购买中转站服务"><a href="#购买中转站服务" class="headerlink" title="购买中转站服务"></a>购买中转站服务</h2><h3 id="注册账号"><a href="#注册账号" class="headerlink" title="注册账号"></a>注册账号</h3><p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1780830637452-e53d2d34-e9ba-4d6b-929c-2bbd01fe7953.png"></p>
+<h3 id="充值额度"><a href="#充值额度" class="headerlink" title="充值额度"></a>充值额度</h3><p>用户管理可以看到余额。钱包管理可以使用兑换码充值，也可以找我直接改额度。这里的额度只是用户使用大模型计费用的，没有余额时限制使用，不是上游模型真实可用额度。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1780830623340-aad45cba-6700-4c38-bfd5-42630682e4c2.png"></p>
+<h3 id="查看可用模型"><a href="#查看可用模型" class="headerlink" title="查看可用模型"></a>查看可用模型</h3><p>模型广场查看</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1780830697169-1f1a721e-ce1e-4166-9f93-345fc3f63a38.png"></p>
+<h3 id="创建令牌"><a href="#创建令牌" class="headerlink" title="创建令牌"></a>创建令牌</h3><p>在令牌管理创建令牌</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1780830727888-b0901e5a-ee32-4c52-b4d6-d037074bf2d0.png"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1780830860064-58b95cac-fc0d-48c9-a631-3b55b8ee3f72.png"></p>
+<h3 id="令牌和模型使用方法"><a href="#令牌和模型使用方法" class="headerlink" title="令牌和模型使用方法"></a>令牌和模型使用方法</h3><p>在需要使用大模型的地方填入配置。</p>
+<p>:::info<br>baseURL:   <a target="_blank" rel="noopener" href="https://newapi.ahao430.site/">https://newapi.ahao430.site</a>,   或者  <a target="_blank" rel="noopener" href="https://newapi.ahao430.site/v1">https://newapi.ahao430.site/v1</a></p>
+<p>key:  刚刚创建的令牌，复制即可</p>
+<p>model:  模型广场中可用的模型id，可以复制。</p>
+<p>:::</p>
+<h2 id="购买官方订阅"><a href="#购买官方订阅" class="headerlink" title="购买官方订阅"></a>购买官方订阅</h2><h3 id="deepseek"><a href="#deepseek" class="headerlink" title="deepseek"></a>deepseek</h3><p>在deepseek开发平台，注册账号并登录。</p>
+<p><a target="_blank" rel="noopener" href="https://platform.deepseek.com/">https://platform.deepseek.com/</a></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1780831566090-295ba7bf-e844-42d9-910b-c8d2df2e2e30.png"></p>
+<p>登录后，可以找到充值界面，直接充值。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1780831609290-6f710822-2bb3-4ba0-8131-0b58be007494.png"></p>
+<p>然后找到API keys，创建令牌。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1780831625256-deaaf6ed-3961-4189-bd28-77238bec0c01.png"></p>
+<p>在接口文档，可以找到使用的baseURL，以及model名称。</p>
+<p><a target="_blank" rel="noopener" href="https://api-docs.deepseek.com/zh-cn/">https://api-docs.deepseek.com/zh-cn/</a></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1780831680926-e96fabc3-6241-4cd0-a59c-e65e248b0ace.png"></p>
+<p>这里baseURL我们要接入claude code，就使用anthropic格式。接入codex，就是用openAI格式。</p>
+<p>model使用最新的deepseek-v4-pro和deepseek-v4-flash就行。</p>
+<h3 id="智谱"><a href="#智谱" class="headerlink" title="智谱"></a>智谱</h3><p><a target="_blank" rel="noopener" href="https://open.bigmodel.cn/">https://open.bigmodel.cn/</a></p>
+<p>同样的，可以在智谱AI开发平台，注册账号，购买智谱的订阅。</p>
+<p>目前编程套餐涨价了。<a target="_blank" rel="noopener" href="https://open.bigmodel.cn/coding-plan/personal/overview">https://open.bigmodel.cn/coding-plan/personal/overview</a></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1780831824041-86ad970f-ce59-4926-ba73-8b5e19b901ba.png"></p>
+<h3 id="minimax"><a href="#minimax" class="headerlink" title="minimax"></a>minimax</h3><p><a target="_blank" rel="noopener" href="https://agent.minimaxi.com/">https://agent.minimaxi.com/</a></p>
+<p>minimax的编程套餐。</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>以及购买百炼、火山等平台的套餐，这些平台也相当于是一个大厂的中转站，提供了很多国产模型的接入。</p>
+<p>:::info<br>目前最强的编程模型还是claude opus和gpt。其他模型还有差距。</p>
+<p>国产最强的编程模型是glm5.1。</p>
+<p>另外deepseek v4 pro在做分析，改bug等场景表现不错，并且性价比很高。</p>
+<p>:::</p>
+<h2 id="在编程工具中使用"><a href="#在编程工具中使用" class="headerlink" title="在编程工具中使用"></a>在编程工具中使用</h2><h3 id="安装CLI和桌面端"><a href="#安装CLI和桌面端" class="headerlink" title="安装CLI和桌面端"></a>安装CLI和桌面端</h3><p>这里需要先安装nodejs环境: <a target="_blank" rel="noopener" href="https://nodejs.cn/">https://nodejs.cn/</a>.</p>
+<p>命令行安装claude code和codex。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装claude code</span></span><br><span class="line">npm install -g @anthropic-ai/claude-code</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装codex</span></span><br><span class="line">npm i -g @openai/codex@latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># opencode</span></span><br><span class="line">npm i -g opencode-ai@latest</span><br></pre></td></tr></table></figure>
+
+<p>还可以安装codex桌面端</p>
+<p><a target="_blank" rel="noopener" href="https://openai.com/zh-Hans-CN/codex/get-started/">https://openai.com/zh-Hans-CN/codex/get-started/</a></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1780831241230-0d680cfe-dc6e-406d-9c07-f4093d0fd75b.png"></p>
+<p>claude code、codex、codex桌面端都需要官方账号购买订阅，授权登录。可以通过修改环境变量来使用第三方模型。</p>
+<p>claude桌面端不使用环境变量，并且对第三方模型不友好，就不推荐了。喜欢用桌面端就用codex桌面端或者opencode桌面端。</p>
+<p>zcode桌面端：<a target="_blank" rel="noopener" href="https://zcode.z.ai/cn/newdocs">https://zcode.z.ai/cn/newdocs</a></p>
+<p>智谱新出的桌面端，使用智谱glm模型时，用自家的工具，优化更好。</p>
+<h3 id="安装CC-Switch"><a href="#安装CC-Switch" class="headerlink" title="安装CC Switch"></a>安装CC Switch</h3><p>这里我们用CC Switch这个工具来方便配置多个第三方模型，一键切换环境变量使用不同模型。</p>
+<p>下载最新版的CC Switch: <a target="_blank" rel="noopener" href="https://github.com/farion1231/cc-switch/releases">https://github.com/farion1231/cc-switch/releases</a> 。软件支持多平台，下载对应平台版本安装。</p>
+<p>安装后界面如下，支持管理Claude Code、Codex、Gemini Cli、Opencode等工具， 用不到的可以在设置隐藏。</p>
+<p>默认是选中claude code，这里刚安装好默认配置列表是空的。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1772791070663-2bb9c20e-f04d-4e11-ba5d-22d60ada8f3e.png"></p>
+<p>**我们先点击左上角设置按钮，找到“跳过Claude Code初次安装确认”，这个一定要打开。**否则登录claude的时候，就会弹出anthropic官方的登录，无法使用第三方模型。</p>
+<p>这里如果设置了没有生效，退出claude，再打开试试。或者直接找到~&#x2F;.claude.json, 在里面添加一行”hasCompletedOnboarding”: true</p>
+<p>上面的“应用到Claude Code插件”，如果你习惯用VSCode的claude code插件的话，可以打开，如果习惯用终端就无所谓了。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1772791202302-55ca015e-8713-4865-8ec6-f3954a12b061.png"></p>
+<h3 id="在CC-switch配置大模型"><a href="#在CC-switch配置大模型" class="headerlink" title="在CC switch配置大模型"></a>在CC switch配置大模型</h3><p>接下来回到主界面，点击右上角的加号。此时弹出一个添加供应商的弹窗。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1772791327282-143482e1-53ce-4639-8298-e875d2dbe6e2.png"></p>
+<p>如果我们买的某些官方服务，可以快速选择某个预设供应商模板，填入sk即可。</p>
+<p>这里我们用自定义配置，往下拉。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1772791375869-e7419257-3f05-42a2-826a-71d7d4288006.png"></p>
+<p>供应商名称是给自己看的，随便写。官网链接可以不写。</p>
+<p>重点是下面的API Key和请求地址。这里分别填写你的服务商令牌和请求地址。地址后面不要带&#x2F;v1。</p>
+<p>API格式这里默认是Anthropic的格式，如果你的模型不兼容Anthropic格式，可以选OpenAI格式。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1772791498888-ef4bdc4d-dbec-45d8-9070-ed4a01bc0d1f.png"></p>
+<p>这里主模型填上你的模型名称。点击添加保存。</p>
+<p>保存后再次查看，发现这里几个模型全都是刚刚填写的主模型。</p>
+<p>这里简单说一下，claude code在执行简单任务时，会调用claude haiku模型；一般任务会调用claude sonnet模型；复杂任务会调用claude opus模型。这里如果你的供应商提供了很多模型，你也可以给这几个地方分别配置上不同的模型，节约成本。比如买智谱编程套餐，官方就推荐opus填写glm-5,  sonnet填写glm-4.7，haiku填glm-4.5-air。</p>
+<p>在列表点击配置的启用按钮。</p>
+<p>打开任意一个终端，输入claude，回车。</p>
+<p>可以看到以下界面，如果界面上的模型名称已经变成了你自定义的模型，说明成功了。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1772791770966-7e9f0438-cf7b-457a-b2fd-b60e4cefebca.png"></h3><h3 id="在终端或IDE使用"><a href="#在终端或IDE使用" class="headerlink" title="在终端或IDE使用"></a>在终端或IDE使用</h3><h4 id="在项目中使用"><a href="#在项目中使用" class="headerlink" title="在项目中使用"></a>在项目中使用</h4><p>claude会把当前启动的目录，当做项目目录。我们要在项目根路径的终端启动claude命令。</p>
+<p>启动后，项目目录中会多一个.claude目录。其中是一些项目本地的claude设置项。</p>
+<h4 id="在终端使用"><a href="#在终端使用" class="headerlink" title="在终端使用"></a>在终端使用</h4><p>在项目根目录，启动终端。输入claude命令。这不依赖于任何IDE。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1772803226680-fe8fbf9d-8c3a-45c8-8b0e-35da5f9caa31.png"></p>
+<h4 id="vscode插件"><a href="#vscode插件" class="headerlink" title="vscode插件"></a>vscode插件</h4><p>如果不习惯终端界面，anthropic官方也提供了一个vscode插件。在插件市场搜索claude code。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1772793581276-9d38526e-65b1-4405-b6d6-966db2c00f8d.png"></p>
+<p>安装后，有两种使用方式。</p>
+<p>1是找到vscode自带的聊天面板，这里是copilot。安装插件后，可以点击更多按钮，切换成claude code。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1773310570884-dc180a5d-1e89-49f4-a585-1bedb8eb667f.png"><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1773310592209-e1d640c3-fb3e-4e47-9545-56fc1cd92d0c.png"></p>
+<p>2是打开任意一个文件，就可以看到文件右上方有一个claude的图标。点击图标，打开claude code窗口。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1772793635888-76fa71bc-b6dd-4903-97e0-dce9603a0c80.png"></p>
+<h4 id="IDEA插件"><a href="#IDEA插件" class="headerlink" title="IDEA插件"></a>IDEA插件</h4><p><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/27310-claude-code-beta-">https://plugins.jetbrains.com/plugin/27310-claude-code-beta-</a></p>
+<p>支持JetBrains 系列IDE：</p>
+<ul>
+<li><font style="color:rgb(62, 62, 62);">IntelliJ IDEA</font></li>
+<li><font style="color:rgb(62, 62, 62);">PyCharm</font></li>
+<li><font style="color:rgb(62, 62, 62);">Android Studio</font></li>
+<li><font style="color:rgb(62, 62, 62);">WebStorm</font></li>
+<li><font style="color:rgb(62, 62, 62);">PhpStorm</font></li>
+<li><font style="color:rgb(62, 62, 62);">GoLand</font></li>
+</ul>
+<h4 id="在codex桌面端使用"><a href="#在codex桌面端使用" class="headerlink" title="在codex桌面端使用"></a>在codex桌面端使用</h4><p>先切换配置，再打开codex桌面端。如切换模型配置，需要重启codex应用。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1780832502653-b73cd08b-bbdd-41bf-a2a3-0f50884def24.png"></p>
+<p>:::info<br>这里有很多codex桌宠可以安装：<a target="_blank" rel="noopener" href="https://codex-pets.net/#/">https://codex-pets.net/#/</a></p>
+<p>:::</p>
+<h4 id="zcode桌面端"><a href="#zcode桌面端" class="headerlink" title="zcode桌面端"></a>zcode桌面端</h4><p>需要手动在设置里面添加供应商。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1781693118893-0bfdb296-9c65-45a0-8556-a12f969b0014.png"></p>
+<h2 id="其他应用使用"><a href="#其他应用使用" class="headerlink" title="其他应用使用"></a>其他应用使用</h2><h3 id="浏览器插件"><a href="#浏览器插件" class="headerlink" title="浏览器插件"></a>浏览器插件</h3><p>。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1780832622476-cc27b39b-e4ca-43f0-a326-beae6945ff77.png"></p>
+<p>我写了一个浏览器插件，可以在插件中配置模型使用。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ahao430/simple-ai-assistant-crx">https://github.com/ahao430/simple-ai-assistant-crx</a></p>
+<h3 id="openclaw"><a href="#openclaw" class="headerlink" title="openclaw"></a>openclaw</h3><p>可以安装配置到龙虾使用</p>
+<h3 id="hermes-agent"><a href="#hermes-agent" class="headerlink" title="hermes agent"></a>hermes agent</h3><p>现在更推荐hermes agent，skill可以自我进化</p>
+<h3 id="Open-Design"><a href="#Open-Design" class="headerlink" title="Open Design"></a>Open Design</h3><p><a target="_blank" rel="noopener" href="https://open-design.ai/">https://open-design.ai/</a></p>
+<p>一个开源版的claude design桌面应用。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1780832831888-645e7942-f535-4639-8925-adf28b1d4b47.png"></p>
+<h3 id="聊天客户端"><a href="#聊天客户端" class="headerlink" title="聊天客户端"></a>聊天客户端</h3><h4 id="Cherry-Studio"><a href="#Cherry-Studio" class="headerlink" title="Cherry Studio"></a>Cherry Studio</h4><p>老牌聊天客户端，功能强大。</p>
+<p><a target="_blank" rel="noopener" href="https://cherryai.com.cn/">https://cherryai.com.cn/</a></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1780832906471-d5bf6a85-c3ec-4029-8449-c1f177f7efcd.png"></p>
+<h4 id="Kelivo"><a href="#Kelivo" class="headerlink" title="Kelivo"></a>Kelivo</h4><p>轻量级客户端，专注聊天。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Chevey339/kelivo">https://github.com/Chevey339/kelivo</a></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1780832928523-db63ec4f-c5b8-47c5-94d7-02c261ac9e1d.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site">ahao430</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site/2026/06/07/%E4%B8%AD%E8%BD%AC%E7%AB%99%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">https://blog.ahao430.site/2026/06/07/%E4%B8%AD%E8%BD%AC%E7%AB%99%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.ahao430.site" target="_blank">ahao430 的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/06/13/%E6%9C%8D%E5%8A%A1%E5%99%A8ip%E8%A2%AB%E5%A2%99/" title="服务器ip被墙"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">服务器ip被墙</div></div><div class="info-2"><div class="info-item-1">今天用Royal TSX连接racknerd发现连不上，在终端ping服务器ip也超时。 去https://ping.pe/检查了一下，服务器ip在国内被墙了。  racknerd是可以提工单更换ip。新购买72小时内可以免费换一次。后续要3美元一次。 这里我的网站服务是通过cloudflare小黄云保护，可以正常访问。只是ssh登录不上。 开启系统代理，Royal TSX还是连接不上，但是开启TUN模式就可以了。 ssh解决办法，申请ipv6地址： racknerd可以提工单申请ipv6地址，然后重新设置下网络就可以了。 ipv6申请后，梯子可能还是会被墙，但是ssh使用ipv6地址就可以正常访问了。 梯子解决办法，CF CDN + WS+TLS 让claude code处理，添加一个子域名开启小黄云用来转发。 </div></div></div></a><a class="pagination-related" href="/2026/06/06/certbot%E7%BB%AD%E7%AD%BEhttps%E8%AF%81%E4%B9%A6/" title="certbot续签https证书"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">certbot续签https证书</div></div><div class="info-2"><div class="info-item-1">可以用let’s encrypt的免费https证书，但是每三个月要续签一次。这里让claude code写一个自动续签的脚本，用到certbot。 token申请我们的域名服务器已经托管给cloudflare了。这里需要在cloudflare创建一个token，用这个token的权限去续订。 获取 Cloudflare API Token  登录 Cloudflare Dashboard  (https://dash.cloudflare.com/profile/api-tokens) 点击左侧 My Profile → API Tokens（或直接访问上面的链接） 点击 Create Token 找到 “Edit zone DNS” 模板，点击右侧 Use template 配置：   Permissions: 保持默认（Zone → DNS → Edit）   Zone Resources: 选择 All zones（或指定 ahao430.site）    点击 Continue to summary → Create Token 复制生成的 Token（只显示一次）  ...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E4%B8%AD%E8%BD%AC%E7%AB%99%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.</span> <span class="toc-text">购买中转站服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C%E8%B4%A6%E5%8F%B7"><span class="toc-number">1.1.</span> <span class="toc-text">注册账号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%85%E5%80%BC%E9%A2%9D%E5%BA%A6"><span class="toc-number">1.2.</span> <span class="toc-text">充值额度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.3.</span> <span class="toc-text">查看可用模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%BB%A4%E7%89%8C"><span class="toc-number">1.4.</span> <span class="toc-text">创建令牌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A4%E7%89%8C%E5%92%8C%E6%A8%A1%E5%9E%8B%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.</span> <span class="toc-text">令牌和模型使用方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E5%AE%98%E6%96%B9%E8%AE%A2%E9%98%85"><span class="toc-number">2.</span> <span class="toc-text">购买官方订阅</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#deepseek"><span class="toc-number">2.1.</span> <span class="toc-text">deepseek</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%BA%E8%B0%B1"><span class="toc-number">2.2.</span> <span class="toc-text">智谱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#minimax"><span class="toc-number">2.3.</span> <span class="toc-text">minimax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">2.4.</span> <span class="toc-text">其他</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">在编程工具中使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85CLI%E5%92%8C%E6%A1%8C%E9%9D%A2%E7%AB%AF"><span class="toc-number">3.1.</span> <span class="toc-text">安装CLI和桌面端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85CC-Switch"><span class="toc-number">3.2.</span> <span class="toc-text">安装CC Switch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8CC-switch%E9%85%8D%E7%BD%AE%E5%A4%A7%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.3.</span> <span class="toc-text">在CC switch配置大模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.4.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E7%BB%88%E7%AB%AF%E6%88%96IDE%E4%BD%BF%E7%94%A8"><span class="toc-number">3.5.</span> <span class="toc-text">在终端或IDE使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="toc-number">3.5.1.</span> <span class="toc-text">在项目中使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8%E7%BB%88%E7%AB%AF%E4%BD%BF%E7%94%A8"><span class="toc-number">3.5.2.</span> <span class="toc-text">在终端使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#vscode%E6%8F%92%E4%BB%B6"><span class="toc-number">3.5.3.</span> <span class="toc-text">vscode插件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IDEA%E6%8F%92%E4%BB%B6"><span class="toc-number">3.5.4.</span> <span class="toc-text">IDEA插件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8codex%E6%A1%8C%E9%9D%A2%E7%AB%AF%E4%BD%BF%E7%94%A8"><span class="toc-number">3.5.5.</span> <span class="toc-text">在codex桌面端使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zcode%E6%A1%8C%E9%9D%A2%E7%AB%AF"><span class="toc-number">3.5.6.</span> <span class="toc-text">zcode桌面端</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%BA%94%E7%94%A8%E4%BD%BF%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">其他应用使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">浏览器插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#openclaw"><span class="toc-number">4.2.</span> <span class="toc-text">openclaw</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hermes-agent"><span class="toc-number">4.3.</span> <span class="toc-text">hermes agent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Open-Design"><span class="toc-number">4.4.</span> <span class="toc-text">Open Design</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%8A%E5%A4%A9%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">4.5.</span> <span class="toc-text">聊天客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cherry-Studio"><span class="toc-number">4.5.1.</span> <span class="toc-text">Cherry Studio</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Kelivo"><span class="toc-number">4.5.2.</span> <span class="toc-text">Kelivo</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-06-30T04:27:15.000Z" title="更新于 2026-06-30 12:27:15">2026-06-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-touchbar/" title="【开源】cc-touchbar">【开源】cc-touchbar</a><time datetime="2026-06-28T13:30:02.000Z" title="更新于 2026-06-28 21:30:02">2026-06-28</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+  const getUtterancesTheme = theme => theme === 'dark' ? 'photon-dark' : 'github-light'
+
+  const loadUtterances = (el = document, key) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyUtterances = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const config = {
+      src: 'https://utteranc.es/client.js',
+      repo: 'ahao430/blog',
+      theme: getUtterancesTheme(document.documentElement.getAttribute('data-theme')),
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      'issue-term': isShuoshuo ? key : (option && option['issue-term']) || 'pathname'
+    }
+
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => ele.setAttribute(key, value))
+    el.querySelector('#utterances-wrap').appendChild(ele)
+  }
+
+  const changeUtterancesTheme = theme => {
+    const iframe = document.querySelector('#utterances-wrap iframe')
+    if (iframe) {
+      const message = {
+        type: 'set-theme',
+        theme: getUtterancesTheme(theme)
+      };
+      iframe.contentWindow.postMessage(message, 'https://utteranc.es')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeUtterancesTheme, 'utterances')
+
+  if (isShuoshuo) {
+    'Utterances' === 'Utterances'
+      ? window.shuoshuoComment = { loadComment: loadUtterances }
+      : window.loadOtherComment = loadUtterances
+    return
+  }
+  
+  if ('Utterances' === 'Utterances' || !true) {
+    if (true) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+    else loadUtterances()
+  } else {
+    window.loadOtherComment = loadUtterances
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

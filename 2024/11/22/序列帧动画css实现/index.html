@@ -1,0 +1,325 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>序列帧动画css实现 | ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="实现原理雪碧图（sprite）雪碧图也叫精灵图， 是一种CSS图像合成技术。通俗来说：将小图标合并在一起之后的图片称作雪碧图，每个小图标的使用配合background-position来获取。 雪碧图的作用有两个：  减少图片资源的请求数，提升页面加载速度 制作序列帧动画  这里我们要用第二种方式。假如我们有如下的一系列图片：  现在我们将它合到一张图片中。这时我们可以用ps一张一张拼，也可以用工">
+<meta property="og:type" content="article">
+<meta property="og:title" content="序列帧动画css实现">
+<meta property="og:url" content="https://blog.ahao430.site/2024/11/22/%E5%BA%8F%E5%88%97%E5%B8%A7%E5%8A%A8%E7%94%BBcss%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="实现原理雪碧图（sprite）雪碧图也叫精灵图， 是一种CSS图像合成技术。通俗来说：将小图标合并在一起之后的图片称作雪碧图，每个小图标的使用配合background-position来获取。 雪碧图的作用有两个：  减少图片资源的请求数，提升页面加载速度 制作序列帧动画  这里我们要用第二种方式。假如我们有如下的一系列图片：  现在我们将它合到一张图片中。这时我们可以用ps一张一张拼，也可以用工">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:published_time" content="2024-11-22T07:52:24.000Z">
+<meta property="article:modified_time" content="2025-06-04T16:00:22.000Z">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "序列帧动画css实现",
+  "url": "https://blog.ahao430.site/2024/11/22/%E5%BA%8F%E5%88%97%E5%B8%A7%E5%8A%A8%E7%94%BBcss%E5%AE%9E%E7%8E%B0/",
+  "image": "https://blog.ahao430.site/img/butterfly-icon.png",
+  "datePublished": "2024-11-22T07:52:24.000Z",
+  "dateModified": "2025-06-04T16:00:22.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ahao430",
+      "url": "https://blog.ahao430.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/2024/11/22/%E5%BA%8F%E5%88%97%E5%B8%A7%E5%8A%A8%E7%94%BBcss%E5%AE%9E%E7%8E%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '序列帧动画css实现',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">序列帧动画css实现</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">序列帧动画css实现</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-22T07:52:24.000Z" title="发表于 2024-11-22 15:52:24">2024-11-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-06-04T16:00:22.000Z" title="更新于 2025-06-05 00:00:22">2025-06-05</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><h3 id="雪碧图（sprite）"><a href="#雪碧图（sprite）" class="headerlink" title="雪碧图（sprite）"></a>雪碧图（sprite）</h3><p><font style="color:rgb(77, 77, 77);">雪碧图也</font>叫精灵图， 是一种CSS<font style="color:rgb(77, 77, 77);">图像合成技术。通俗来说：将小图标合并在一起之后的图片称作雪碧图，每个小图标的使用配合background-position来获取。</font></p>
+<p><font style="color:rgb(77, 77, 77);">雪碧图的作用有两个：</font></p>
+<ol>
+<li>减少图片资源的请求数，提升页面加载速度</li>
+<li>制作序列帧动画</li>
+</ol>
+<p>这里我们要用第二种方式。假如我们有如下的一系列图片：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/373268/1732535719730-b51d246d-ec40-44f4-95fd-49e848829bea.png"></p>
+<p>现在我们将它合到一张图片中。这时我们可以用ps一张一张拼，也可以用工具直接生成，如textpacker。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.codeandweb.com/texturepacker">https://www.codeandweb.com/texturepacker</a></p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/373268/1732535822796-f9aff2c8-5206-4393-84b6-a6f819759067.png"></p>
+<p>如下，我们可以拼成一个几行几列的图，或者都放在一行。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/373268/1732536162285-70941664-cb69-4e2b-b03e-8967fc533f36.png"></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a><img src="https://cdn.nlark.com/yuque/0/2024/png/373268/1732536263783-9ce52e6c-a655-443d-b96e-e41d3c05eece.png"></h3><h3 id="css实现序列帧动画"><a href="#css实现序列帧动画" class="headerlink" title="css实现序列帧动画"></a>css实现序列帧动画</h3><p>我们都用过css的transition和animation实现动画。这里我们要像幻灯片一样，在每一帧停顿一下，再切换到下一帧。</p>
+<p>这里要用到animation的一个属性steps。</p>
+<p><font style="color:rgb(221, 17, 68);background-color:rgb(248, 248, 248);">animation</font>的工作原理是通过将元素的CSS样式从一个状态改变为另一个状态（我们称为线性变化）。默认情况下，它以<code>&lt;font style=&quot;color:rgb(199, 37, 78);background-color:rgb(249, 242, 244);&quot;&gt;ease&lt;/font&gt;</code>方式（速度逐渐放慢）过渡，它会在每个关键帧之间插入补间动画，所以动画效果是连贯性的，但有些时候，我们不需要这种过渡效果，而是想实现跳跃式的效果，这时，<code>&lt;font style=&quot;color:rgb(199, 37, 78);background-color:rgb(249, 242, 244);&quot;&gt;steps()&lt;/font&gt;</code>函数就出现了。</p>
+<p><font style="color:rgb(221, 17, 68);background-color:rgb(248, 248, 248);">steps()</font>是一个阶跃函数，用于把整个操作领域切分为相同大小的间隔，每个间隔都是相等的。</p>
+<p>语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">steps(number[, end | start])</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li><code>&lt;font style=&quot;color:rgb(199, 37, 78);background-color:rgb(249, 242, 244);&quot;&gt;number&lt;/font&gt;</code>参数指定了时间函数中的间隔数量（必须是正整数）</li>
+<li>第二个参数是可选的，可设值：<code>&lt;font style=&quot;color:rgb(199, 37, 78);background-color:rgb(249, 242, 244);&quot;&gt;start&lt;/font&gt;</code>和<code>&lt;font style=&quot;color:rgb(199, 37, 78);background-color:rgb(249, 242, 244);&quot;&gt;end&lt;/font&gt;</code>，表示在每个间隔的起点或是终点发生阶跃变化，如果忽略，默认是end。</li>
+</ul>
+<p>注意：第二个参数还有两个内置值，<code>&lt;font style=&quot;color:rgb(199, 37, 78);background-color:rgb(249, 242, 244);&quot;&gt;step-start&lt;/font&gt;</code>等同于<code>&lt;font style=&quot;color:rgb(199, 37, 78);background-color:rgb(249, 242, 244);&quot;&gt;steps(1,start)&lt;/font&gt;</code>，动画分成1步，动画执行时以左侧端点为开始；<code>&lt;font style=&quot;color:rgb(199, 37, 78);background-color:rgb(249, 242, 244);&quot;&gt;step-end&lt;/font&gt;</code>等同于<code>&lt;font style=&quot;color:rgb(199, 37, 78);background-color:rgb(249, 242, 244);&quot;&gt;steps(1,end)&lt;/font&gt;</code>：动画分成1步，动画执行时以结尾端点为开始。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/373268/1732777399278-8cf84501-2d20-475d-8ca0-3b2fbd3d015f.png"></p>
+<p>对于单行拼接的雪碧图（假设有n张图拼接，即帧数为n），我们将起始的x设为0，结束的x设为100%，中间经过的间隔应该是n-1，即steps(n-1, start)。</p>
+<h2 id="css单行实现"><a href="#css单行实现" class="headerlink" title="css单行实现"></a>css单行实现</h2><p>单张图片600px * 647px，共21张，拼在一起12600px * 647px。注意这里background-size要写完整大小。</p>
+<p>此时动画就一个区间，然后steps分成20步。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.duck</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">600px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">647px</span>;</span><br><span class="line">  <span class="attribute">background</span>: url(<span class="string">&#x27;https://xiaojinhe-cdn.iyoudui.cn/assets/run-duck/duck-1-row.png&#x27;</span>) no-repeat left center / <span class="number">12600px</span> <span class="number">647px</span>;</span><br><span class="line">  <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">animation</span>: duck-<span class="number">1</span>-row infinite <span class="number">1s</span> <span class="built_in">steps</span>(<span class="number">20</span>,start);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@keyframes</span> duck-<span class="number">1</span>-row&#123;</span><br><span class="line">  <span class="number">0%</span>&#123;<span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">0</span>;&#125;</span><br><span class="line">  <span class="number">100%</span>&#123;<span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">0</span>;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>codepen预览: <a target="_blank" rel="noopener" href="https://codepen.io/ahao430/pen/xbKwEdv">https://codepen.io/ahao430/pen/xbKwEdv</a></p>
+<h2 id="css多行实现"><a href="#css多行实现" class="headerlink" title="css多行实现"></a>css多行实现</h2><p>此时动画要分为N个区间，每个区间一步。</p>
+<h3 id="less"><a href="#less" class="headerlink" title="less"></a>less</h3><p>less不支持for循环，但是可以通过while循环来模拟。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="variable">@duck_width:</span> <span class="number">600px</span>;</span><br><span class="line"><span class="variable">@duck_height:</span> <span class="number">647px</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 多行的</span></span><br><span class="line"><span class="selector-class">.duck-rows</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="variable">@duck_width</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="variable">@duck_height</span>;</span><br><span class="line">  <span class="attribute">background</span>: url(<span class="string">&#x27;https://xiaojinhe-cdn.iyoudui.cn/assets/run-duck/duck-rows.png&#x27;</span>) no-repeat left top / <span class="variable">@duck_width</span> * <span class="number">3</span> <span class="variable">@duck_width</span> * <span class="number">7</span>;</span><br><span class="line">  <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">animation</span>: duck-rows infinite <span class="number">1s</span> <span class="built_in">steps</span>(<span class="number">1</span>, start);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// @row_count每行几个，@count第几个，@total总共几个</span></span><br><span class="line"><span class="selector-class">.duck_rows_step</span>(<span class="variable">@row_count</span>, <span class="variable">@count</span>, <span class="variable">@total</span>) <span class="keyword">when</span> (<span class="variable">@count</span> &lt;= <span class="variable">@total</span>) &#123;</span><br><span class="line">  <span class="variable">@percent:</span> (<span class="variable">@count</span> - <span class="number">1</span>) / (<span class="variable">@total</span> - <span class="number">1</span>) * <span class="number">100%</span>;</span><br><span class="line">  <span class="variable">@cur_row:</span> <span class="built_in">ceil</span>(<span class="variable">@count</span> / <span class="variable">@row_count</span>) - <span class="number">1</span>;</span><br><span class="line">  <span class="variable">@cur_col:</span> <span class="built_in">mod</span>(<span class="variable">@count</span> - <span class="number">1</span>, <span class="variable">@row_count</span>);</span><br><span class="line">  <span class="variable">@row:</span> <span class="built_in">ceil</span>(<span class="variable">@total</span> / <span class="variable">@row_count</span>);</span><br><span class="line">  <span class="variable">@col:</span> <span class="variable">@row_count</span>;</span><br><span class="line">  <span class="variable">@x:</span> (<span class="variable">@cur_col</span> ) / (<span class="variable">@col</span> - <span class="number">1</span>)  * <span class="number">100%</span>;</span><br><span class="line">  <span class="variable">@y:</span> (<span class="variable">@cur_row</span> ) / (<span class="variable">@row</span> - <span class="number">1</span>)  * <span class="number">100%</span>;</span><br><span class="line">  <span class="variable">@&#123;percent&#125;</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="variable">@x</span> <span class="variable">@y</span>;</span><br><span class="line">    <span class="comment">// count: @count;</span></span><br><span class="line">    <span class="comment">// positon: @cur_row+1 @cur_col+1;</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.duck_rows_step</span>(<span class="variable">@row_count</span>, <span class="variable">@count</span> + <span class="number">1</span>, <span class="variable">@total</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@keyframes</span> duck-rows&#123;</span><br><span class="line">  <span class="selector-class">.duck_rows_step</span>(<span class="number">3</span>, <span class="number">1</span>, <span class="number">21</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>codepen预览： <a target="_blank" rel="noopener" href="https://codepen.io/ahao430/pen/zxOvKdQ">https://codepen.io/ahao430/pen/zxOvKdQ</a></p>
+<blockquote>
+<p>在线less转css工具：<a target="_blank" rel="noopener" href="https://www.lesstester.com/">https://www.lesstester.com/</a></p>
+</blockquote>
+<p>转换出来的css如下：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.duck-rows</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">600px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">647px</span>;</span><br><span class="line">  <span class="attribute">background</span>: url(<span class="string">&#x27;https://xiaojinhe-cdn.iyoudui.cn/assets/run-duck/duck-rows.png&#x27;</span>) no-repeat left top / <span class="number">1800px</span> <span class="number">4200px</span>;</span><br><span class="line">  <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">animation</span>: duck-rows infinite <span class="number">1s</span> <span class="built_in">steps</span>(<span class="number">1</span>, start);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@keyframes</span> duck-rows &#123;</span><br><span class="line">  <span class="number">0%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">0%</span> <span class="number">0%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">5%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">50%</span> <span class="number">0%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">10%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">0%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">15%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">0%</span> <span class="number">16.66666667%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">20%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">50%</span> <span class="number">16.66666667%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">25%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">16.66666667%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">30%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">0%</span> <span class="number">33.33333333%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">35%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">50%</span> <span class="number">33.33333333%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">40%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">33.33333333%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">45%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">0%</span> <span class="number">50%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">50%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">50%</span> <span class="number">50%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">55%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">50%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">60%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">0%</span> <span class="number">66.66666667%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">65%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">50%</span> <span class="number">66.66666667%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">70%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">66.66666667%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">75%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">0%</span> <span class="number">83.33333333%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">80%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">50%</span> <span class="number">83.33333333%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">85%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">83.33333333%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">90%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">0%</span> <span class="number">100%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">95%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">50%</span> <span class="number">100%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">100%</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">100%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="scss"><a href="#scss" class="headerlink" title="scss"></a>scss</h3><p>scss支持for循环，实现起来更简单</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@use</span> <span class="string">&quot;sass:math&quot;</span>;</span><br><span class="line">$duck_width: 600px;</span><br><span class="line">$duck_height: 647px;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 多行的</span></span><br><span class="line"><span class="selector-class">.duck-rows</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: $duck_width;</span><br><span class="line">  <span class="attribute">height</span>: $duck_height;</span><br><span class="line">  <span class="attribute">background</span>: url(<span class="string">&#x27;https://xiaojinhe-cdn.iyoudui.cn/assets/run-duck/duck-rows.png&#x27;</span>) no-repeat left top #&#123;<span class="string">&#x27;/&#x27;</span>&#125; $<span class="selector-tag">duck_width</span> * <span class="number">3</span> $<span class="selector-tag">duck_width</span> * <span class="number">7</span>;</span><br><span class="line">  <span class="selector-tag">background-position</span>: <span class="number">0</span> <span class="number">0</span>;</span><br><span class="line">  <span class="selector-tag">animation</span>: <span class="selector-tag">duck-rows</span> <span class="selector-tag">infinite</span> <span class="number">1s</span> <span class="selector-tag">steps</span>(<span class="number">1</span>, start);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="selector-tag">function</span> <span class="selector-tag">generate-step</span>($i, $total, $row_count) &#123;</span><br><span class="line">     $percent: ($i - 1) / ($total - 1) * 100%;</span><br><span class="line">    $cur_row: math.ceil($i / $row_count) - 1;</span><br><span class="line">    $cur_col: ($i - 1) % $row_count;</span><br><span class="line">    $row: math.ceil($total / $row_count);</span><br><span class="line">    $col: $row_count;</span><br><span class="line">    $<span class="attribute">x</span>: ($cur_col) / ($col - <span class="number">1</span>) * <span class="number">100%</span>;</span><br><span class="line">    $<span class="attribute">y</span>: ($cur_row) / ($row - <span class="number">1</span>) * <span class="number">100%</span>;</span><br><span class="line">  <span class="variable">@return</span> ($percent,$x,$y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@keyframes</span> duck-rows&#123;</span><br><span class="line">  $row_count: 3;</span><br><span class="line">  $total: 21;</span><br><span class="line">  <span class="variable">@for</span> $i from <span class="number">1</span> through <span class="number">21</span> &#123;</span><br><span class="line">    $result: generate-step($i, $total, $row_count);</span><br><span class="line">    #&#123;<span class="selector-tag">nth</span>($result, <span class="number">1</span>)&#125; &#123;</span><br><span class="line">      <span class="attribute">background-position</span>: <span class="built_in">nth</span>($result, <span class="number">2</span>) <span class="built_in">nth</span>($result, <span class="number">3</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>codepen预览： <a target="_blank" rel="noopener" href="https://codepen.io/ahao430/pen/XJrmjaQ">https://codepen.io/ahao430/pen/XJrmjaQ</a></p>
+<p>转换出来的css同上。</p>
+<h2 id="gif-vs-序列帧"><a href="#gif-vs-序列帧" class="headerlink" title="gif vs 序列帧"></a>gif vs 序列帧</h2><p>我们知道，当我们有一系列图片，直接生成一个gif做动图更简单。那么为什么要用序列帧呢？</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>gif</td>
+<td>兼容性好，播放简单，可以多平台支持。</td>
+<td>1. GIF格式仅支持 8 位，也就是256种不同的颜色会有色彩失真，所以效果差<br/>2. 动画文件大，播放资源内存、CPU占用高。</td>
+</tr>
+<tr>
+<td>序列帧</td>
+<td>1. 制作方便简单，还原度高，颜色偏差损失基本没有(PNG图片压缩可能会有颜色偏差)。<br/>2. 可以通过代码控制动画的播放、停止、循环、播放速度等。</td>
+<td>需要加载全部图片，文件占用内存大，内存一大就容易造成打开页面的时候卡顿，大的文件用户体验感很差</td>
+</tr>
+</tbody></table>
+<p>跟GIF相比，序列帧不会产生边缘锯齿的效果，也比GIF支持的色彩范围大。当对效果要求高时，序列帧比gif更加合适。</p>
+<h2 id="问题处理"><a href="#问题处理" class="headerlink" title="问题处理"></a>问题处理</h2><h3 id="兼容性（白屏）"><a href="#兼容性（白屏）" class="headerlink" title="兼容性（白屏）"></a>兼容性（白屏）</h3><p>当拼接成一行时，texturepacker会提示这个警告。上网查了一些帖子提到一些设备对超过4k的图片展示空白，但是帖子的时间比较早，暂时未测试到这个问题。</p>
+<h3 id="兼容性（抖动）"><a href="#兼容性（抖动）" class="headerlink" title="兼容性（抖动）"></a>兼容性（抖动）</h3><p><img src="https://cdn.nlark.com/yuque/0/2024/png/373268/1733280026843-0f15bf15-2667-48da-b1fa-51c1475bce11.png"></p>
+<p>在小程序中发生了抖动，因为小程序的单位是rpx，换算成px会有小数，雪碧图移动背景图位置的时候，就可能向左或向右取整。这里的解决办法是使用真实的px，再根据设备宽度进行缩放。</p>
+<p>兼容代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;duck-scale-container&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;duck-scale-container-inner&quot;</span> <span class="attr">style</span>=<span class="string">&quot;transform: translate(-50%, -50%) scale({{scale}});&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;duck&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span>	</span><br><span class="line">  <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> scale = app.<span class="property">globalData</span>.<span class="property">systemInfo</span>.<span class="property">windowWidth</span> / <span class="number">750</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@duck_width:</span> <span class="number">457px</span>;</span><br><span class="line"><span class="variable">@duck_height:</span> <span class="number">457px</span>;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.duck-scale-container</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">457</span>rpx;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">457</span>rpx;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.duck-scale-container-inner</span>&#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意，原先鸭子及雪碧图动画background-position等，单位都换成px。外层加容器，单位rpx。然后内层容器定位，通过scale缩放。</p>
+<h3 id="切换空白问题"><a href="#切换空白问题" class="headerlink" title="切换空白问题"></a>切换空白问题</h3><p>需求中一个小鸭子的形象。有几套雪碧图进行切换。雪碧图比较大，切换过程中第一次加载图片等待会造成白屏。</p>
+<p>处理办法是提前加载图片，并准备一张静态背景图。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;duck duck-1-row duck-a&quot;</span> <span class="attr">onTap</span>=<span class="string">&quot;handleClickDuck&quot;</span> <span class="attr">a:if</span>=<span class="string">&quot;{{action === &#x27;a&#x27;}}&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;duck duck-1-row duck-b&quot;</span> <span class="attr">onTap</span>=<span class="string">&quot;handleClickDuck&quot;</span> <span class="attr">a:elif</span>=<span class="string">&quot;{{action === &#x27;b&#x27;}}&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;duck duck-1-row duck-c&quot;</span> <span class="attr">onTap</span>=<span class="string">&quot;handleClickDuck&quot;</span> <span class="attr">a:elif</span>=<span class="string">&quot;{{action === &#x27;c&#x27;}}&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;duck duck-1-row duck-d&quot;</span> <span class="attr">onTap</span>=<span class="string">&quot;handleClickDuck&quot;</span> <span class="attr">a:elif</span>=<span class="string">&quot;{{action === &#x27;d&#x27;}}&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;duck duck-1-row&quot;</span> <span class="attr">onTap</span>=<span class="string">&quot;handleClickDuck&quot;</span> <span class="attr">a:else</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 图片预加载 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">style</span>=<span class="string">&quot;visibility: hidden; width: 0; height: 0; overflow: hidden;&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;duck duck-1-row duck-a&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;duck duck-1-row duck-b&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;duck duck-1-row duck-c&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;duck duck-1-row duck-d&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 图片预加载 end --&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site">ahao430</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site/2024/11/22/%E5%BA%8F%E5%88%97%E5%B8%A7%E5%8A%A8%E7%94%BBcss%E5%AE%9E%E7%8E%B0/">https://blog.ahao430.site/2024/11/22/%E5%BA%8F%E5%88%97%E5%B8%A7%E5%8A%A8%E7%94%BBcss%E5%AE%9E%E7%8E%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.ahao430.site" target="_blank">ahao430 的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/05/14/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91sjs%E4%BA%8B%E4%BB%B6%E5%8A%A8%E6%80%81%E8%B0%83%E6%95%B4%E5%85%83%E7%B4%A0%E4%BD%8D%E7%BD%AE/" title="【小程序】sjs事件动态调整元素位置"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">【小程序】sjs事件动态调整元素位置</div></div><div class="info-2"><div class="info-item-1">需求描述之前写过一篇利用sjs在小程序实现无卡顿元素拖拽的分享：【小程序】小程序sjs事件及拖拽组件开发。 这次需求做了一个气泡提示的容器组件，需要在遇到屏幕边缘时动态向内调整气泡的位置，就想到利用sjs事件来实现。  要求：  气泡箭头对准该功能中间位置 当气泡箭头无法居中位于功能，靠近页面左&#x2F;右边缘时，气泡距离页面左右边距统一为16px箭头位置对准该功能  还有一个角标的组件，正常是在元素右上角，要实现到达页面右边缘时变为左上角。  事件文档sjs事件官方文档：小程序文档 - SJS 响应事件。 在 .sjs 文件中定义函数： 1234567891011121314151617181920// index.sjsfunction handleEvent(event, ownerComponent) &#123;  // currentTarget 的 Descriptor 描述对象  event.instance.setStyle(&#123;    &#x27;font-size&#x27;: &#x27;28rpx&#x27;,  &#125;);  // 不往...</div></div></div></a><a class="pagination-related" href="/2024/07/17/gulp-replace%E9%A2%84%E7%BC%96%E8%AF%91%E6%B3%A8%E5%85%A5%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" title="gulp-replace预编译注入环境变量"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">gulp-replace预编译注入环境变量</div></div><div class="info-2"><div class="info-item-1">需求：在小程序使用pagespy，不希望带入到生产环境。期望在编译时而非运行时，动态判断环境注入代码。 要动态注入的代码： 1234567891011121314import PageSpy from &#x27;@huolala-tech/page-spy-alipay&#x27;;(function () &#123;  const uid = my.getStorageSync(&#123; key: &#x27;uid&#x27; &#125;).data;  const map = &#123;    &#x27;xxxxxxxxxxxxxxxx&#x27;: &#x27;xx&#x27;,  &#125;  // eslint-disable-next-line  new PageSpy(&#123;    api: &#x27;xxx&#x27;,    project: &#x27;xxx小程序&#x27;,    title: map[uid] || uid || new Date().toLocaleTimeString(),  &#125;);&#125;)...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%AA%E7%A2%A7%E5%9B%BE%EF%BC%88sprite%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">雪碧图（sprite）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.2.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#css%E5%AE%9E%E7%8E%B0%E5%BA%8F%E5%88%97%E5%B8%A7%E5%8A%A8%E7%94%BB"><span class="toc-number">1.3.</span> <span class="toc-text">css实现序列帧动画</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#css%E5%8D%95%E8%A1%8C%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">css单行实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#css%E5%A4%9A%E8%A1%8C%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">css多行实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#less"><span class="toc-number">3.1.</span> <span class="toc-text">less</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#scss"><span class="toc-number">3.2.</span> <span class="toc-text">scss</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gif-vs-%E5%BA%8F%E5%88%97%E5%B8%A7"><span class="toc-number">4.</span> <span class="toc-text">gif vs 序列帧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86"><span class="toc-number">5.</span> <span class="toc-text">问题处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%BC%E5%AE%B9%E6%80%A7%EF%BC%88%E7%99%BD%E5%B1%8F%EF%BC%89"><span class="toc-number">5.1.</span> <span class="toc-text">兼容性（白屏）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%BC%E5%AE%B9%E6%80%A7%EF%BC%88%E6%8A%96%E5%8A%A8%EF%BC%89"><span class="toc-number">5.2.</span> <span class="toc-text">兼容性（抖动）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E6%8D%A2%E7%A9%BA%E7%99%BD%E9%97%AE%E9%A2%98"><span class="toc-number">5.3.</span> <span class="toc-text">切换空白问题</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-06-30T04:27:15.000Z" title="更新于 2026-06-30 12:27:15">2026-06-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-touchbar/" title="【开源】cc-touchbar">【开源】cc-touchbar</a><time datetime="2026-06-28T13:30:02.000Z" title="更新于 2026-06-28 21:30:02">2026-06-28</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+  const getUtterancesTheme = theme => theme === 'dark' ? 'photon-dark' : 'github-light'
+
+  const loadUtterances = (el = document, key) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyUtterances = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const config = {
+      src: 'https://utteranc.es/client.js',
+      repo: 'ahao430/blog',
+      theme: getUtterancesTheme(document.documentElement.getAttribute('data-theme')),
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      'issue-term': isShuoshuo ? key : (option && option['issue-term']) || 'pathname'
+    }
+
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => ele.setAttribute(key, value))
+    el.querySelector('#utterances-wrap').appendChild(ele)
+  }
+
+  const changeUtterancesTheme = theme => {
+    const iframe = document.querySelector('#utterances-wrap iframe')
+    if (iframe) {
+      const message = {
+        type: 'set-theme',
+        theme: getUtterancesTheme(theme)
+      };
+      iframe.contentWindow.postMessage(message, 'https://utteranc.es')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeUtterancesTheme, 'utterances')
+
+  if (isShuoshuo) {
+    'Utterances' === 'Utterances'
+      ? window.shuoshuoComment = { loadComment: loadUtterances }
+      : window.loadOtherComment = loadUtterances
+    return
+  }
+  
+  if ('Utterances' === 'Utterances' || !true) {
+    if (true) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+    else loadUtterances()
+  } else {
+    window.loadOtherComment = loadUtterances
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

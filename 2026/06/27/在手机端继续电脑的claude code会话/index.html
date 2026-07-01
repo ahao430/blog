@@ -1,0 +1,360 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>在手机端继续电脑的claude code会话 | ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="平时在电脑上用 Claude Code 做开发时，一个很自然的需求是：人不在电脑前时，能不能在手机上继续和它交互，让任务不中断。 实际做下来会发现，这件事本身有两个前提问题：  Claude Code 的会话不能跨设备直接迁移 手机和电脑之间缺少稳定的连接方式   一些尝试过但不太理想的方案远程控制电脑最直接的想法是用远程桌面。 实际体验下来问题很明显：  手机屏幕太小，终端操作效率很低 输入依赖">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在手机端继续电脑的claude code会话">
+<meta property="og:url" content="https://blog.ahao430.site/2026/06/27/%E5%9C%A8%E6%89%8B%E6%9C%BA%E7%AB%AF%E7%BB%A7%E7%BB%AD%E7%94%B5%E8%84%91%E7%9A%84claude%20code%E4%BC%9A%E8%AF%9D/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="平时在电脑上用 Claude Code 做开发时，一个很自然的需求是：人不在电脑前时，能不能在手机上继续和它交互，让任务不中断。 实际做下来会发现，这件事本身有两个前提问题：  Claude Code 的会话不能跨设备直接迁移 手机和电脑之间缺少稳定的连接方式   一些尝试过但不太理想的方案远程控制电脑最直接的想法是用远程桌面。 实际体验下来问题很明显：  手机屏幕太小，终端操作效率很低 输入依赖">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:published_time" content="2026-06-27T16:14:14.000Z">
+<meta property="article:modified_time" content="2026-06-28T03:57:42.000Z">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "在手机端继续电脑的claude code会话",
+  "url": "https://blog.ahao430.site/2026/06/27/%E5%9C%A8%E6%89%8B%E6%9C%BA%E7%AB%AF%E7%BB%A7%E7%BB%AD%E7%94%B5%E8%84%91%E7%9A%84claude%20code%E4%BC%9A%E8%AF%9D/",
+  "image": "https://blog.ahao430.site/img/butterfly-icon.png",
+  "datePublished": "2026-06-27T16:14:14.000Z",
+  "dateModified": "2026-06-28T03:57:42.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ahao430",
+      "url": "https://blog.ahao430.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/2026/06/27/%E5%9C%A8%E6%89%8B%E6%9C%BA%E7%AB%AF%E7%BB%A7%E7%BB%AD%E7%94%B5%E8%84%91%E7%9A%84claude%20code%E4%BC%9A%E8%AF%9D/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '在手机端继续电脑的claude code会话',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">在手机端继续电脑的claude code会话</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">在手机端继续电脑的claude code会话</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-06-27T16:14:14.000Z" title="发表于 2026-06-28 00:14:14">2026-06-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-06-28T03:57:42.000Z" title="更新于 2026-06-28 11:57:42">2026-06-28</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>平时在电脑上用 Claude Code 做开发时，一个很自然的需求是：人不在电脑前时，能不能在手机上继续和它交互，让任务不中断。</p>
+<p>实际做下来会发现，这件事本身有两个前提问题：</p>
+<ul>
+<li>Claude Code 的会话不能跨设备直接迁移</li>
+<li>手机和电脑之间缺少稳定的连接方式</li>
+</ul>
+<hr>
+<h1 id="一些尝试过但不太理想的方案"><a href="#一些尝试过但不太理想的方案" class="headerlink" title="一些尝试过但不太理想的方案"></a>一些尝试过但不太理想的方案</h1><h2 id="远程控制电脑"><a href="#远程控制电脑" class="headerlink" title="远程控制电脑"></a>远程控制电脑</h2><p>最直接的想法是用远程桌面。</p>
+<p>实际体验下来问题很明显：</p>
+<ul>
+<li>手机屏幕太小，终端操作效率很低</li>
+<li>输入依赖强键盘场景，移动端很别扭</li>
+<li>本质还是在“远程操作一台桌面电脑”，而不是移动办公</li>
+</ul>
+<p>这个方案更适合临时救急，不适合日常使用。</p>
+<hr>
+<h2 id="自己做一套会话同步系统"><a href="#自己做一套会话同步系统" class="headerlink" title="自己做一套会话同步系统"></a>自己做一套会话同步系统</h2><p>另一个方向是把 Claude Code 的会话做成可同步的服务：</p>
+<ul>
+<li>后端保存会话状态</li>
+<li>手机端做一个 UI</li>
+<li>双端实时同步</li>
+</ul>
+<p>但很快会发现问题变复杂了：</p>
+<ul>
+<li>需要处理终端流式输出</li>
+<li>需要处理交互状态同步</li>
+<li>需要重新做一套移动端交互</li>
+<li>维护成本非常高</li>
+</ul>
+<p>本质上是在重新造一个终端 + IDE。</p>
+<hr>
+<h1 id="更现实的方案：tmux-Tailscale"><a href="#更现实的方案：tmux-Tailscale" class="headerlink" title="更现实的方案：tmux + Tailscale"></a>更现实的方案：tmux + Tailscale</h1><p>后来看到社区里一个更轻量的组合方式：</p>
+<ul>
+<li>tmux 解决会话不断开的问题</li>
+<li>Tailscale 解决设备之间的连接问题</li>
+</ul>
+<p>没有改造 Claude Code，也没有引入新的系统，只是在基础设施层做了拼接。</p>
+<hr>
+<h1 id="tmux：让会话不依赖当前连接"><a href="#tmux：让会话不依赖当前连接" class="headerlink" title="tmux：让会话不依赖当前连接"></a>tmux：让会话不依赖当前连接</h1><p>tmux 是一个终端复用工具，本质是把终端会话从 SSH 连接中剥离出来。</p>
+<p>它解决的问题很直接：</p>
+<p>SSH 断开后，进程和终端状态仍然保留。</p>
+<p>也就是说，Claude Code 不再依赖“你是否在线”。</p>
+<p>常用操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux new -s claude</span><br></pre></td></tr></table></figure>
+
+<p>创建一个会话。</p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + B，然后按 D</span><br></pre></td></tr></table></figure>
+
+<p>将当前会话挂到后台。</p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux a -t claude</span><br></pre></td></tr></table></figure>
+
+<p>重新进入会话。</p>
+<hr>
+<p>如果你想更系统地了解 tmux 的使用方式和配置，可以参考这篇整理：</p>
+<p><a target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6/vx1u80byk06elvb9/edit">https://www.yuque.com/ahao430/zsnfd6/vx1u80byk06elvb9/edit</a></p>
+<p>里面对 session 管理、detach&#x2F;attach 的说明比较完整，这里不重复展开。</p>
+<hr>
+<h1 id="Tailscale：把设备变成一个局域网"><a href="#Tailscale：把设备变成一个局域网" class="headerlink" title="Tailscale：把设备变成一个局域网"></a>Tailscale：把设备变成一个局域网</h1><p>Tailscale 解决的是另一个问题：设备之间怎么连。</p>
+<p>它的方式是把所有设备拉进一个虚拟局域网。</p>
+<p>官网：</p>
+<p><a target="_blank" rel="noopener" href="https://tailscale.com/">https://tailscale.com/</a></p>
+<p>下载客户端，配置完成后，每台设备都会有一个类似这样的 IP：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">100.x.x.x</span><br></pre></td></tr></table></figure>
+
+<p>手机可以直接通过这个地址访问电脑，不需要公网 IP，也不需要端口转发。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/373268/1782618431509-42b768c1-e56e-4b9c-a8b4-f6f1ea2a9dd9.png"></p>
+<hr>
+<h1 id="Termius：手机端-SSH-工具"><a href="#Termius：手机端-SSH-工具" class="headerlink" title="Termius：手机端 SSH 工具"></a>Termius：手机端 SSH 工具</h1><p>手机上用的是 Termius 作为 SSH 客户端。</p>
+<p>官网：</p>
+<p><a target="_blank" rel="noopener" href="https://termius.com/">https://termius.com/</a></p>
+<p>主要用来：</p>
+<ul>
+<li>管理 SSH 主机</li>
+<li>连接 Tailscale 内网 IP</li>
+<li>进入 tmux 会话</li>
+</ul>
+<hr>
+<h1 id="实际工作流"><a href="#实际工作流" class="headerlink" title="实际工作流"></a>实际工作流</h1><p>整体流程比较固定：</p>
+<h2 id="1-在电脑上启动-tmux-Claude-Code"><a href="#1-在电脑上启动-tmux-Claude-Code" class="headerlink" title="1. 在电脑上启动 tmux + Claude Code"></a>1. 在电脑上启动 tmux + Claude Code</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建一个新的tmux会话</span></span><br><span class="line">tmux new -s claude <span class="comment"># 这里的会话名称可以自己定义</span></span><br><span class="line"><span class="comment"># 在tmux会话中启动claude code</span></span><br><span class="line">claude </span><br></pre></td></tr></table></figure>
+
+<p>然后进行一些会话。</p>
+<hr>
+<h2 id="2-将会话挂起"><a href="#2-将会话挂起" class="headerlink" title="2. 将会话挂起"></a>2. 将会话挂起</h2><p>当我们准备在手机端继续，先隐藏会话。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + B → D</span><br></pre></td></tr></table></figure>
+
+<p>此时 Claude Code 仍然在后台运行。</p>
+<hr>
+<h2 id="3-手机通过-Tailscale-连接电脑"><a href="#3-手机通过-Tailscale-连接电脑" class="headerlink" title="3. 手机通过 Tailscale 连接电脑"></a>3. 手机通过 Tailscale 连接电脑</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh user@100.x.x.x</span><br></pre></td></tr></table></figure>
+
+<p>这里是电脑的开机登录用户名。不记得的话，可以用<font style="color:rgba(0, 0, 0, 0.88);background-color:rgb(246, 247, 251);">whoami</font>命令查询。</p>
+<hr>
+<h2 id="4-恢复会话"><a href="#4-恢复会话" class="headerlink" title="4. 恢复会话"></a>4. 恢复会话</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux a -t claude</span><br></pre></td></tr></table></figure>
+
+<p>会直接回到之前的 Claude Code 现场，包括上下文和运行状态。</p>
+<hr>
+<h1 id="实践中遇到的几个问题"><a href="#实践中遇到的几个问题" class="headerlink" title="实践中遇到的几个问题"></a>实践中遇到的几个问题</h1><h2 id="无法连接机器"><a href="#无法连接机器" class="headerlink" title="无法连接机器"></a>无法连接机器</h2><p>即使 Tailscale 正常，有时仍然 SSH 不通。</p>
+<p>原因是 macOS 默认没有开启 SSH 服务。</p>
+<p>在系统设置中打开：</p>
+<p>通用 → 共享 → Remote Login</p>
+<hr>
+<h2 id="Android-Termius-中文输入问题"><a href="#Android-Termius-中文输入问题" class="headerlink" title="Android Termius 中文输入问题"></a>Android Termius 中文输入问题</h2><p>在 Android 上使用 Termius 时，曾遇到中文无法正常输入的问题，拉起的是自带的安全键盘，无法切换。</p>
+<p>原因是 Termius 的安全输入模式限制了系统输入法行为。</p>
+<p>解决方式是关闭系统安全键盘，找到手机系统设置-输入法设置-安全，关闭。</p>
+<hr>
+<h1 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h1><p><img src="https://cdn.nlark.com/yuque/0/2026/jpeg/373268/1782579133751-c8f3578d-9d94-4a97-ba9e-bc59a9eb89d3.jpeg"></p>
+<p>整个链路跑通之后，实际体验变成：</p>
+<ul>
+<li>在电脑上启动 Claude Code</li>
+<li>手机随时 SSH 进入</li>
+<li>tmux 保持会话不断</li>
+<li>可以随时继续同一个工作状态</li>
+</ul>
+<hr>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这套方案本身没有任何复杂设计，本质是三个工具的组合：</p>
+<ul>
+<li>tmux 解决“会话不丢”</li>
+<li>Tailscale 解决“设备互通”</li>
+<li>SSH 提供入口</li>
+</ul>
+<p>思路很简单：</p>
+<p>不去改造 Claude Code，而是让它运行在一个可以随时接入的终端环境里。codex等其他终端也是一样的。</p>
+<p>:::color4<br>唯一不习惯的就是，启动claude前要先启动tmux会话。但是习惯了之后，所有的会话都在一个tmux窗口管理会更加方便，可以熟悉下tmux的pane管理。</p>
+<p>:::</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site">ahao430</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site/2026/06/27/%E5%9C%A8%E6%89%8B%E6%9C%BA%E7%AB%AF%E7%BB%A7%E7%BB%AD%E7%94%B5%E8%84%91%E7%9A%84claude%20code%E4%BC%9A%E8%AF%9D/">https://blog.ahao430.site/2026/06/27/%E5%9C%A8%E6%89%8B%E6%9C%BA%E7%AB%AF%E7%BB%A7%E7%BB%AD%E7%94%B5%E8%84%91%E7%9A%84claude%20code%E4%BC%9A%E8%AF%9D/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.ahao430.site" target="_blank">ahao430 的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/06/28/%E4%BB%8E%E8%AF%AD%E9%9B%80%E5%88%B0GitHub-Pages-%E8%87%AA%E5%8A%A8%E5%90%8C%E6%AD%A5%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%85%A8%E6%B5%81%E7%A8%8B/" title="从语雀到GitHub-Pages-自动同步部署博客全流程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">从语雀到GitHub-Pages-自动同步部署博客全流程</div></div><div class="info-2"><div class="info-item-1">项目背景一直用语雀写笔记和技术文档，但语雀的公开分享体验一般，也没有独立域名。于是搭建了一套自动化流水线：语雀写作 → Elog 同步 → GitHub Actions → Hexo 构建 → GitHub Pages 发布，全程自动，零成本。 源码仓库：github.com&#x2F;ahao430&#x2F;blog 线上博客：blog.ahao430.site 语雀知识库：yuque.com&#x2F;ahao430&#x2F;zsnfd6 整体架构[图：架构流程图 - 语雀 → Elog → GitHub Actions → Hexo → GitHub Pages] 1234567891011语雀写作 ──(Elog 定时同步)──&gt; GitHub 仓库 master 分支                                     │                              docs/*.md + README 目录                                     │                      ...</div></div></div></a><a class="pagination-related" href="/2026/06/13/%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%84%9A%E6%9C%AC/" title="客户端脚本"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">客户端脚本</div></div><div class="info-2"><div class="info-item-1">frp-start.sh frpc-stop.sh frpc-status.sh </div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E5%B0%9D%E8%AF%95%E8%BF%87%E4%BD%86%E4%B8%8D%E5%A4%AA%E7%90%86%E6%83%B3%E7%9A%84%E6%96%B9%E6%A1%88"><span class="toc-number">1.</span> <span class="toc-text">一些尝试过但不太理想的方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6%E7%94%B5%E8%84%91"><span class="toc-number">1.1.</span> <span class="toc-text">远程控制电脑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%B7%B1%E5%81%9A%E4%B8%80%E5%A5%97%E4%BC%9A%E8%AF%9D%E5%90%8C%E6%AD%A5%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.2.</span> <span class="toc-text">自己做一套会话同步系统</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9B%B4%E7%8E%B0%E5%AE%9E%E7%9A%84%E6%96%B9%E6%A1%88%EF%BC%9Atmux-Tailscale"><span class="toc-number">2.</span> <span class="toc-text">更现实的方案：tmux + Tailscale</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#tmux%EF%BC%9A%E8%AE%A9%E4%BC%9A%E8%AF%9D%E4%B8%8D%E4%BE%9D%E8%B5%96%E5%BD%93%E5%89%8D%E8%BF%9E%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">tmux：让会话不依赖当前连接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Tailscale%EF%BC%9A%E6%8A%8A%E8%AE%BE%E5%A4%87%E5%8F%98%E6%88%90%E4%B8%80%E4%B8%AA%E5%B1%80%E5%9F%9F%E7%BD%91"><span class="toc-number">4.</span> <span class="toc-text">Tailscale：把设备变成一个局域网</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Termius%EF%BC%9A%E6%89%8B%E6%9C%BA%E7%AB%AF-SSH-%E5%B7%A5%E5%85%B7"><span class="toc-number">5.</span> <span class="toc-text">Termius：手机端 SSH 工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-number">6.</span> <span class="toc-text">实际工作流</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%9C%A8%E7%94%B5%E8%84%91%E4%B8%8A%E5%90%AF%E5%8A%A8-tmux-Claude-Code"><span class="toc-number">6.1.</span> <span class="toc-text">1. 在电脑上启动 tmux + Claude Code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%B0%86%E4%BC%9A%E8%AF%9D%E6%8C%82%E8%B5%B7"><span class="toc-number">6.2.</span> <span class="toc-text">2. 将会话挂起</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%89%8B%E6%9C%BA%E9%80%9A%E8%BF%87-Tailscale-%E8%BF%9E%E6%8E%A5%E7%94%B5%E8%84%91"><span class="toc-number">6.3.</span> <span class="toc-text">3. 手机通过 Tailscale 连接电脑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%81%A2%E5%A4%8D%E4%BC%9A%E8%AF%9D"><span class="toc-number">6.4.</span> <span class="toc-text">4. 恢复会话</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text">实践中遇到的几个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E6%9C%BA%E5%99%A8"><span class="toc-number">7.1.</span> <span class="toc-text">无法连接机器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-Termius-%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E9%97%AE%E9%A2%98"><span class="toc-number">7.2.</span> <span class="toc-text">Android Termius 中文输入问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E6%95%88%E6%9E%9C"><span class="toc-number">8.</span> <span class="toc-text">最终效果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-06-30T04:27:15.000Z" title="更新于 2026-06-30 12:27:15">2026-06-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-touchbar/" title="【开源】cc-touchbar">【开源】cc-touchbar</a><time datetime="2026-06-28T13:30:02.000Z" title="更新于 2026-06-28 21:30:02">2026-06-28</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+  const getUtterancesTheme = theme => theme === 'dark' ? 'photon-dark' : 'github-light'
+
+  const loadUtterances = (el = document, key) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyUtterances = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const config = {
+      src: 'https://utteranc.es/client.js',
+      repo: 'ahao430/blog',
+      theme: getUtterancesTheme(document.documentElement.getAttribute('data-theme')),
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      'issue-term': isShuoshuo ? key : (option && option['issue-term']) || 'pathname'
+    }
+
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => ele.setAttribute(key, value))
+    el.querySelector('#utterances-wrap').appendChild(ele)
+  }
+
+  const changeUtterancesTheme = theme => {
+    const iframe = document.querySelector('#utterances-wrap iframe')
+    if (iframe) {
+      const message = {
+        type: 'set-theme',
+        theme: getUtterancesTheme(theme)
+      };
+      iframe.contentWindow.postMessage(message, 'https://utteranc.es')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeUtterancesTheme, 'utterances')
+
+  if (isShuoshuo) {
+    'Utterances' === 'Utterances'
+      ? window.shuoshuoComment = { loadComment: loadUtterances }
+      : window.loadOtherComment = loadUtterances
+    return
+  }
+  
+  if ('Utterances' === 'Utterances' || !true) {
+    if (true) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+    else loadUtterances()
+  } else {
+    window.loadOtherComment = loadUtterances
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

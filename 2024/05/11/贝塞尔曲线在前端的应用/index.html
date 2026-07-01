@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>贝塞尔曲线在前端的应用 | ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="贝塞尔曲线介绍贝塞尔曲线（Bezier Curve）在计算机图形领域应用非常广泛，比如我们熟知的 CSS 动画、 Canvas 以及 Photoshop 等都可以看到贝塞尔曲线的身影。  百度百科：https:&#x2F;&#x2F;baike.baidu.com&#x2F;item&#x2F;%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF&#x2F;1091769?fr&#x3D;ge_ala  css中的时间">
+<meta property="og:type" content="article">
+<meta property="og:title" content="贝塞尔曲线在前端的应用">
+<meta property="og:url" content="https://blog.ahao430.site/2024/05/11/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E5%9C%A8%E5%89%8D%E7%AB%AF%E7%9A%84%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="贝塞尔曲线介绍贝塞尔曲线（Bezier Curve）在计算机图形领域应用非常广泛，比如我们熟知的 CSS 动画、 Canvas 以及 Photoshop 等都可以看到贝塞尔曲线的身影。  百度百科：https:&#x2F;&#x2F;baike.baidu.com&#x2F;item&#x2F;%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF&#x2F;1091769?fr&#x3D;ge_ala  css中的时间">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:published_time" content="2024-05-11T06:20:00.000Z">
+<meta property="article:modified_time" content="2024-05-11T12:41:55.000Z">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "贝塞尔曲线在前端的应用",
+  "url": "https://blog.ahao430.site/2024/05/11/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E5%9C%A8%E5%89%8D%E7%AB%AF%E7%9A%84%E5%BA%94%E7%94%A8/",
+  "image": "https://blog.ahao430.site/img/butterfly-icon.png",
+  "datePublished": "2024-05-11T06:20:00.000Z",
+  "dateModified": "2024-05-11T12:41:55.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ahao430",
+      "url": "https://blog.ahao430.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/2024/05/11/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E5%9C%A8%E5%89%8D%E7%AB%AF%E7%9A%84%E5%BA%94%E7%94%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '贝塞尔曲线在前端的应用',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">贝塞尔曲线在前端的应用</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">贝塞尔曲线在前端的应用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-11T06:20:00.000Z" title="发表于 2024-05-11 14:20:00">2024-05-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-11T12:41:55.000Z" title="更新于 2024-05-11 20:41:55">2024-05-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="贝塞尔曲线介绍"><a href="#贝塞尔曲线介绍" class="headerlink" title="贝塞尔曲线介绍"></a>贝塞尔曲线介绍</h2><p>贝塞尔曲线（Bezier Curve）在计算机图形领域应用非常广泛，比如我们熟知的 CSS 动画、 Canvas 以及 Photoshop 等都可以看到贝塞尔曲线的身影。</p>
+<blockquote>
+<p>百度百科：<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/1091769?fr=ge_ala">https://baike.baidu.com/item/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/1091769?fr=ge_ala</a></p>
+</blockquote>
+<h2 id="css中的时间函数"><a href="#css中的时间函数" class="headerlink" title="css中的时间函数"></a>css中的时间函数</h2><p>css3的transition和animation可以实现动画效果，二者都支持贝塞尔曲线。CSS动画过渡时间函数是三阶贝塞尔曲线。动过时间函数，我们在用transition和animation做动画时，可以控制从起点到终点之间的值随时间的变化，如线性变化，先快后满，等等。</p>
+<blockquote>
+<p>CSS animation-timing-function 属性  <a target="_blank" rel="noopener" href="https://www.w3school.com.cn/cssref/pr_animation-timing-function.asp">https://www.w3school.com.cn/cssref/pr_animation-timing-function.asp</a></p>
+</blockquote>
+<blockquote>
+<p>CSS transition-timing-function属性  <a target="_blank" rel="noopener" href="https://www.w3school.com.cn/cssref/pr_transition-timing-function.asp">https://www.w3school.com.cn/cssref/pr_transition-timing-function.asp</a></p>
+</blockquote>
+<p>时间函数的一些预设值如下，也支持自定义值：</p>
+<table>
+<thead>
+<tr>
+<th align="left"><font style="color:rgb(255, 255, 255);">值</font></th>
+<th align="left"><font style="color:rgb(255, 255, 255);">描述</font></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><font style="color:rgb(0, 0, 0);">linear</font></td>
+<td align="left"><font style="color:rgb(0, 0, 0);">规定以相同速度开始至结束的过渡效果（等于 cubic-bezier(0,0,1,1)）。</font></td>
+</tr>
+<tr>
+<td align="left"><font style="color:rgb(0, 0, 0);">ease</font></td>
+<td align="left"><font style="color:rgb(0, 0, 0);">规定慢速开始，然后变快，然后慢速结束的过渡效果（cubic-bezier(0.25,0.1,0.25,1)）。</font></td>
+</tr>
+<tr>
+<td align="left"><font style="color:rgb(0, 0, 0);">ease-in</font></td>
+<td align="left"><font style="color:rgb(0, 0, 0);">规定以慢速开始的过渡效果（等于 cubic-bezier(0.42,0,1,1)）。</font></td>
+</tr>
+<tr>
+<td align="left"><font style="color:rgb(0, 0, 0);">ease-out</font></td>
+<td align="left"><font style="color:rgb(0, 0, 0);">规定以慢速结束的过渡效果（等于 cubic-bezier(0,0,0.58,1)）。</font></td>
+</tr>
+<tr>
+<td align="left"><font style="color:rgb(0, 0, 0);">ease-in-out</font></td>
+<td align="left"><font style="color:rgb(0, 0, 0);">规定以慢速开始和结束的过渡效果（等于 cubic-bezier(0.42,0,0.58,1)）。</font></td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/cssref/func_cubic-bezier.asp">cubic-bezier(n,n,n,n)</a></td>
+<td align="left"><font style="color:rgb(0, 0, 0);">在 cubic-bezier 函数中定义自己的值。可能的值是 0 至 1 之间的数值。</font></td>
+</tr>
+</tbody></table>
+<p>比如我们要实现dom元素从一个点p1到位置p2，就可以用transition来移动，移动的方向是直线的，但是移动的速度就可以由时间函数来控制。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span>&#123;</span><br><span class="line">  <span class="attribute">x</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">y</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">transition</span>: all ease <span class="number">1s</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">  <span class="attribute">x</span>: <span class="number">100</span>;</span><br><span class="line">  <span class="attribute">y</span>: <span class="number">100</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>chrome浏览器中，有一个按钮点击可以实现自己拖拽生成合适的贝塞尔曲线。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/373268/1715412323654-d71c1cee-0861-41ab-8836-ccfa109945e9.png"></p>
+<p>codepen: <a target="_blank" rel="noopener" href="https://codepen.io/ahao430/pen/gOJbOyg">https://codepen.io/ahao430/pen/gOJbOyg</a></p>
+<h2 id="tween-js补间动画"><a href="#tween-js补间动画" class="headerlink" title="tween.js补间动画"></a>tween.js补间动画</h2><p>tween.js是一款简单易用的JavaScript补间动画库，它可以让Web开发者很方便地创建和控制复杂的动画效果。它的特点是功能全面、易于使用，支持各种类型的动画插值器和缓动函数，以及灵活的回调函数和参数调整。</p>
+<blockquote>
+<p>tween.js文档：<a target="_blank" rel="noopener" href="https://github.com/tweenjs/tween.js/blob/main/README_zh-CN.md">https://github.com/tweenjs/tween.js/blob/main/README_zh-CN.md</a></p>
+</blockquote>
+<p>下面是tween.js的easing function的值：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/373268/1715421571467-ff29f7ea-4a94-4093-b8e0-836ab0b09934.png"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/373268/1715421640349-2d65091d-b38e-4c43-b1ab-f1d08ab022a9.png"></p>
+<p>刚刚说到的dom元素移动，也可以用tween.js来实现相同的效果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> box = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;box&#x27;</span>) <span class="comment">// Get the element we want to animate.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> coords = &#123;<span class="attr">x</span>: <span class="number">0</span>, <span class="attr">y</span>: <span class="number">0</span>&#125; <span class="comment">// Start at (0, 0)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> tween = <span class="keyword">new</span> <span class="variable constant_">TWEEN</span>.<span class="title class_">Tween</span>(coords, <span class="literal">false</span>) <span class="comment">// Create a new tween that modifies &#x27;coords&#x27;.</span></span><br><span class="line">  .<span class="title function_">to</span>(&#123;<span class="attr">x</span>: <span class="number">100</span>, <span class="attr">y</span>: <span class="number">100</span>&#125;, <span class="number">1000</span>) <span class="comment">// Move to (300, 200) in 1 second.</span></span><br><span class="line">  .<span class="title function_">easing</span>(<span class="variable constant_">TWEEN</span>.<span class="property">Easing</span>.<span class="property">Quadratic</span>.<span class="property">InOut</span>) <span class="comment">// Use an easing function to make the animation smooth.</span></span><br><span class="line">  .<span class="title function_">onUpdate</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Called after tween.js updates &#x27;coords&#x27;.</span></span><br><span class="line">    <span class="comment">// Move &#x27;box&#x27; to the position described by &#x27;coords&#x27; with a CSS translation.</span></span><br><span class="line">    box.<span class="property">style</span>.<span class="title function_">setProperty</span>(<span class="string">&#x27;transform&#x27;</span>, <span class="string">&#x27;translate(&#x27;</span> + coords.<span class="property">x</span> + <span class="string">&#x27;px, &#x27;</span> + coords.<span class="property">y</span> + <span class="string">&#x27;px)&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">onComplete</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;complete&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">start</span>() <span class="comment">// Start the tween immediately.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Setup the animation loop.</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">animate</span>(<span class="params">time</span>) &#123;</span><br><span class="line">  tween.<span class="title function_">update</span>(time)</span><br><span class="line">  <span class="title function_">requestAnimationFrame</span>(animate)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">requestAnimationFrame</span>(animate)</span><br></pre></td></tr></table></figure>
+
+<p>只不过一般出于性能考虑，能用css实现的，就不用js来做。</p>
+<p>codepen: <a target="_blank" rel="noopener" href="https://codepen.io/ahao430/pen/RwmNNbG">https://codepen.io/ahao430/pen/RwmNNbG</a></p>
+<hr>
+<h2 id="应用示例"><a href="#应用示例" class="headerlink" title="应用示例"></a>应用示例</h2><h3 id="css实现大转盘抽奖动画"><a href="#css实现大转盘抽奖动画" class="headerlink" title="css实现大转盘抽奖动画"></a>css实现大转盘抽奖动画</h3><p>这里的实现思路是，直接用transition实现过渡，初始rotate角度是0，后面旋转超过1圈，角度可以超过360deg。然后用ease，或者ease-in-out，或者用chrome拖一个先加速再减速的贝塞尔曲线。</p>
+<blockquote>
+<p>codepen: <a target="_blank" rel="noopener" href="https://codepen.io/ahao430/pen/VwOYYbm">https://codepen.io/ahao430/pen/VwOYYbm</a></p>
+</blockquote>
+<h3 id="css实现购物车小球抛物线动画"><a href="#css实现购物车小球抛物线动画" class="headerlink" title="css实现购物车小球抛物线动画"></a>css实现购物车小球抛物线动画</h3><p>这里要理解抛物线的实质，当我们水平或斜抛出一个物体，实际上可以分解为两个方向的运动。水平方向上x我们可以理解为匀速，这个时间函数是线性的。而竖直方向上，由于收到重力的作用，y实际上是一个向下的匀加速运动，当有初始向上的速度时，可以理解为是一个初始的负值，然后逐渐增大。</p>
+<p>这样我们实际上可以包装两层div，一层做水平方向的线性运动，一层做竖直方向的一个加速运动。这样两层分别做直线运动，但是时间函数一个线性一个不断加速即可。</p>
+<blockquote>
+<p>codepen: <a target="_blank" rel="noopener" href="https://codepen.io/ahao430/pen/LYoEEyN">https://codepen.io/ahao430/pen/LYoEEyN</a></p>
+</blockquote>
+<h3 id="tween-js实现数字缓动"><a href="#tween-js实现数字缓动" class="headerlink" title="tween.js实现数字缓动"></a>tween.js实现数字缓动</h3><p>这个很简单，直接用tween.js做缓动计算，把数字实时展示就行了，这种一般展示人数变化之类的都是整数，可以取整。</p>
+<blockquote>
+<p>codepen: <a target="_blank" rel="noopener" href="https://codepen.io/ahao430/pen/MWdYwgY">https://codepen.io/ahao430/pen/MWdYwgY</a></p>
+</blockquote>
+<h3 id="tween-js实现九宫格抽奖动画"><a href="#tween-js实现九宫格抽奖动画" class="headerlink" title="tween.js实现九宫格抽奖动画"></a>tween.js实现九宫格抽奖动画</h3><p><img src="https://cdn.nlark.com/yuque/0/2024/png/373268/1715421242960-8d42f00f-415b-466a-8bce-92b923be1bf9.png"></p>
+<p>同样的，这个要用到tween.js, 这里css是实现不了的。九宫格抽奖的时候，外层的8个位置转圈圈，实际上类似大转盘的转圈，虽然视觉上是循环的，但是我们的角度一直在增加。这里同样的，这里要转N圈的话，让数字从0开始，到 8*N + 停止位置结束，用缓动函数变化，每次得到的值取整，再mod 8，得到动画的实时位置。 </p>
+<blockquote>
+<p>codepen: <a target="_blank" rel="noopener" href="https://codepen.io/ahao430/pen/JjqodmL">https://codepen.io/ahao430/pen/JjqodmL</a></p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site">ahao430</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site/2024/05/11/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E5%9C%A8%E5%89%8D%E7%AB%AF%E7%9A%84%E5%BA%94%E7%94%A8/">https://blog.ahao430.site/2024/05/11/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E5%9C%A8%E5%89%8D%E7%AB%AF%E7%9A%84%E5%BA%94%E7%94%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.ahao430.site" target="_blank">ahao430 的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/06/09/draft.js%E5%AE%9A%E5%88%B6%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8/" title="draft.js定制富文本编辑器"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">draft.js定制富文本编辑器</div></div><div class="info-2"><div class="info-item-1">有一个需求：  需要在输入框中输入&#x2F;时弹出自定义下拉弹窗，选择组件并插入到输入框。 下拉弹窗是双层，且子目录支持输入文本过滤。 同时插入的块在删除时应该整体删除。  这个弹窗和插入整体感觉跟语雀的功能很像。一般的富文本编辑器可以插入特定的样式，但是整体自定义组件显示是不支持的，尤其是插入的块退格时作为整体删除。 另外这个输入&#x2F;弹出下拉的功能，联想到很多编辑器中@人的时候的mention功能。 去看了react-mention，唤起键可以自定义，不一定是@，但是下拉弹窗的样式是固定的，只有单层列表，且不支持过滤。看react-mention的介绍，要唤起多个列表，就用多个不同按键唤起。这与我们的需求不符。 库选择第一反应是用tiptap，去翻了下文档，挺复杂的，感觉对我这个功能来说有点重。 再去查了下富文本实现mention，facebook开源的有一个draft.js的库，相对底层一些，可以用来实现自定义的富文本编辑器，网上的示例就有mention和插入整体的代码。参考了这篇文章：https://segmentfault.com/a/1190000041471...</div></div></div></a><a class="pagination-related" href="/2024/05/09/JS%E9%A2%9C%E8%89%B2%E5%A4%84%E7%90%86/" title="JS颜色处理"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">JS颜色处理</div></div><div class="info-2"><div class="info-item-1">主题切换平时我们开发时，颜色一般写在css里，用less或者sass预处理器的话，还有变量和函数功能，可以设置一个主题色，再利用lighten函数和darken函数得到一系列设置，非常方便不同的主题处理。 SCSS切换主题预处理器是在编译阶段执行，我们如果想要动态切换主题的话，需要编译生成多套主题css文件，然后动态加载覆盖，实现起来比较麻烦。之前我们一般用webpack-theme-color-replacer这个包来做。 但是这样只能实现预设编译好的主题直接互相切换，如果要添加新的颜色，就要先重新编译一套主题css文件。 CSS变量切换主题后来css有了原生的变量，我们也可以通过js去修改css变量来实现这一功能。  element-plus主题设置，scss变量方式和css变量方式  element-plus因为用css变量实现了主题设置，切换主题只需要动态设置css变量即可。 123document.documentElement.style.setProperty(&#x27;--primary-color&#x27;, &#x27;red&#x27;);documen...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">贝塞尔曲线介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#css%E4%B8%AD%E7%9A%84%E6%97%B6%E9%97%B4%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">css中的时间函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tween-js%E8%A1%A5%E9%97%B4%E5%8A%A8%E7%94%BB"><span class="toc-number">3.</span> <span class="toc-text">tween.js补间动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-number">4.</span> <span class="toc-text">应用示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#css%E5%AE%9E%E7%8E%B0%E5%A4%A7%E8%BD%AC%E7%9B%98%E6%8A%BD%E5%A5%96%E5%8A%A8%E7%94%BB"><span class="toc-number">4.1.</span> <span class="toc-text">css实现大转盘抽奖动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#css%E5%AE%9E%E7%8E%B0%E8%B4%AD%E7%89%A9%E8%BD%A6%E5%B0%8F%E7%90%83%E6%8A%9B%E7%89%A9%E7%BA%BF%E5%8A%A8%E7%94%BB"><span class="toc-number">4.2.</span> <span class="toc-text">css实现购物车小球抛物线动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tween-js%E5%AE%9E%E7%8E%B0%E6%95%B0%E5%AD%97%E7%BC%93%E5%8A%A8"><span class="toc-number">4.3.</span> <span class="toc-text">tween.js实现数字缓动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tween-js%E5%AE%9E%E7%8E%B0%E4%B9%9D%E5%AE%AB%E6%A0%BC%E6%8A%BD%E5%A5%96%E5%8A%A8%E7%94%BB"><span class="toc-number">4.4.</span> <span class="toc-text">tween.js实现九宫格抽奖动画</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-06-30T04:27:15.000Z" title="更新于 2026-06-30 12:27:15">2026-06-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-touchbar/" title="【开源】cc-touchbar">【开源】cc-touchbar</a><time datetime="2026-06-28T13:30:02.000Z" title="更新于 2026-06-28 21:30:02">2026-06-28</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+  const getUtterancesTheme = theme => theme === 'dark' ? 'photon-dark' : 'github-light'
+
+  const loadUtterances = (el = document, key) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyUtterances = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const config = {
+      src: 'https://utteranc.es/client.js',
+      repo: 'ahao430/blog',
+      theme: getUtterancesTheme(document.documentElement.getAttribute('data-theme')),
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      'issue-term': isShuoshuo ? key : (option && option['issue-term']) || 'pathname'
+    }
+
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => ele.setAttribute(key, value))
+    el.querySelector('#utterances-wrap').appendChild(ele)
+  }
+
+  const changeUtterancesTheme = theme => {
+    const iframe = document.querySelector('#utterances-wrap iframe')
+    if (iframe) {
+      const message = {
+        type: 'set-theme',
+        theme: getUtterancesTheme(theme)
+      };
+      iframe.contentWindow.postMessage(message, 'https://utteranc.es')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeUtterancesTheme, 'utterances')
+
+  if (isShuoshuo) {
+    'Utterances' === 'Utterances'
+      ? window.shuoshuoComment = { loadComment: loadUtterances }
+      : window.loadOtherComment = loadUtterances
+    return
+  }
+  
+  if ('Utterances' === 'Utterances' || !true) {
+    if (true) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+    else loadUtterances()
+  } else {
+    window.loadOtherComment = loadUtterances
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

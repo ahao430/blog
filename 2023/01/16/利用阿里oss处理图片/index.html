@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>利用阿里oss处理图片 | ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="oss图片处理能力我们平时存储图片一般都是用的阿里oss服务，阿里oss除了存储文件外，还有很多其他功能。比如可以通过拼接url后缀，来对图片进行处理。 官方文档在这里：https:&#x2F;&#x2F;help.aliyun.com&#x2F;document_detail&#x2F;144582.html。 可以看到，支持很多处理方式，如修改图片的分辨率，给图片添加水印，转换图片格式，压缩图片等等。 下面简单介绍下拼接的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用阿里oss处理图片">
+<meta property="og:url" content="https://blog.ahao430.site/2023/01/16/%E5%88%A9%E7%94%A8%E9%98%BF%E9%87%8Coss%E5%A4%84%E7%90%86%E5%9B%BE%E7%89%87/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="oss图片处理能力我们平时存储图片一般都是用的阿里oss服务，阿里oss除了存储文件外，还有很多其他功能。比如可以通过拼接url后缀，来对图片进行处理。 官方文档在这里：https:&#x2F;&#x2F;help.aliyun.com&#x2F;document_detail&#x2F;144582.html。 可以看到，支持很多处理方式，如修改图片的分辨率，给图片添加水印，转换图片格式，压缩图片等等。 下面简单介绍下拼接的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:published_time" content="2023-01-16T05:50:24.000Z">
+<meta property="article:modified_time" content="2023-01-16T06:40:50.000Z">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "利用阿里oss处理图片",
+  "url": "https://blog.ahao430.site/2023/01/16/%E5%88%A9%E7%94%A8%E9%98%BF%E9%87%8Coss%E5%A4%84%E7%90%86%E5%9B%BE%E7%89%87/",
+  "image": "https://blog.ahao430.site/img/butterfly-icon.png",
+  "datePublished": "2023-01-16T05:50:24.000Z",
+  "dateModified": "2023-01-16T06:40:50.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ahao430",
+      "url": "https://blog.ahao430.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/2023/01/16/%E5%88%A9%E7%94%A8%E9%98%BF%E9%87%8Coss%E5%A4%84%E7%90%86%E5%9B%BE%E7%89%87/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '利用阿里oss处理图片',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">利用阿里oss处理图片</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">利用阿里oss处理图片</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-16T05:50:24.000Z" title="发表于 2023-01-16 13:50:24">2023-01-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-16T06:40:50.000Z" title="更新于 2023-01-16 14:40:50">2023-01-16</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="oss图片处理能力"><a href="#oss图片处理能力" class="headerlink" title="oss图片处理能力"></a>oss图片处理能力</h2><p>我们平时存储图片一般都是用的阿里oss服务，阿里oss除了存储文件外，还有很多其他功能。比如可以通过拼接url后缀，来对图片进行处理。</p>
+<p>官方文档在这里：<a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/144582.html">https://help.aliyun.com/document_detail&#x2F;144582.html</a>。</p>
+<p>可以看到，支持很多处理方式，如修改图片的分辨率，给图片添加水印，转换图片格式，压缩图片等等。</p>
+<p>下面简单介绍下拼接的规则：</p>
+<ol>
+<li>必须是上传到oss的图片链接</li>
+<li>后面拼接参数<font style="color:#DF2A3F;">?x-oss-process&#x3D;image</font><font style="color:rgb(0, 0, 0);">，再继续按照不同的功能拼接</font></li>
+<li><font style="color:rgb(0, 0, 0);">类似旋转、亮度这种，参数说明只有一个[value]的，直接&#x2F;[key],[val]。如</font><a target="_blank" rel="noopener" href="https://oss-console-img-demo-cn-hangzhou.oss-cn-hangzhou.aliyuncs.com/example.jpg?x-oss-process=image/rotate,90">https://oss-console-img-demo-cn-hangzhou.oss-cn-hangzhou.aliyuncs.com/example.jpg?x-oss-process=image<font style="color:#DF2A3F;">&#x2F;rotate,90</font></a></li>
+<li>如果参数说明是一个对象，对象又有很多子key，拼接方式是&#x2F;[key],[subKey1]<em>[subVal1],[subKey2]</em>[subVal2],…。子key之间用’,’分割，最后一个不用加’,’。如<a target="_blank" rel="noopener" href="https://oss-console-img-demo-cn-hangzhou.oss-cn-hangzhou.aliyuncs.com/example.jpg?x-oss-process=image/resize,h_100,m_lfit">https://oss-console-img-demo-cn-hangzhou.oss-cn-hangzhou.aliyuncs.com/example.jpg?x-oss-process=image<font style="color:#DF2A3F;">&#x2F;resize,h_100,m_lfit</font></a></li>
+<li>同时进行多项处理，直接拼接即可，’&#x2F;‘分割。如<a target="_blank" rel="noopener" href="https://image-demo.oss-cn-hangzhou.aliyuncs.com/example.jpg?x-oss-process=image/resize,w_300/quality,q_90">https://image-demo.oss-cn-hangzhou.aliyuncs.com/example.jpg?x-oss-process=image<font style="color:#DF2A3F;">&#x2F;resize,w_300&#x2F;quality,q_90</font></a></li>
+</ol>
+<h2 id="费用"><a href="#费用" class="headerlink" title="费用"></a>费用</h2><blockquote>
+<p><font style="color:rgb(24, 24, 24);">使用图片处理服务时，会产生如下费用：</font></p>
+</blockquote>
+<ul>
+<li><font style="color:rgb(24, 24, 24);">图片处理费用</font><font style="color:rgb(24, 24, 24);">未超出免费额度时，不产生费用；超出免费额度后，按处理的原图实际大小计费。计费详情，请参见</font><a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/173537.htm#concept-2558464">数据处理费用</a><font style="color:rgb(24, 24, 24);">。</font></li>
+<li><font style="color:rgb(24, 24, 24);">请求费用</font><font style="color:rgb(24, 24, 24);">处理图片时会产生一次</font><font style="color:rgb(24, 24, 24);">GetObject</font><font style="color:rgb(24, 24, 24);">请求，按请求次数收费。计费详情，请参见</font><a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/173536.htm#concept-2558398">请求费用</a><font style="color:rgb(24, 24, 24);">。</font></li>
+<li><font style="color:rgb(24, 24, 24);">流量费用根据处理后的图片大小收取外网流出流量费用。计费详情，请参见</font><a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/173535.htm#concept-2558367">流量费用</a><font style="color:rgb(24, 24, 24);">。</font></li>
+</ul>
+<p>可以看到，<font style="color:#DF2A3F;">在额度内是免费的。超过额度后按次收费</font>。所以我们拼接生成的url不要直接来用，否则每个用户访问都算一次。要把它保存为新的图片，上传到oss来使用。</p>
+<h2 id="写一个web工具来处理"><a href="#写一个web工具来处理" class="headerlink" title="写一个web工具来处理"></a>写一个web工具来处理</h2><p>利用oss的功能，写了一个小的工具网页来处理图片。</p>
+<ol>
+<li>上传图片到oss</li>
+<li>进行参数配置</li>
+<li>预览和保存图片</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2023/png/373268/1673851144719-e68a808c-d4a8-4aa3-8723-eb43eea852a3.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site">ahao430</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site/2023/01/16/%E5%88%A9%E7%94%A8%E9%98%BF%E9%87%8Coss%E5%A4%84%E7%90%86%E5%9B%BE%E7%89%87/">https://blog.ahao430.site/2023/01/16/%E5%88%A9%E7%94%A8%E9%98%BF%E9%87%8Coss%E5%A4%84%E7%90%86%E5%9B%BE%E7%89%87/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.ahao430.site" target="_blank">ahao430 的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2023/01/16/%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E7%BD%91%E9%A1%B5%E7%89%88%E8%8A%82%E6%8B%8D%E5%99%A8/" title="开发一个网页版节拍器"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">开发一个网页版节拍器</div></div><div class="info-2"><div class="info-item-1"> 平时练尤克里里经常用到节拍器，突发奇想自己用js开发一个。 最后实现的效果如下：https://ahao430.github.io/metronome/。 代码见github仓库：https://github.com/ahao430/metronome。  1. 需求分析节拍器主要是可以设定不同的速度和节奏打拍子。看各种节拍器，有简单的，也有复杂的。  设定不同的速度，每分钟多少拍 选择节拍，比如4&#x2F;4拍、3&#x2F;4拍、6&#x2F;8拍等等。 选择节拍的节奏型，一拍一个，一拍两个，一拍三个（三连音），一拍四个，swing，等等。这个很多简易节拍器就没有了。 切换不同的音色，比如敲击声、鼓声、人声等等。   这里拍速是指一分钟有多少拍。 而节拍是以几分音符为1拍，每小节几拍。这个不影响拍速，观察各种节拍器，这里会展示几个小点，每一拍一个点，其中第一拍第一下重声，后面的轻声。 节奏型决定每一拍响几下，以及这几下之前的节奏。比如这一拍响一下、响两下、响三下、响四下；如果是一个swing就是前8后16分音符的时长；也可能这个节奏型的时长是两拍，比如民谣扫弦的下—-，下...</div></div></div></a><a class="pagination-related" href="/2023/01/12/github%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%88%86%E6%94%AF%E5%88%B0pages/" title="github自动部署分支到pages"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">github自动部署分支到pages</div></div><div class="info-2"><div class="info-item-1">在代码根目录新建.github&#x2F;workflows&#x2F;目录，新建一个任意名称后缀yml的文件。 内容如下： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566name: CIon:  push:    branches:    - main  # 这里是要自动部署的分支名，有提交的时候就会触发actionjobs:  job:    name: Deployment    runs-on: macos-latest    permissions:      pages: write      id-token: write    environment:      name: github-pages      url: ${{ steps.deployment.outputs.page_url }}    steps:      - name: Checkout   ...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#oss%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E8%83%BD%E5%8A%9B"><span class="toc-number">1.</span> <span class="toc-text">oss图片处理能力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%B9%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">费用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E4%B8%80%E4%B8%AAweb%E5%B7%A5%E5%85%B7%E6%9D%A5%E5%A4%84%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">写一个web工具来处理</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-06-30T04:27:15.000Z" title="更新于 2026-06-30 12:27:15">2026-06-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-touchbar/" title="【开源】cc-touchbar">【开源】cc-touchbar</a><time datetime="2026-06-28T13:30:02.000Z" title="更新于 2026-06-28 21:30:02">2026-06-28</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+  const getUtterancesTheme = theme => theme === 'dark' ? 'photon-dark' : 'github-light'
+
+  const loadUtterances = (el = document, key) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyUtterances = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const config = {
+      src: 'https://utteranc.es/client.js',
+      repo: 'ahao430/blog',
+      theme: getUtterancesTheme(document.documentElement.getAttribute('data-theme')),
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      'issue-term': isShuoshuo ? key : (option && option['issue-term']) || 'pathname'
+    }
+
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => ele.setAttribute(key, value))
+    el.querySelector('#utterances-wrap').appendChild(ele)
+  }
+
+  const changeUtterancesTheme = theme => {
+    const iframe = document.querySelector('#utterances-wrap iframe')
+    if (iframe) {
+      const message = {
+        type: 'set-theme',
+        theme: getUtterancesTheme(theme)
+      };
+      iframe.contentWindow.postMessage(message, 'https://utteranc.es')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeUtterancesTheme, 'utterances')
+
+  if (isShuoshuo) {
+    'Utterances' === 'Utterances'
+      ? window.shuoshuoComment = { loadComment: loadUtterances }
+      : window.loadOtherComment = loadUtterances
+    return
+  }
+  
+  if ('Utterances' === 'Utterances' || !true) {
+    if (true) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+    else loadUtterances()
+  } else {
+    window.loadOtherComment = loadUtterances
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【规范】前端团队代码规范及git提交检测 | ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在团队开发中，需要对代码风格进行统一；同时，好的代码风格也有利于阅读和维护。下面从ide和eslint的配置，以及git-commit预检测来介绍。 VSCODE配置现在vscode使用最多，其他编辑器也可类似配置。 editorconfigvscode本身可以设置tab转换为空格。使用editorconfig可以更方便的对项目和文件做不同的配置。VSCODE可以安装editorconfig插件，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【规范】前端团队代码规范及git提交检测">
+<meta property="og:url" content="https://blog.ahao430.site/2020/05/21/%E3%80%90%E8%A7%84%E8%8C%83%E3%80%91%E5%89%8D%E7%AB%AF%E5%9B%A2%E9%98%9F%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83%E5%8F%8Agit%E6%8F%90%E4%BA%A4%E6%A3%80%E6%B5%8B/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="在团队开发中，需要对代码风格进行统一；同时，好的代码风格也有利于阅读和维护。下面从ide和eslint的配置，以及git-commit预检测来介绍。 VSCODE配置现在vscode使用最多，其他编辑器也可类似配置。 editorconfigvscode本身可以设置tab转换为空格。使用editorconfig可以更方便的对项目和文件做不同的配置。VSCODE可以安装editorconfig插件，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:published_time" content="2020-05-21T08:56:58.000Z">
+<meta property="article:modified_time" content="2020-06-19T03:11:31.000Z">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "【规范】前端团队代码规范及git提交检测",
+  "url": "https://blog.ahao430.site/2020/05/21/%E3%80%90%E8%A7%84%E8%8C%83%E3%80%91%E5%89%8D%E7%AB%AF%E5%9B%A2%E9%98%9F%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83%E5%8F%8Agit%E6%8F%90%E4%BA%A4%E6%A3%80%E6%B5%8B/",
+  "image": "https://blog.ahao430.site/img/butterfly-icon.png",
+  "datePublished": "2020-05-21T08:56:58.000Z",
+  "dateModified": "2020-06-19T03:11:31.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ahao430",
+      "url": "https://blog.ahao430.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/2020/05/21/%E3%80%90%E8%A7%84%E8%8C%83%E3%80%91%E5%89%8D%E7%AB%AF%E5%9B%A2%E9%98%9F%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83%E5%8F%8Agit%E6%8F%90%E4%BA%A4%E6%A3%80%E6%B5%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【规范】前端团队代码规范及git提交检测',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">【规范】前端团队代码规范及git提交检测</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">【规范】前端团队代码规范及git提交检测</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-05-21T08:56:58.000Z" title="发表于 2020-05-21 16:56:58">2020-05-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-06-19T03:11:31.000Z" title="更新于 2020-06-19 11:11:31">2020-06-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>在团队开发中，需要对代码风格进行统一；同时，好的代码风格也有利于阅读和维护。下面从ide和eslint的配置，以及git-commit预检测来介绍。</p>
+<h2 id="VSCODE配置"><a href="#VSCODE配置" class="headerlink" title="VSCODE配置"></a>VSCODE配置</h2><p>现在vscode使用最多，其他编辑器也可类似配置。</p>
+<h3 id="editorconfig"><a href="#editorconfig" class="headerlink" title="editorconfig"></a><a target="_blank" rel="noopener" href="https://editorconfig.org/">editorconfig</a></h3><p>vscode本身可以设置tab转换为空格。使用editorconfig可以更方便的对项目和文件做不同的配置。VSCODE可以安装editorconfig插件，然后在项目根目录新建一个.editorconfig文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root = true</span><br><span class="line"></span><br><span class="line">[*]</span><br><span class="line">indent_style = space</span><br><span class="line">indent_size = 2</span><br><span class="line">charset = utf-8</span><br><span class="line">trim_trailing_whitespace = false</span><br><span class="line">insert_final_newline = true</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这里可以在下面最近文件类型，比如设置java和python的tab为4个空格，而js的tab为2个空格。</p>
+<h3 id="eslint"><a href="#eslint" class="headerlink" title="eslint"></a><a target="_blank" rel="noopener" href="https://eslint.bootcss.com/">eslint</a></h3><p>eslint是一个代码的强约束，通过一系列规则来严格控制团队代码风格。在官网可以看到详细的规则列表。</p>
+<p>在项目中安装eslint，可以通过命令行进行校验。同时，需要安装一系列的包。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D eslint babel-eslint eslint-plugin-import eslint-plugin-node eslint-plugin-promise</span><br></pre></td></tr></table></figure>
+
+<p>eslint的规则需要在.eslintrc(.eslintrc.js、.eslintrc.json)文件中设置。一个eslintrc.js文件如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">root</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">extends</span>: [</span><br><span class="line">    <span class="string">&#x27;eslint-config-standard&#x27;</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">globals</span>: &#123;</span><br><span class="line">    <span class="attr">my</span>: <span class="literal">false</span>, <span class="comment">// false只读</span></span><br><span class="line">    <span class="attr">getApp</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="title class_">App</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">getCurrentPages</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="title class_">Component</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="title class_">Page</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">getRegExp</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">getDate</span>: <span class="literal">false</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">env</span>: &#123;</span><br><span class="line">    <span class="string">&quot;browser&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">&quot;es6&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">&quot;node&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">&quot;jquery&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">&quot;amd&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">&quot;commonjs&quot;</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">parser</span>: <span class="string">&quot;babel-eslint&quot;</span>,</span><br><span class="line">  <span class="attr">rules</span>: &#123;</span><br><span class="line">    <span class="string">&quot;no-fallthrough&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;prefer-promise-reject-errors&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;comma-dangle&quot;</span>: [<span class="number">2</span>, <span class="string">&quot;only-multiline&quot;</span>],</span><br><span class="line">    <span class="string">&quot;indent&quot;</span>: [<span class="number">2</span>, <span class="number">2</span>, &#123;<span class="string">&quot;SwitchCase&quot;</span>: <span class="number">1</span>&#125;],</span><br><span class="line">    <span class="string">&quot;no-useless-computed-key&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;semi&quot;</span>: [<span class="number">2</span>, <span class="string">&quot;never&quot;</span>],</span><br><span class="line">    <span class="string">&quot;space-before-function-paren&quot;</span>: [<span class="number">2</span>, <span class="string">&quot;always&quot;</span>],</span><br><span class="line">    <span class="string">&quot;no-console&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;no-alert&quot;</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="string">&quot;new-cap&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;no-eq-null&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;eqeqeq&quot;</span>: [<span class="number">2</span>, <span class="string">&quot;always&quot;</span>, &#123;<span class="string">&quot;null&quot;</span>: <span class="string">&quot;ignore&quot;</span>&#125;],</span><br><span class="line">    <span class="string">&quot;no-param-reassign&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;no-invalid-this&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;quote-props&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;no-misleading-character-class&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;no-useless-escape&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;import/no-absolute-path&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;no-case-declarations&quot;</span>: <span class="number">0</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>其中，extends里的eslint-config-standard是一个eslint config，常用的还有eslint-config-airbnb。使用规则时需要npm安装。下面的rules就是需要设置的eslint规则，这两个config中包含了大量预设的规则，下面的rules可以自定义补充和覆盖。前面的key是规则名，后面的value可以是一个数字或数组。0表示忽略，不校验；1表示警告；2表示报错。具体的规则可以在官网查询。</p>
+<p>另外可以通过注释忽略某一行或某个文件的eslint校验。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 某一段落忽略</span></span><br><span class="line"><span class="comment">/* eslint-disable */</span></span><br><span class="line"><span class="title function_">alert</span>(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"><span class="comment">/* eslint-enable */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 某一段路忽略指定规则</span></span><br><span class="line"><span class="comment">/* eslint-disable no-alert, no-console */</span></span><br><span class="line"><span class="title function_">alert</span>(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;bar&#x27;</span>);</span><br><span class="line"><span class="comment">/* eslint-enable no-alert, no-console */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 整个文件下面开始忽略</span></span><br><span class="line"><span class="comment">/* eslint-disable */</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以通过.eslintignore文件，设置忽略校验的文件夹，比如node_modules, dist, 第三方库。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.tea/</span><br><span class="line">.idea</span><br><span class="line">dist/</span><br><span class="line">libs/</span><br><span class="line">node_modules/</span><br><span class="line">**/*.sjs</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>最后，再在package.json的script中设置eslint命令，通过npm run eslint来检验。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;miniapp&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;main&quot;</span><span class="punctuation">:</span> <span class="string">&quot;app.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;eslint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;eslint miniapp/**/*.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;dependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;babel-eslint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^10.0.3&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;eslint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^6.7.2&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;eslint-config-standard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^14.1.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;eslint-plugin-import&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^2.18.2&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;eslint-plugin-node&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^10.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;eslint-plugin-promise&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^4.2.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;eslint-plugin-standard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^4.0.1&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在vscode中，我们有更方便的使用方式。首先安装eslint和prettier插件。然后vscode会在打开项目时自动eslint检测，在左侧目录对错误文件标红，在代码中也会自动标记警告和错误的位置，提示规则。</p>
+<h3 id="prettier插件"><a href="#prettier插件" class="headerlink" title="prettier插件"></a>prettier插件</h3><p>我们知道，vscode快捷键Alt+Shift+F可以格式化代码。在vscode继续安装prettier插件，可以设置对齐方式使用eslint对齐。这样，对一些单双引号，空格等问题，可以一键格式化。更进一步，在vscode设置中选择保存自动fix代码，只要每次Ctrl+S保存代码，就会自动eslint对齐。</p>
+<p>一些规则不能自动处理，比如我们推荐除了&#x3D;&#x3D;null，其余地方都严格使用&#x3D;&#x3D;&#x3D;，这个就无法自动转换，因为涉及到类型判断。</p>
+<h2 id="PRE-COMMIT配置"><a href="#PRE-COMMIT配置" class="headerlink" title="PRE-COMMIT配置"></a>PRE-COMMIT配置</h2><p>npm安装pre-commit包。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D pre-commit</span><br></pre></td></tr></table></figure>
+
+<p>在package.json配置pre-commit。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xjh&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;main&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./miniapp/app.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;eslint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;eslint miniapp/**/*.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;pre-commit&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;eslint&quot;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;devDependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;babel-eslint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^10.0.3&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;eslint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^6.7.2&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;eslint-config-standard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^14.1.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;eslint-plugin-import&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^2.18.2&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;eslint-plugin-node&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^10.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;eslint-plugin-promise&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^4.2.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;eslint-plugin-standard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^4.0.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;pre-commit&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^1.2.2&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这样，在每次执行git commit时，就会先进行预设的eslint命令，如果eslint检查未通过，则不能commit代码，从而强制要求每个成员在提交代码时，必须符合项目eslint规范。</p>
+<h2 id="Eslint-Rules"><a href="#Eslint-Rules" class="headerlink" title="Eslint Rules"></a>Eslint Rules</h2><p>三个级别：</p>
+<ul>
+<li><code>&quot;off&quot;</code> 或 <code>0</code> - 关闭规则</li>
+<li><code>&quot;warn&quot;</code> 或 <code>1</code> - 开启规则，使用警告级别的错误：<code>warn</code> (不会导致程序退出)</li>
+<li><code>&quot;error&quot;</code> 或 <code>2</code> - 开启规则，使用错误级别的错误：<code>error</code> (当被触发的时候，程序会退出)</li>
+</ul>
+<p>部分常用规则：</p>
+<ul>
+<li>“no-fallthrough”:  <font style="color:#333333;background-color:#F9F9F9;">禁止 </font><code>case</code><font style="color:#333333;background-color:#F9F9F9;"> 语句落空</font></li>
+<li>“prefer-promise-reject-errors”: 要求使用 Error 对象作为 Promise 拒绝的原因</li>
+<li>“comma-dangle”:  <font style="color:#333333;background-color:#F9F9F9;">要求或禁止末尾逗号</font></li>
+<li><font style="color:#333333;background-color:#F9F9F9;">“comma-spacing”:  </font>强制在逗号前后使用一致的空格</li>
+<li>“indent”:  强制使用一致的缩进</li>
+<li>“no-useless-computed-key”: 禁止在对象中使用不必要的计算属性</li>
+<li>“semi”: 要求或禁止使用分号代替 ASI</li>
+<li>“space-before-function-paren”:  强制在 function的左括号之前使用一致的空格</li>
+<li>“no-console”: 0,</li>
+<li>“no-alert”: 禁用 alert、confirm 和 prompt</li>
+<li>“new-cap”: 要求构造函数首字母大写</li>
+<li>“no-eq-null”: 禁止在没有类型检查操作符的情况下与 null 进行比较</li>
+<li>“eqeqeq”: 要求使用 &#x3D;&#x3D;&#x3D; 和 !&#x3D;&#x3D;</li>
+<li>“no-param-reassign”: 禁止对 function 的参数进行重新赋值</li>
+<li>“no-invalid-this”: 禁止 this 关键字出现在类和类对象之外</li>
+<li>“quote-props”: 要求对象字面量属性名称用引号括起来</li>
+<li>“no-misleading-character-class”: 不允许在字符类语法中出现由多个代码点组成的字符</li>
+<li>“no-useless-escape”: 禁用不必要的转义字符</li>
+<li>“no-case-declarations”: 不允许在 case 子句中使用词法声明</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site">ahao430</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site/2020/05/21/%E3%80%90%E8%A7%84%E8%8C%83%E3%80%91%E5%89%8D%E7%AB%AF%E5%9B%A2%E9%98%9F%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83%E5%8F%8Agit%E6%8F%90%E4%BA%A4%E6%A3%80%E6%B5%8B/">https://blog.ahao430.site/2020/05/21/%E3%80%90%E8%A7%84%E8%8C%83%E3%80%91%E5%89%8D%E7%AB%AF%E5%9B%A2%E9%98%9F%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83%E5%8F%8Agit%E6%8F%90%E4%BA%A4%E6%A3%80%E6%B5%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.ahao430.site" target="_blank">ahao430 的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2020/06/08/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AAtransition%E7%BB%84%E4%BB%B6/" title="【小程序】实现一个transition组件"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">【小程序】实现一个transition组件</div></div><div class="info-2"><div class="info-item-1">在小程序实现一个transition组件，实现类似vue和react的transition的过渡效果。 分析vue的transition是接收一个name，以这个name在过渡的几个阶段生成不同的class。然后对这几个class设置相应的css3的transition或animation动画，来实现显示和隐藏的过渡动画。  这样，我们就可以先设置初始状态（enter, leave），再在下一次渲染阶段执行相应的active来触发开始的动画。再在transitionEnd或者animationEnd时执行enter-to和leave-to来触发结束动画，达成最终状态。 另外，小程序中无法获取this.props.slots或者this.props.children，所以我们可以直接将组件的显示和隐藏状态做为参数传递进来。但是为了显示动画，不能立刻改变状态，要等待动画完成。 实现12345&lt;view class=&quot;my-transition {{name}} {{name}}-{{step}}&quot; onTransitionEnd=&quot;onTransi...</div></div></div></a><a class="pagination-related" href="/2020/05/21/%E3%80%90%E5%B7%A5%E5%85%B7%E3%80%91%E6%94%AF%E4%BB%98%E5%AE%9D%E5%B0%8F%E7%A8%8B%E5%BA%8Fanymock%E7%9A%84%E4%BD%BF%E7%94%A8/" title="【工具】支付宝小程序anymock的使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">【工具】支付宝小程序anymock的使用</div></div><div class="info-2"><div class="info-item-1">在前后端分离开发的过程中，经常使用mock来进行开发，这方面的工具有在项目代码中开发环境下引入mockjs来做mock服务，或是使用线上mock服务平台如rap、apizza等。这些服务最大的一个问题是，要么全部接口启用mock，要么全部接口不使用mock。如果是在新项目比较方便，但是对于半路接手的项目，显然全部设置一遍mock是不现实的。 在web项目中，可以在开发环境引入mockjs，对某些接口做拦截，而非单独起一个mock服务域名。在支付宝小程序中，可以使用anymock服务。 新版本的开发工具中，新增了一个anymock的按钮，点击可以看到一个配置界面。点击前往anymock平台并登陆，可以配置项目mock代码。anymock不需要设置全部接口mock，而是对设置了mock的接口返回mock数据，对找不到mock数据的接口正常请求，这样，更方便我们在新迭代中开发。 anymock登录后，可以创建一个项目，复制token填入开发工具。  进入项目，可以创建接口，类型选择http，填入接口path，选择接口类型并保存。  可以看到，一个接口可以创建多个mock数据来选择。  ...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#VSCODE%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">VSCODE配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#editorconfig"><span class="toc-number">1.1.</span> <span class="toc-text">editorconfig</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eslint"><span class="toc-number">1.2.</span> <span class="toc-text">eslint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#prettier%E6%8F%92%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">prettier插件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PRE-COMMIT%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">PRE-COMMIT配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Eslint-Rules"><span class="toc-number">3.</span> <span class="toc-text">Eslint Rules</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-06-30T04:27:15.000Z" title="更新于 2026-06-30 12:27:15">2026-06-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-touchbar/" title="【开源】cc-touchbar">【开源】cc-touchbar</a><time datetime="2026-06-28T13:30:02.000Z" title="更新于 2026-06-28 21:30:02">2026-06-28</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+  const getUtterancesTheme = theme => theme === 'dark' ? 'photon-dark' : 'github-light'
+
+  const loadUtterances = (el = document, key) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyUtterances = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const config = {
+      src: 'https://utteranc.es/client.js',
+      repo: 'ahao430/blog',
+      theme: getUtterancesTheme(document.documentElement.getAttribute('data-theme')),
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      'issue-term': isShuoshuo ? key : (option && option['issue-term']) || 'pathname'
+    }
+
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => ele.setAttribute(key, value))
+    el.querySelector('#utterances-wrap').appendChild(ele)
+  }
+
+  const changeUtterancesTheme = theme => {
+    const iframe = document.querySelector('#utterances-wrap iframe')
+    if (iframe) {
+      const message = {
+        type: 'set-theme',
+        theme: getUtterancesTheme(theme)
+      };
+      iframe.contentWindow.postMessage(message, 'https://utteranc.es')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeUtterancesTheme, 'utterances')
+
+  if (isShuoshuo) {
+    'Utterances' === 'Utterances'
+      ? window.shuoshuoComment = { loadComment: loadUtterances }
+      : window.loadOtherComment = loadUtterances
+    return
+  }
+  
+  if ('Utterances' === 'Utterances' || !true) {
+    if (true) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+    else loadUtterances()
+  } else {
+    window.loadOtherComment = loadUtterances
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

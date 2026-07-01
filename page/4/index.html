@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="个人技术博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ahao430 的博客">
+<meta property="og:url" content="https://blog.ahao430.site/page/4/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="个人技术博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/page/4/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ahao430 的博客',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">ahao430 的博客</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/05/09/JS%E9%A2%9C%E8%89%B2%E5%A4%84%E7%90%86/" title="JS颜色处理">JS颜色处理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2024-05-09T09:01:03.000Z" title="更新于 2024-05-09 17:01:03">2024-05-09</time></span></div><div class="content">主题切换平时我们开发时，颜色一般写在css里，用less或者sass预处理器的话，还有变量和函数功能，可以设置一个主题色，再利用lighten函数和darken函数得到一系列设置，非常方便不同的主题处理。 SCSS切换主题预处理器是在编译阶段执行，我们如果想要动态切换主题的话，需要编译生成多套主题css文件，然后动态加载覆盖，实现起来比较麻烦。之前我们一般用webpack-theme-color-replacer这个包来做。 但是这样只能实现预设编译好的主题直接互相切换，如果要添加新的颜色，就要先重新编译一套主题css文件。 CSS变量切换主题后来css有了原生的变量，我们也可以通过js去修改css变量来实现这一功能。  element-plus主题设置，scss变量方式和css变量方式  element-plus因为用css变量实现了主题设置，切换主题只需要动态设置css变量即可。 123document.documentElement.style.setProperty(&#x27;--primary-color&#x27;, &#x27;red&#x27;);documen...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/04/24/unplugin-auto-import%E4%BC%98%E5%8C%96%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96/" title="unplugin-auto-import优化项目依赖">unplugin-auto-import优化项目依赖</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2024-04-24T07:43:23.000Z" title="更新于 2024-04-24 15:43:23">2024-04-24</time></span></div><div class="content">前端项目中，模块化管理可以方便我们管理代码，但是有些公用的依赖项需要在每个页面和组件重复引入，较为繁琐。尤其是中台项目，每个页面都要引入一堆UI框架的组件。我们可以通过配置插件来实现自动引入，这样用的时候直接就能用，代码上方少了一堆依赖看着也清晰不少。 自动依赖的实现是通过一个unplugin-auto-import的插件。  官网：https://unplugin.unjs.io/showcase/unplugin-auto-import.html   github：https://github.com/unplugin/unplugin-auto-import  插件支持vite、webpack、rollup等打包工具。下面以vite为例。 插件安装与引入1npm i -D unplugin-auto-import  123456789101112import AutoImport from &#x27;unplugin-auto-import/vite&#x27;;import &#123; defineConfig &#125; from &#x27;vite&#x27;...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/04/09/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%BF%94%E5%9B%9E%E6%8B%A6%E6%88%AA%E5%AE%9E%E7%8E%B0/" title="小程序返回拦截实现">小程序返回拦截实现</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2024-04-09T07:31:01.000Z" title="更新于 2024-04-09 15:31:01">2024-04-09</time></span></div><div class="content">my.enableAlertBeforeUnload方法（2.7.17）文档：https://opendocs.alipay.com/mini/api/my.enableAlertBeforeUnload my.enableAlertBeforeUnload 开启小程序页面返回询问对话框。调用后，当用户尝试从小程序当前页面返回上一页面时会弹出对话框。 在小程序写A&#x2F;B&#x2F;C三个页面，A放一个跳转B按钮，B放一个跳转C按钮。 在B页面代码如下： 12345678910111213141516171819Page(&#123;  data: &#123;  &#125;,  onLoad (query) &#123;    my.enableAlertBeforeUnload(&#123;      message: &#x27;测试返回拦截&#x27;,      success: function(res) &#123;        console.log(res);      &#125;,      fail: function(err) &#123;  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/04/09/%E5%9F%BA%E4%BA%8Eali-oss%E5%BC%80%E5%8F%91%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0%E5%B0%8F%E5%B7%A5%E5%85%B7/" title="基于ali-oss开发图片上传小工具">基于ali-oss开发图片上传小工具</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2024-04-09T07:30:40.000Z" title="更新于 2024-04-09 15:30:40">2024-04-09</time></span></div><div class="content"> ali-oss sdk(nodejs版)：https://help.aliyun.com/zh/oss/developer-reference/getting-started-with-oss-sdk-for-node-js?spm=a2c4g.11186623.0.0.e1137efd32AoVH  背景之前在海星server基于ali-oss的nodejs sdk，做了oss上传下载文件的接口，并基于上传接口做了一款网页版的上传工具， 界面如下：  平时上传一些图片等静态资源还是很方便的。但是有个问题是上传之后看不到当前的目录结构和历史上传的文件，替换文件的时候要记得文件路径去拼写。 为了解决上述问题，仔细查询文档后，发现有查询目录的api，实现了一个2.0版，界面如下：  sdk相关方法 查询目录: client.list方法，传入路径，列举制定前缀的文件，返回当前路径的文件列表和子目录列表。 删除文件：client.delete方法删除单个文件。 上传文件：client.put上传本地文件。oss中没有目录的概念，上传路径的&#x2F;当做逻辑上的目录划分。 下载文件：...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/11/07/Automa%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8/" title="Automa插件使用">Automa插件使用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2024-12-13T13:18:43.000Z" title="更新于 2024-12-13 21:18:43">2024-12-13</time></span></div><div class="content"> Automa是一个chrome扩展，通过拖拽0代码实现工作流，模拟网页的各种点击、表单填写等操作，使用时点击插件脚本一键执行，或者设置定时执行，从而简化我们的工作。 功能介绍官方文档地址：https://docs.automa.site/。 界面新建一个插件，界面如上图。  左侧面版有一些列组件可供选择 右侧画布区域可以放置组件，再把组件用线连起来。 点击组件，组件上方出现编辑、删除等按钮，点击编辑，左侧弹出组件配置区域。 右上方工具栏，其中table可以创建数据表，globalData可以编辑全局数据 设置里可以选择中文  常用组件插件提供了非常多的组件。有界面相关的，如点击元素、获取元素属性、获取元素文本、悬停元素、按键等等；有逻辑相关的，如条件、判断元素存在、循环等；有浏览器相关的，如激活当前活动标签页、新建标签页、前进、返回、刷新、截屏；等等。 这里介绍几个主要的组件： 触发器一个脚本以触发器开始，新建脚本默认会有一个触发器。编辑触发器，有编辑触发器和参数两个配置。其中编辑触发器，默认手动，可以换成下图的多种触发方式，可以按时间定时执行，也可以设置快捷键等。  可以添加...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/10/26/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%95%86%E5%AE%B6%E5%90%8E%E5%8F%B0%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E6%89%B9%E9%87%8F%E6%B7%BB%E5%8A%A0%E5%9F%9F%E5%90%8D/" title="小程序商家后台脚本实现批量添加域名">小程序商家后台脚本实现批量添加域名</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2023-10-26T11:58:32.000Z" title="更新于 2023-10-26 19:58:32">2023-10-26</time></span></div><div class="content"> 业务需求在多个小程序后台批量添加域名，每个小程序要添加几十个。需要重复如下操作：  点击图上添加按钮，出现弹窗。 在弹窗输入要添加的域名，点击确认提交。 弹出通知弹窗，再次点击确认。 重复上述操作，添加不同的域名  几十个域名*几个小程序，操作量有点大，考虑用脚本实现。 思路 考虑用按键精灵，发现mac不支持 考虑js脚本，仔细研究了ajax请求，在控制台ajax调用，设置了携带cookie，发现依然返回失败 考虑用js模拟真实操作  问题用js实现了上述过程，在输入框设置input.value&#x3D;domain。实际执行每次输入域名后点击确认，输入框报红色校验错误，判断应该是用框架实现的页面，虽然修改了输入框dom上挂载的value，但是内存中的值没有改，代码直接读取内存的值，校验错误。 搜索vue和react模拟真实收入，发现有实现的方法，https://blog.csdn.net/weixin_46774564&#x2F;article&#x2F;details&#x2F;123254550。 查看支付宝这个页面应该是react写的，在控制台可以看到react插件有...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/10/08/%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%9B%BE%E6%A0%87%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E7%AE%A1%E7%90%86/" title="前端项目中图标的使用和管理">前端项目中图标的使用和管理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2023-10-08T08:10:14.000Z" title="更新于 2023-10-08 16:10:14">2023-10-08</time></span></div><div class="content">在前端项目中，会用到很多小图标，这些图标很小，但是数量会很多，比如导航、按钮等等，其中很多在不同项目还会重复用到。  使用方式直接使用图片最简单的图片使用方式，就是UI给出的图片，在代码中使用img标签，或者background属性来引用。 引用的图片可以维护在项目本地，也可以放到cdn。 雪碧图直接使用图片，会有很多并发的网络请求，因此可以讲这些小图标合并成一张大图，通过background-position定位来展示不同的图标。这样多个请求合并成一个，优化了性能，但是使用和维护起来麻烦。 关于雪碧图的维护，我们可以通过插件在编译阶段解决，自动生成雪碧图，并且生成css文件，开发的时候，按照文件名的class命名去引用。 123456789101112131415161718192021222324252627282930313233343536373839//webpack.config.jsvar path = require(&#x27;path&#x27;); var SpritesmithPlugin = require(&#x27;webpack-spritesmi...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/09/07/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9C%AC%E5%9C%B0iconfont%E5%B7%A5%E5%85%B7%E5%BC%80%E5%8F%91/" title="小程序本地iconfont工具开发">小程序本地iconfont工具开发</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2023-09-07T08:13:32.000Z" title="更新于 2023-09-07 16:13:32">2023-09-07</time></span></div><div class="content">npm包：https://www.npmjs.com/package/miniapp-svg2iconfont github: https://github.com/ahao430/miniapp-svg2iconfont#readme 基于svgtofont开发。  背景： 平时小程序开发过程中，UI给的是一个个的svg，没有系统的iconfont维护。小程序端使用iconfont的话，首先要上传维护iconfont仓库，然后每次要转base63再下载，在项目中更新，比较麻烦。 在web端直接使用svg更加方便，如svg-sprite-loader，项目本地维护svg即可；但是小程序端svg只能作为图片使用。 思路： svgtofont可以将本地的svg转成iconfont，但是看了文档，没有转成base64格式的选项，转base64的话，还是需要去iconmoon等网站工具。想到基于svgtofont生成的文件，继续转base64，再替换到css中，试验可行。 实现：  svg转font  从https://www.iconfont.cn/下载了几个svg图片，引入svgto...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/08/16/SVGA%E5%8A%A8%E7%94%BB%E6%9B%BF%E6%8D%A2%E5%9B%BE%E5%B1%82%E5%85%83%E7%B4%A0/" title="SVGA动画替换图层元素">SVGA动画替换图层元素</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2023-08-16T02:08:20.000Z" title="更新于 2023-08-16 10:08:20">2023-08-16</time></span></div><div class="content">之前写了一篇关于SVGA和Lottie动画使用的，现在有一个新的需求，要实现一个效果比较炫的引导动画，想用SVGA实现，但是要求里面的一些数字是动态可配的。查了下SVGA支持替换图层，跟UI配合调研成功替换，用了两种SVGA库来实现。 UI准备： UI在出图的时候，对图层做好命名，导出SVGA后，告诉开发可配置图层的名称。 PS: 在这里预览SVGA文件，也可以查看所有图层的key。 联调过程： 引入svga，根据图层的key动态替换元素，再播放动画。 这里我先用的svgaplayer-web-lite去做，因为之前的svga动画也是用的这个库。但是当时跟UI还在调研，以为新建的图层要用文本框，出了一个有问题的svga文件，用这个库报错，换成svgaplayer-web就可以正常渲染。另外网上看的替换svga图层的教程都是用的svgaplayer-web，就先用这个实现了。 后来发现不用文本框，普通图层就行，又用lite实现了一下，相比较起来，lite更轻量，性能更好。 参考文章：https://blog.csdn.net/weixin_44309374&#x2F;article...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/08/07/%E4%B8%80%E6%AC%A1code%20review%E5%8F%91%E7%8E%B0%E7%9A%84%E5%AF%B9%E8%B1%A1%E6%8E%92%E5%BA%8F%E9%97%AE%E9%A2%98/" title="一次code review发现的对象排序问题">一次code review发现的对象排序问题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2023-08-07T02:30:21.000Z" title="更新于 2023-08-07 10:30:21">2023-08-07</time></span></div><div class="content">问题一次代码review中，发现代码如下： 1234567891011121314151617181920export const sortByASCII = (obj) =&gt; &#123;    let arr = Object.keys(obj);    let sortArr = arr.sort();    let sortObj = &#123;&#125;;    for (let i in sortArr) &#123;        sortObj[sortArr[i]] = obj[sortArr[i]];    &#125;    return sortObj;&#125;;export const qs = &#123;  stringify: (obj = &#123;&#125;) =&gt; &#123;        const arr = [];        for (const key in obj) &#123;            arr.push(key + &quot;=&quot; + obj[key]);        &#...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/3/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#content-inner">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/#content-inner">8</a><a class="extend next" rel="next" href="/page/5/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-06-30T04:27:15.000Z" title="更新于 2026-06-30 12:27:15">2026-06-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-touchbar/" title="【开源】cc-touchbar">【开源】cc-touchbar</a><time datetime="2026-06-28T13:30:02.000Z" title="更新于 2026-06-28 21:30:02">2026-06-28</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI/"><span class="card-category-list-name">AI</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/VPS%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/"><span class="card-category-list-name">VPS服务器配置</span><span class="card-category-list-count">13</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/VPS%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/frp%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE/"><span class="card-category-list-name">frp服务配置</span><span class="card-category-list-count">2</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/esim/"><span class="card-category-list-name">esim</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"><span class="card-category-list-name">开源项目</span><span class="card-category-list-count">3</span></a></li>
+          </ul></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      <a class="card-more-btn" href="/archives/"
+            title="查看更多">
+            <i class="fas fa-angle-right"></i>
+          </a>
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/07/">
+            <span class="card-archive-list-date">
+              七月 2026
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/06/">
+            <span class="card-archive-list-date">
+              六月 2026
+            </span>
+            <span class="card-archive-list-count">17</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/05/">
+            <span class="card-archive-list-date">
+              五月 2026
+            </span>
+            <span class="card-archive-list-count">3</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/03/">
+            <span class="card-archive-list-date">
+              三月 2026
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/12/">
+            <span class="card-archive-list-date">
+              十二月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/11/">
+            <span class="card-archive-list-date">
+              十一月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/05/">
+            <span class="card-archive-list-date">
+              五月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/11/">
+            <span class="card-archive-list-date">
+              十一月 2024
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">78</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-07-01T20:17:55.509Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

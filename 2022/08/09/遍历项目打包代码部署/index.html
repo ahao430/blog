@@ -1,0 +1,277 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>遍历项目打包代码部署 | ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="原项目是在webpack里配置entry为列表，遍历多个活动页面打包。现改造项目拆分为独立的项目，又想能够在需要时遍历所有项目打包，所以在根目录加了一个build命令，并写了一个脚本去执行。 命令：1234567891011121314&#123;  &quot;name&quot;: &quot;@mono&#x2F;dsp&quot;,  &quot;version&quot;: &quot;0.1.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="遍历项目打包代码部署">
+<meta property="og:url" content="https://blog.ahao430.site/2022/08/09/%E9%81%8D%E5%8E%86%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BB%A3%E7%A0%81%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="原项目是在webpack里配置entry为列表，遍历多个活动页面打包。现改造项目拆分为独立的项目，又想能够在需要时遍历所有项目打包，所以在根目录加了一个build命令，并写了一个脚本去执行。 命令：1234567891011121314&#123;  &quot;name&quot;: &quot;@mono&#x2F;dsp&quot;,  &quot;version&quot;: &quot;0.1.0">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:published_time" content="2022-08-09T07:31:33.000Z">
+<meta property="article:modified_time" content="2022-08-09T08:48:33.000Z">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "遍历项目打包代码部署",
+  "url": "https://blog.ahao430.site/2022/08/09/%E9%81%8D%E5%8E%86%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BB%A3%E7%A0%81%E9%83%A8%E7%BD%B2/",
+  "image": "https://blog.ahao430.site/img/butterfly-icon.png",
+  "datePublished": "2022-08-09T07:31:33.000Z",
+  "dateModified": "2022-08-09T08:48:33.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ahao430",
+      "url": "https://blog.ahao430.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/2022/08/09/%E9%81%8D%E5%8E%86%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BB%A3%E7%A0%81%E9%83%A8%E7%BD%B2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '遍历项目打包代码部署',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">遍历项目打包代码部署</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">遍历项目打包代码部署</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-08-09T07:31:33.000Z" title="发表于 2022-08-09 15:31:33">2022-08-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-08-09T08:48:33.000Z" title="更新于 2022-08-09 16:48:33">2022-08-09</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>原项目是在webpack里配置entry为列表，遍历多个活动页面打包。现改造项目拆分为独立的项目，又想能够在需要时遍历所有项目打包，所以在根目录加了一个build命令，并写了一个脚本去执行。</p>
+<h2 id="命令："><a href="#命令：" class="headerlink" title="命令："></a>命令：</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;@mono/dsp&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.1.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;private&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;module&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm run build:prod&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;build:dev&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cross-env NODE_ENV=production VUE_APP_ENV=dev node build/index.mjs&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;build:test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cross-env NODE_ENV=production VUE_APP_ENV=test node build/index.mjs&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;build:uat&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cross-env NODE_ENV=production VUE_APP_ENV=uat node build/index.mjs&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;build:prod&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cross-env NODE_ENV=production VUE_APP_ENV=prod node build/index.mjs&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  ...</span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>在根目录新建build目录存放脚本：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/373268/1660030707584-8fc7025f-bde7-4baa-a0a7-202f593d66d1.png"></p>
+<h2 id="功能实现"><a href="#功能实现" class="headerlink" title="功能实现"></a>功能实现</h2><p>首先遍历活动目录，拿到所有项目路径。这里用fs和path模块即可。当前路径用__dirname。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">getChildFolders</span> = (<span class="params">dir</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> children = fs.<span class="title function_">readdirSync</span>(dir);</span><br><span class="line">  <span class="keyword">return</span> children.<span class="title function_">filter</span>(<span class="function"><span class="params">name</span> =&gt;</span> fs.<span class="title function_">statSync</span>(path.<span class="title function_">resolve</span>(dir, name)).<span class="title function_">isDirectory</span>())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>然后遍历执行打包命令。这里用到child_process模块，开启子线程进行编译。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cp = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> cmd = <span class="string">`cd <span class="subst">$&#123;url&#125;</span> &amp;&amp; npm run build:<span class="subst">$&#123;env&#125;</span>`</span></span><br><span class="line">cp.<span class="title function_">exec</span>(cmd, &#123;</span><br><span class="line">  <span class="attr">cwd</span>: process.<span class="title function_">cwd</span>()</span><br><span class="line">&#125;, <span class="keyword">function</span> (<span class="params">err, stdout, stderr</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(err || stdout || stderr)</span><br><span class="line">  <span class="title function_">resolve</span>()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>这里一开始执行就特别的卡，因为同时开了太多子进程去打包。将遍历改为异步。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">asyncForEach</span> = <span class="keyword">async</span> (<span class="params">arr, fn</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> arr) &#123;</span><br><span class="line">    <span class="comment">// console.log(item)</span></span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">fn</span>(item)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>待打包完，执行部署，将项目的dist目录复制到指定目录并重命名。这里可以用fs来实现，发现有个fs-extra更方便。将fs引入改为fs-extra，包含所有fs的方法，原先fs使用不用更改。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs-extra&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">deployProgram</span> = <span class="keyword">async</span> (<span class="params">dir, name, dir2</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> src = path.<span class="title function_">join</span>(dir, name, <span class="string">&#x27;dist&#x27;</span>)</span><br><span class="line">  <span class="keyword">const</span> target = path.<span class="title function_">join</span>(dir2, name)</span><br><span class="line">  fs.<span class="title function_">copySync</span>(src, target)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>到这里，基本功能已经实现，加一些console就能看到打包的状况。</p>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>我们再引入chalk对console做一些美化，并打印进度。这里引入progress组件，看进度更方便一些。</p>
+<p>此时遇到一个eslint报错，说不能require es模块。原来npm install chalk安装的模板只支持es module。改成import引入chalk，又遇到另一个报错，说不支持在node环境用import。因此，我们把这两个脚本后缀名改成mjs，然后所有require改成import。</p>
+<p>这时还有一个报错，说是__dirname未定义，这个变量只能在node环境用。上网找了下解决方案。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; dirname &#125; <span class="keyword">from</span> <span class="string">&quot;node:path&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; fileURLToPath &#125; <span class="keyword">from</span> <span class="string">&quot;node:url&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> __filename = <span class="title function_">fileURLToPath</span>(<span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">url</span>);</span><br><span class="line"><span class="keyword">const</span> __dirname = <span class="title function_">dirname</span>(__filename);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>另外node版本在14以下不支持在最外层直接使用await。改用一个async函数包裹下。</p>
+<h2 id="最终代码"><a href="#最终代码" class="headerlink" title="最终代码"></a>最终代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> utils <span class="keyword">from</span> <span class="string">&#x27;./utils.mjs&#x27;</span></span><br><span class="line"><span class="keyword">import</span> path <span class="keyword">from</span> <span class="string">&#x27;path&#x27;</span></span><br><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs-extra&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">ProgressBar</span> <span class="keyword">from</span> <span class="string">&#x27;progress&#x27;</span>;</span><br><span class="line"><span class="comment">// const chalk = require(&#x27;chalk&#x27;)</span></span><br><span class="line"><span class="keyword">import</span> chalk <span class="keyword">from</span> <span class="string">&#x27;chalk&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; dirname &#125; <span class="keyword">from</span> <span class="string">&quot;node:path&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; fileURLToPath &#125; <span class="keyword">from</span> <span class="string">&quot;node:url&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> __filename = <span class="title function_">fileURLToPath</span>(<span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">url</span>);</span><br><span class="line"><span class="keyword">const</span> __dirname = <span class="title function_">dirname</span>(__filename);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 环境</span></span><br><span class="line"><span class="keyword">const</span> env = process.<span class="property">env</span>.<span class="property">VUE_APP_ENV</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">NODE_ENV</span> = <span class="string">&#x27;production&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 目录</span></span><br><span class="line"><span class="keyword">const</span> activityPath = path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;../packageActivity&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> subpagePath = path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;../packageSubpage&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> deployPath = path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;../releases&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> subpageDeployPath = path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;../releases/subpage&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 清空releases目录</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(chalk.<span class="title function_">blue</span>(<span class="string">&#x27;清空releases目录&#x27;</span>))</span><br><span class="line">fs.<span class="title function_">emptyDirSync</span>(deployPath)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取活动目录， </span></span><br><span class="line"><span class="keyword">const</span> arr1 = utils.<span class="title function_">getChildFolders</span>(activityPath)</span><br><span class="line"><span class="comment">// 读取二级页目录， </span></span><br><span class="line"><span class="keyword">const</span> arr2 = utils.<span class="title function_">getChildFolders</span>(subpagePath)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(chalk.<span class="title function_">blue</span>(<span class="string">&#x27;开始遍历项目&#x27;</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`当前环境：<span class="subst">$&#123;chalk.blue(env)&#125;</span>`</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 进度</span></span><br><span class="line"><span class="keyword">const</span> total = arr1.<span class="property">length</span> + arr2.<span class="property">length</span></span><br><span class="line"><span class="keyword">let</span> finish = <span class="number">0</span></span><br><span class="line"><span class="keyword">const</span> bar = <span class="keyword">new</span> <span class="title class_">ProgressBar</span>(<span class="string">&#x27;:bar :current/:total\n&#x27;</span>, &#123; <span class="attr">total</span>: total &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 活动遍历打包，放到/releases</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">init</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> utils.<span class="title function_">asyncForEach</span>(arr1, <span class="keyword">async</span> item =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> utils.<span class="title function_">buildProgram</span>(activityPath, item, env)</span><br><span class="line">    <span class="keyword">await</span> utils.<span class="title function_">deployProgram</span>(activityPath, item, deployPath)</span><br><span class="line">    finish++</span><br><span class="line">    bar.<span class="title function_">tick</span>(<span class="number">1</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 二级页，遍历打包，放到/releases/subpage/</span></span><br><span class="line">  <span class="keyword">await</span> utils.<span class="title function_">asyncForEach</span>(arr2, <span class="keyword">async</span> item =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> utils.<span class="title function_">buildProgram</span>(subpagePath, item, env)</span><br><span class="line">    <span class="keyword">await</span> utils.<span class="title function_">deployProgram</span>(subpagePath, item, subpageDeployPath)</span><br><span class="line">    finish++</span><br><span class="line">    bar.<span class="title function_">tick</span>(<span class="number">1</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (finish === total) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(chalk.<span class="title function_">green</span>(<span class="string">&#x27;全部打包完成，可以部署releases目录到release仓库&#x27;</span>))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">init</span>()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs-extra&#x27;</span></span><br><span class="line"><span class="keyword">import</span> path <span class="keyword">from</span> <span class="string">&#x27;path&#x27;</span></span><br><span class="line"><span class="keyword">import</span> cp <span class="keyword">from</span> <span class="string">&#x27;child_process&#x27;</span></span><br><span class="line"><span class="comment">// const chalk = require(&#x27;chalk&#x27;)</span></span><br><span class="line"><span class="keyword">import</span> chalk <span class="keyword">from</span> <span class="string">&#x27;chalk&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; dirname &#125; <span class="keyword">from</span> <span class="string">&quot;node:path&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; fileURLToPath &#125; <span class="keyword">from</span> <span class="string">&quot;node:url&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> __filename = <span class="title function_">fileURLToPath</span>(<span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">url</span>);</span><br><span class="line"><span class="keyword">const</span> __dirname = <span class="title function_">dirname</span>(__filename);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">getChildFolders</span> = (<span class="params">dir</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> children = fs.<span class="title function_">readdirSync</span>(dir);</span><br><span class="line">  <span class="keyword">return</span> children.<span class="title function_">filter</span>(<span class="function"><span class="params">name</span> =&gt;</span> fs.<span class="title function_">statSync</span>(path.<span class="title function_">resolve</span>(dir, name)).<span class="title function_">isDirectory</span>())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">buildProgram</span> = (<span class="params">dir, name, env</span>) =&gt; &#123;</span><br><span class="line">  <span class="comment">// console.log(dir)</span></span><br><span class="line">  <span class="keyword">const</span> url = path.<span class="title function_">join</span>(dir, name)</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> cmd = <span class="string">`cd <span class="subst">$&#123;url&#125;</span> &amp;&amp; npm run build:<span class="subst">$&#123;env&#125;</span>`</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`开始打包: <span class="subst">$&#123;chalk.yellow(name)&#125;</span>`</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`打包命令：<span class="subst">$&#123;chalk.yellow(cmd)&#125;</span>`</span>)</span><br><span class="line">    cp.<span class="title function_">exec</span>(cmd, &#123;</span><br><span class="line">      <span class="attr">cwd</span>: process.<span class="title function_">cwd</span>()</span><br><span class="line">    &#125;, <span class="keyword">function</span> (<span class="params">err, stdout, stderr</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`打包结束: <span class="subst">$&#123;chalk.yellow(name)&#125;</span>`</span>)</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(err || stdout || stderr)</span><br><span class="line">      <span class="title function_">resolve</span>()</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">asyncForEach</span> = <span class="keyword">async</span> (<span class="params">arr, fn</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> arr) &#123;</span><br><span class="line">    <span class="comment">// console.log(item)</span></span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">fn</span>(item)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">deployProgram</span> = <span class="keyword">async</span> (<span class="params">dir, name, dir2</span>) =&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`开始部署: <span class="subst">$&#123;chalk.yellow(name)&#125;</span>`</span>)</span><br><span class="line">  <span class="keyword">const</span> src = path.<span class="title function_">join</span>(dir, name, <span class="string">&#x27;dist&#x27;</span>)</span><br><span class="line">  <span class="keyword">const</span> target = path.<span class="title function_">join</span>(dir2, name)</span><br><span class="line">  fs.<span class="title function_">copySync</span>(src, target)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`部署完成: <span class="subst">$&#123;chalk.yellow(name)&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  getChildFolders,</span><br><span class="line">  buildProgram,</span><br><span class="line">  asyncForEach,</span><br><span class="line">  deployProgram,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="运行效果"><a href="#运行效果" class="headerlink" title="运行效果"></a>运行效果</h2><p><img src="https://cdn.nlark.com/yuque/0/2022/png/373268/1660034444234-5f6758f4-042e-436b-8954-6d930cfcf30c.png"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/373268/1660034463015-62f951ba-dbd3-4d2e-bb94-5e959b8db8fc.png"></p>
+<p>…</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/373268/1660034886168-176ef391-237e-459d-bc95-777b114d96fa.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site">ahao430</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site/2022/08/09/%E9%81%8D%E5%8E%86%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BB%A3%E7%A0%81%E9%83%A8%E7%BD%B2/">https://blog.ahao430.site/2022/08/09/%E9%81%8D%E5%8E%86%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BB%A3%E7%A0%81%E9%83%A8%E7%BD%B2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.ahao430.site" target="_blank">ahao430 的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2022/11/03/React%E6%8B%96%E6%8B%BD%E6%95%88%E6%9E%9C%E5%AE%9E%E7%8E%B0/" title="React拖拽效果实现"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">React拖拽效果实现</div></div><div class="info-2"><div class="info-item-1">原生js中，我们可以通过onDrag和onDrop事件来实现拖拽效果。而在react中，有一个强大的库，react-dnd，对拖拽相关能力进行了封装。react-dnd强大的好处是高度自由性，但是各种代码需要去手动实现。 我们海星二期装修页面需要实现一个拖拽（排序和复制），这里我们选择一个基于react-dnd二次封装的库，react-smooth-dnd。  文档安装1npm i react-smooth-dnd  示例1234567891011121314151617181920import React, &#123; Component &#125; from &#x27;react&#x27;;import &#123; Container, Draggable &#125; from &#x27;react-smooth-dnd&#x27;;class SimpleSortableList extends Component &#123;  render() &#123;    return (      &lt;div&gt;        &lt;Container...</div></div></div></a><a class="pagination-related" href="/2022/07/29/%E5%9C%A8vue%E4%B8%AD%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E5%91%BD%E4%BB%A4%E5%BC%8F%E8%B0%83%E7%94%A8%E7%9A%84%E5%BC%B9%E7%AA%97%E7%BB%84%E4%BB%B6/" title="在vue中开发一个命令式调用的弹窗组件"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">在vue中开发一个命令式调用的弹窗组件</div></div><div class="info-2"><div class="info-item-1">活动需求要做一个顶部弹窗图片的toast效果，想起element中通过命令调用toast组件的方式，去调研一番，实现了一个类似效果。 相关api：核心需要用到两个api：  Vue.extend方法，通过模板创建Vue构造器：https://cn.vuejs.org/v2/api/?#Vue-extend vm.$mount方法，获取vm实例：https://cn.vuejs.org/v2/api/?#vm-mount  第一步，创建模板如下，写一个Vue组件，就像我们平常手动引入使用的组件那样。但是不用写props，所有的配置对象写到data里。关闭的时候，要销毁dom对象。我们知道vm.$el可以拿到组件的dom元素，因此可以通过this.$el.parentNode.removeChild(this.$el)来移除dom。在此之前，用vm.$destroy销毁vm实例。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">命令：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">功能实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96"><span class="toc-number">3.</span> <span class="toc-text">优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E4%BB%A3%E7%A0%81"><span class="toc-number">4.</span> <span class="toc-text">最终代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%95%88%E6%9E%9C"><span class="toc-number">5.</span> <span class="toc-text">运行效果</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-06-30T04:27:15.000Z" title="更新于 2026-06-30 12:27:15">2026-06-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-touchbar/" title="【开源】cc-touchbar">【开源】cc-touchbar</a><time datetime="2026-06-28T13:30:02.000Z" title="更新于 2026-06-28 21:30:02">2026-06-28</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+  const getUtterancesTheme = theme => theme === 'dark' ? 'photon-dark' : 'github-light'
+
+  const loadUtterances = (el = document, key) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyUtterances = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const config = {
+      src: 'https://utteranc.es/client.js',
+      repo: 'ahao430/blog',
+      theme: getUtterancesTheme(document.documentElement.getAttribute('data-theme')),
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      'issue-term': isShuoshuo ? key : (option && option['issue-term']) || 'pathname'
+    }
+
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => ele.setAttribute(key, value))
+    el.querySelector('#utterances-wrap').appendChild(ele)
+  }
+
+  const changeUtterancesTheme = theme => {
+    const iframe = document.querySelector('#utterances-wrap iframe')
+    if (iframe) {
+      const message = {
+        type: 'set-theme',
+        theme: getUtterancesTheme(theme)
+      };
+      iframe.contentWindow.postMessage(message, 'https://utteranc.es')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeUtterancesTheme, 'utterances')
+
+  if (isShuoshuo) {
+    'Utterances' === 'Utterances'
+      ? window.shuoshuoComment = { loadComment: loadUtterances }
+      : window.loadOtherComment = loadUtterances
+    return
+  }
+  
+  if ('Utterances' === 'Utterances' || !true) {
+    if (true) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+    else loadUtterances()
+  } else {
+    window.loadOtherComment = loadUtterances
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
