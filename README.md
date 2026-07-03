@@ -6,13 +6,13 @@
 
 > 本目录由 `tools/build-readme.cjs` 在每次语雀同步后**自动生成**，请勿手动编辑。部署 / 同步说明见 [`DEPLOY.md`](./DEPLOY.md)。
 
-共 **79** 篇文章 · 目录生成时间：2026-07-03 07:27:18 UTC
+共 **79** 篇文章 · 目录生成时间：2026-07-03 08:09:52 UTC
 
 | 更新时间 | 标题 |
 | --- | --- |
+| 2026-07-03 | [otty终端app](docs/otty%E7%BB%88%E7%AB%AFapp.md) |
 | 2026-07-03 | [发现一个不错的PPT skill](docs/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84PPT%20skill.md) |
 | 2026-07-01 | [【开源】cc-statusline](docs/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline.md) |
-| 2026-06-30 | [otty终端app](docs/otty%E7%BB%88%E7%AB%AFapp.md) |
 | 2026-06-29 | [发现一个不错的ssh客户端](docs/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF.md) |
 | 2026-06-28 | [【开源-浏览器AI侧边栏插件】](docs/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91.md) |
 | 2026-06-28 | [【开源】cc-touchbar](docs/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-touchbar.md) |

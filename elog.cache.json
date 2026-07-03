@@ -1364,13 +1364,14 @@
     {
       "id": 275791211,
       "doc_id": "khd8a0cxfqex4qkn",
-      "updated": 1782793635000,
+      "updated": 1783066152000,
       "properties": {
         "title": "otty终端app",
         "urlname": "khd8a0cxfqex4qkn",
         "date": "2026-06-30 12:24:34",
-        "updated": "2026-06-30 12:27:15",
-        "description": "https://otty.sh/之前typora团队新出品的终端应用。可以在一个界面上通过tab管理多个终端。然后发现搭配上tmux相当好用啊。现在claude code每个项目都用tmux启动，隐藏，然后再在otty上单开一个窗口恢复。一个界面实现我所有claude code会话的管理。"
+        "updated": "2026-07-03 16:09:12",
+        "cover": "https://cdn.nlark.com/yuque/0/2026/png/373268/1783066067631-c998cda7-eabd-4bb5-8c48-370af4900bbf.png",
+        "description": "https://otty.sh/之前typora团队新出品的终端应用。可以在一个界面上通过tab管理多个终端。然后发现搭配上tmux相当好用啊。现在claude code每个项目都用tmux启动，隐藏，然后再在otty上单开一个窗口恢复。一个界面实现我所有claude code会话的管理。右边..."
       },
       "catalog": [],
       "realName": "otty终端app",
