@@ -1398,15 +1398,46 @@
       "realName": "【开源】cc-statusline",
       "relativePath": "/【开源】cc-statusline.md",
       "docPath": "docs"
+    },
+    {
+      "id": 276246264,
+      "doc_id": "gn386gaxre6dt0ur",
+      "updated": 1783063601000,
+      "properties": {
+        "title": "发现一个不错的PPT skill",
+        "urlname": "gn386gaxre6dt0ur",
+        "date": "2026-07-03 14:10:21",
+        "updated": "2026-07-03 15:26:41",
+        "description": "让 AI 直接画一整套 PPT 的 skill。每一页都是一张 16:9 的图，由 gpt-image-2 生成，最后拼成 .pptx。仓库：https://github.com/ningzimu/codex-ppt-skill案例合集（Issue #34）：https://github.co..."
+      },
+      "catalog": [],
+      "realName": "发现一个不错的PPT skill",
+      "relativePath": "/发现一个不错的PPT skill.md",
+      "docPath": "docs"
     }
   ],
   "catalog": [
     {
       "type": "DOC",
+      "title": "发现一个不错的PPT skill",
+      "uuid": "6vnjK_mUo0ugeMZm",
+      "url": "gn386gaxre6dt0ur",
+      "prev_uuid": "",
+      "sibling_uuid": "QPnai2XtL_A9OYfM",
+      "child_uuid": "",
+      "parent_uuid": "",
+      "doc_id": 276246264,
+      "level": 0,
+      "id": 276246264,
+      "open_window": 1,
+      "visible": 1
+    },
+    {
+      "type": "DOC",
       "title": "otty终端app",
       "uuid": "QPnai2XtL_A9OYfM",
       "url": "khd8a0cxfqex4qkn",
-      "prev_uuid": "",
+      "prev_uuid": "6vnjK_mUo0ugeMZm",
       "sibling_uuid": "tPUiuwbOZOBGgeJ5",
       "child_uuid": "",
       "parent_uuid": "",
