@@ -6,13 +6,14 @@
 
 > 本目录由 `tools/build-readme.cjs` 在每次语雀同步后**自动生成**，请勿手动编辑。部署 / 同步说明见 [`DEPLOY.md`](./DEPLOY.md)。
 
-共 **79** 篇文章 · 目录生成时间：2026-07-24 08:45:13 UTC
+共 **79** 篇文章 · 目录生成时间：2026-07-24 14:16:23 UTC
 
 | 更新时间 | 标题 |
 | --- | --- |
+| 2026-07-24 | [发现一个不错的PPT skill](docs/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84PPT%20skill.md) |
+| 2026-07-24 | [【开源】cc-statusline](docs/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline.md) |
+| 2026-07-24 | [梯子](docs/%E6%A2%AF%E5%AD%90.md) |
 | 2026-07-03 | [otty终端app](docs/otty%E7%BB%88%E7%AB%AFapp.md) |
-| 2026-07-03 | [发现一个不错的PPT skill](docs/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84PPT%20skill.md) |
-| 2026-07-01 | [【开源】cc-statusline](docs/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline.md) |
 | 2026-06-29 | [发现一个不错的ssh客户端](docs/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF.md) |
 | 2026-06-28 | [【开源-浏览器AI侧边栏插件】](docs/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91.md) |
 | 2026-06-28 | [【开源】cc-touchbar](docs/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-touchbar.md) |
@@ -29,7 +30,6 @@
 | 2026-06-06 | [服务器安装cc](docs/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85cc.md) |
 | 2026-06-06 | [探针](docs/%E6%8E%A2%E9%92%88.md) |
 | 2026-06-06 | [送中和warp](docs/%E9%80%81%E4%B8%AD%E5%92%8Cwarp.md) |
-| 2026-06-06 | [梯子](docs/%E6%A2%AF%E5%AD%90.md) |
 | 2026-06-06 | [BBR加速](docs/BBR%E5%8A%A0%E9%80%9F.md) |
 | 2026-05-27 | [服务器备份](docs/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%A4%87%E4%BB%BD.md) |
 | 2026-05-27 | [德国沃丰达](docs/%E5%BE%B7%E5%9B%BD%E6%B2%83%E4%B8%B0%E8%BE%BE.md) |

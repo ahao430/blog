@@ -243,12 +243,12 @@
     {
       "id": 272789133,
       "doc_id": "wp3xugg4l8gapkqu",
-      "updated": 1780710205000,
+      "updated": 1784884548000,
       "properties": {
         "title": "梯子",
         "urlname": "wp3xugg4l8gapkqu",
         "date": "2026-06-06 09:38:41",
-        "updated": "2026-06-06 09:43:25",
+        "updated": "2026-07-24 17:15:48",
         "description": "命令：bash "
       },
       "catalog": [
@@ -1381,12 +1381,12 @@
     {
       "id": 275979064,
       "doc_id": "cypz2qhn5p8kk5cy",
-      "updated": 1782893853000,
+      "updated": 1784884550000,
       "properties": {
         "title": "【开源】cc-statusline",
         "urlname": "cypz2qhn5p8kk5cy",
         "date": "2026-07-01 16:12:53",
-        "updated": "2026-07-01 16:17:33",
+        "updated": "2026-07-24 17:15:50",
         "cover": "https://cdn.nlark.com/yuque/0/2026/png/373268/1782893621287-9a7ffd5b-62f4-4dc7-a6f2-8f03629db35d.png",
         "description": "https://github.com/ahao430/cc-statusline又搓了一个自定义statusline，没有touchbar的用户可以用这个。一键安装curl -fsSL https://raw.githubusercontent.com/ahao430/cc-statuslin..."
       },
@@ -1403,12 +1403,12 @@
     {
       "id": 276246264,
       "doc_id": "gn386gaxre6dt0ur",
-      "updated": 1783063601000,
+      "updated": 1784884552000,
       "properties": {
         "title": "发现一个不错的PPT skill",
         "urlname": "gn386gaxre6dt0ur",
         "date": "2026-07-03 14:10:21",
-        "updated": "2026-07-03 15:26:41",
+        "updated": "2026-07-24 17:15:52",
         "description": "让 AI 直接画一整套 PPT 的 skill。每一页都是一张 16:9 的图，由 gpt-image-2 生成，最后拼成 .pptx。仓库：https://github.com/ningzimu/codex-ppt-skill案例合集（Issue #34）：https://github.co..."
       },
       "catalog": [],
