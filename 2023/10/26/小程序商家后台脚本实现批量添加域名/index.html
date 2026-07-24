@@ -1,0 +1,256 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>小程序商家后台脚本实现批量添加域名 | ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="业务需求在多个小程序后台批量添加域名，每个小程序要添加几十个。需要重复如下操作：  点击图上添加按钮，出现弹窗。 在弹窗输入要添加的域名，点击确认提交。 弹出通知弹窗，再次点击确认。 重复上述操作，添加不同的域名  几十个域名*几个小程序，操作量有点大，考虑用脚本实现。 思路 考虑用按键精灵，发现mac不支持 考虑js脚本，仔细研究了ajax请求，在控制台ajax调用，设置了携带cookie，发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小程序商家后台脚本实现批量添加域名">
+<meta property="og:url" content="https://blog.ahao430.site/2023/10/26/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%95%86%E5%AE%B6%E5%90%8E%E5%8F%B0%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E6%89%B9%E9%87%8F%E6%B7%BB%E5%8A%A0%E5%9F%9F%E5%90%8D/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="业务需求在多个小程序后台批量添加域名，每个小程序要添加几十个。需要重复如下操作：  点击图上添加按钮，出现弹窗。 在弹窗输入要添加的域名，点击确认提交。 弹出通知弹窗，再次点击确认。 重复上述操作，添加不同的域名  几十个域名*几个小程序，操作量有点大，考虑用脚本实现。 思路 考虑用按键精灵，发现mac不支持 考虑js脚本，仔细研究了ajax请求，在控制台ajax调用，设置了携带cookie，发">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:published_time" content="2023-10-26T11:58:16.000Z">
+<meta property="article:modified_time" content="2023-10-26T11:58:32.000Z">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "小程序商家后台脚本实现批量添加域名",
+  "url": "https://blog.ahao430.site/2023/10/26/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%95%86%E5%AE%B6%E5%90%8E%E5%8F%B0%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E6%89%B9%E9%87%8F%E6%B7%BB%E5%8A%A0%E5%9F%9F%E5%90%8D/",
+  "image": "https://blog.ahao430.site/img/butterfly-icon.png",
+  "datePublished": "2023-10-26T11:58:16.000Z",
+  "dateModified": "2023-10-26T11:58:32.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ahao430",
+      "url": "https://blog.ahao430.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/2023/10/26/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%95%86%E5%AE%B6%E5%90%8E%E5%8F%B0%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E6%89%B9%E9%87%8F%E6%B7%BB%E5%8A%A0%E5%9F%9F%E5%90%8D/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '小程序商家后台脚本实现批量添加域名',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">小程序商家后台脚本实现批量添加域名</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">小程序商家后台脚本实现批量添加域名</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-26T11:58:16.000Z" title="发表于 2023-10-26 19:58:16">2023-10-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-10-26T11:58:32.000Z" title="更新于 2023-10-26 19:58:32">2023-10-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p><img src="https://cdn.nlark.com/yuque/0/2023/png/373268/1698320797962-ed854967-5174-432b-a6ef-42f0e035c497.png"></p>
+<p>业务需求在多个小程序后台批量添加域名，每个小程序要添加几十个。需要重复如下操作：</p>
+<ol>
+<li>点击图上添加按钮，出现弹窗。</li>
+<li>在弹窗输入要添加的域名，点击确认提交。</li>
+<li>弹出通知弹窗，再次点击确认。</li>
+<li>重复上述操作，添加不同的域名</li>
+</ol>
+<p>几十个域名*几个小程序，操作量有点大，考虑用脚本实现。</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li>考虑用按键精灵，发现mac不支持</li>
+<li>考虑js脚本，仔细研究了ajax请求，在控制台ajax调用，设置了携带cookie，发现依然返回失败</li>
+<li>考虑用js模拟真实操作</li>
+</ol>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>用js实现了上述过程，在输入框设置input.value&#x3D;domain。实际执行每次输入域名后点击确认，输入框报红色校验错误，判断应该是用框架实现的页面，虽然修改了输入框dom上挂载的value，但是内存中的值没有改，代码直接读取内存的值，校验错误。</p>
+<p>搜索vue和react模拟真实收入，发现有实现的方法，<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46774564/article/details/123254550">https://blog.csdn.net/weixin_46774564&#x2F;article&#x2F;details&#x2F;123254550</a>。</p>
+<p>查看支付宝这个页面应该是react写的，在控制台可以看到react插件有显示内容。用react的方法测试成功。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>完整脚本实现如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">addScript</span>(<span class="params">url, cb</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> script = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;script&#x27;</span>)</span><br><span class="line">  script.<span class="property">src</span> = url</span><br><span class="line">  script.<span class="property">onload</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    axios.<span class="property">defaults</span>.<span class="property">withCredentials</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="title function_">cb</span>()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(script)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> list = [</span><br><span class="line">  <span class="string">&#x27;dsp-api.yunyinglhc.net.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;huodong.shmlantec.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;huodong.shmlkjxx.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.voguecai.pub&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.voguecai.org.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;voguecai.net.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;huodong.jiuzhengsh.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;huodong.yuaitech.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;voguecai.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;huodong.shyunai.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.voguecai.net.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.happilyzhou.org.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.happilyzhou.pub&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.lifeduan.com.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.fitnesstip.net.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;czyl.iyoudui.com&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;huodong.jiuzhenxx.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.aiyoudui.com.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.baubles.pub&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.plantphotos.com.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;huodong.shmlanxx.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.fitnesstip.com.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.happilyzhou.net.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.skincarew.com.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.lifeduan.net.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.voguecai.com.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;huodong.shjiuzhensy.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.fitnesstip.pub&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.baubles.com.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;huodong.minglantec.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api-uat.iyoudui.com.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.skincarew.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;huodong.mlantecsh.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.hcbit.com.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.skincarew.net.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.skincarew.pub&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.lifeduan.org.cn&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;dsp-api.lifeduan.pub&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;luna.iyoudui.com&#x27;</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">sleep</span> = time =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> <span class="built_in">setTimeout</span>(resolve, time))</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">$</span> = el =&gt; <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(el)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 模拟真实输入框点击</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">mockInput</span> = (<span class="params">input, val, type</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> lastValue = input.<span class="property">value</span></span><br><span class="line">  input.<span class="property">value</span> = val</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (type === <span class="string">&#x27;vue&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// vue</span></span><br><span class="line">    <span class="keyword">let</span> event = <span class="variable language_">document</span>.<span class="title function_">createEvent</span>(<span class="string">&#x27;HTMLEvents&#x27;</span>)</span><br><span class="line">    event.<span class="title function_">initEvent</span>(<span class="string">&#x27;input&#x27;</span>, <span class="literal">true</span>, <span class="literal">true</span>)</span><br><span class="line">    event.<span class="property">eventType</span> = <span class="string">&#x27;message&#x27;</span></span><br><span class="line">    input.<span class="title function_">dispatchEvent</span>(event)</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">&#x27;react&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// react</span></span><br><span class="line">    <span class="keyword">let</span> event = <span class="keyword">new</span> <span class="title class_">Event</span>(<span class="string">&#x27;input&#x27;</span>, &#123; <span class="attr">bubbles</span>: <span class="literal">true</span> &#125;)</span><br><span class="line">    <span class="keyword">let</span> tracker = input.<span class="property">_valueTracker</span></span><br><span class="line">    <span class="keyword">if</span>(tracker) &#123;</span><br><span class="line">      tracker.<span class="title function_">setValue</span>(lastValue)</span><br><span class="line">    &#125;</span><br><span class="line">    input.<span class="title function_">dispatchEvent</span>(event)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">addDomain</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (list.<span class="property">length</span> === <span class="number">0</span>) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 点击服务器域名白名单添加按钮</span></span><br><span class="line">  <span class="keyword">const</span> domain = list.<span class="title function_">pop</span>()</span><br><span class="line">  <span class="keyword">const</span> btnAdd = $(<span class="string">&#x27;.after___HsXtq button&#x27;</span>)</span><br><span class="line">  btnAdd.<span class="title function_">click</span>()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 弹窗输入域名</span></span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">sleep</span>(<span class="number">500</span>)</span><br><span class="line">  <span class="keyword">const</span> input = $(<span class="string">&#x27;#safeDomain&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(domain)</span><br><span class="line">  <span class="title function_">mockInput</span>(input, domain, <span class="string">&#x27;react&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(input)</span><br><span class="line">  <span class="comment">// 点击弹窗确认按钮</span></span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">sleep</span>(<span class="number">500</span>)</span><br><span class="line">  <span class="keyword">const</span> btnOk = $(<span class="string">&#x27;.ant-modal-footer .ant-btn.ant-btn-primary&#x27;</span>)</span><br><span class="line">  btnOk.<span class="title function_">click</span>()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 点击通知弹窗确认</span></span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">sleep</span>(<span class="number">500</span>)</span><br><span class="line">  <span class="keyword">const</span> btnOk2 = $(<span class="string">&#x27;.ant-modal-confirm-btns .ant-btn.ant-btn-primary&#x27;</span>)</span><br><span class="line">  btnOk2.<span class="title function_">click</span>()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 下一个域名</span></span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">sleep</span>(<span class="number">500</span>)</span><br><span class="line">  <span class="title function_">addDomain</span>()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">addDomain</span>()</span><br></pre></td></tr></table></figure>
+
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p>打开商家页面，F12打开控制台，粘贴上述代码，回车。可以看到页面不断地弹出添加弹窗，输入域名，确认的过程。一会功夫几十个域名都添加好了。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site">ahao430</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site/2023/10/26/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%95%86%E5%AE%B6%E5%90%8E%E5%8F%B0%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E6%89%B9%E9%87%8F%E6%B7%BB%E5%8A%A0%E5%9F%9F%E5%90%8D/">https://blog.ahao430.site/2023/10/26/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%95%86%E5%AE%B6%E5%90%8E%E5%8F%B0%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E6%89%B9%E9%87%8F%E6%B7%BB%E5%8A%A0%E5%9F%9F%E5%90%8D/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.ahao430.site" target="_blank">ahao430 的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2023/11/07/Automa%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8/" title="Automa插件使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Automa插件使用</div></div><div class="info-2"><div class="info-item-1"> Automa是一个chrome扩展，通过拖拽0代码实现工作流，模拟网页的各种点击、表单填写等操作，使用时点击插件脚本一键执行，或者设置定时执行，从而简化我们的工作。 功能介绍官方文档地址：https://docs.automa.site/。 界面新建一个插件，界面如上图。  左侧面版有一些列组件可供选择 右侧画布区域可以放置组件，再把组件用线连起来。 点击组件，组件上方出现编辑、删除等按钮，点击编辑，左侧弹出组件配置区域。 右上方工具栏，其中table可以创建数据表，globalData可以编辑全局数据 设置里可以选择中文  常用组件插件提供了非常多的组件。有界面相关的，如点击元素、获取元素属性、获取元素文本、悬停元素、按键等等；有逻辑相关的，如条件、判断元素存在、循环等；有浏览器相关的，如激活当前活动标签页、新建标签页、前进、返回、刷新、截屏；等等。 这里介绍几个主要的组件： 触发器一个脚本以触发器开始，新建脚本默认会有一个触发器。编辑触发器，有编辑触发器和参数两个配置。其中编辑触发器，默认手动，可以换成下图的多种触发方式，可以按时间定时执行，也可以设置快捷键等。  可以添加...</div></div></div></a><a class="pagination-related" href="/2023/10/08/%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%9B%BE%E6%A0%87%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E7%AE%A1%E7%90%86/" title="前端项目中图标的使用和管理"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">前端项目中图标的使用和管理</div></div><div class="info-2"><div class="info-item-1">在前端项目中，会用到很多小图标，这些图标很小，但是数量会很多，比如导航、按钮等等，其中很多在不同项目还会重复用到。  使用方式直接使用图片最简单的图片使用方式，就是UI给出的图片，在代码中使用img标签，或者background属性来引用。 引用的图片可以维护在项目本地，也可以放到cdn。 雪碧图直接使用图片，会有很多并发的网络请求，因此可以讲这些小图标合并成一张大图，通过background-position定位来展示不同的图标。这样多个请求合并成一个，优化了性能，但是使用和维护起来麻烦。 关于雪碧图的维护，我们可以通过插件在编译阶段解决，自动生成雪碧图，并且生成css文件，开发的时候，按照文件名的class命名去引用。 123456789101112131415161718192021222324252627282930313233343536373839//webpack.config.jsvar path = require(&#x27;path&#x27;); var SpritesmithPlugin = require(&#x27;webpack-spritesmi...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%88%E6%9E%9C"><span class="toc-number">4.</span> <span class="toc-text">效果</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-07-03T08:09:12.000Z" title="更新于 2026-07-03 16:09:12">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/03/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84PPT%20skill/" title="发现一个不错的PPT skill">发现一个不错的PPT skill</a><time datetime="2026-07-03T07:26:41.000Z" title="更新于 2026-07-03 15:26:41">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+  const getUtterancesTheme = theme => theme === 'dark' ? 'photon-dark' : 'github-light'
+
+  const loadUtterances = (el = document, key) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyUtterances = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const config = {
+      src: 'https://utteranc.es/client.js',
+      repo: 'ahao430/blog',
+      theme: getUtterancesTheme(document.documentElement.getAttribute('data-theme')),
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      'issue-term': isShuoshuo ? key : (option && option['issue-term']) || 'pathname'
+    }
+
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => ele.setAttribute(key, value))
+    el.querySelector('#utterances-wrap').appendChild(ele)
+  }
+
+  const changeUtterancesTheme = theme => {
+    const iframe = document.querySelector('#utterances-wrap iframe')
+    if (iframe) {
+      const message = {
+        type: 'set-theme',
+        theme: getUtterancesTheme(theme)
+      };
+      iframe.contentWindow.postMessage(message, 'https://utteranc.es')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeUtterancesTheme, 'utterances')
+
+  if (isShuoshuo) {
+    'Utterances' === 'Utterances'
+      ? window.shuoshuoComment = { loadComment: loadUtterances }
+      : window.loadOtherComment = loadUtterances
+    return
+  }
+  
+  if ('Utterances' === 'Utterances' || !true) {
+    if (true) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+    else loadUtterances()
+  } else {
+    window.loadOtherComment = loadUtterances
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

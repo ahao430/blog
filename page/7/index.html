@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="个人技术博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ahao430 的博客">
+<meta property="og:url" content="https://blog.ahao430.site/page/7/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="个人技术博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/page/7/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ahao430 的博客',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">ahao430 的博客</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/03/26/Jest%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%BD%BF%E7%94%A8/" title="Jest单元测试使用">Jest单元测试使用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2021-03-26T02:30:48.000Z" title="更新于 2021-03-26 10:30:48">2021-03-26</time></span></div><div class="content">在小程序中尝试引入jest进行简单的单元测试。 安装1yarn add -D jest  配置在package.json添加test命令，执行jest； 在项目根目录新建test目录，用于存放test文件； 在根目录增加jest.config.js文件，设置jest配置。配置文档 配置问题新建一个测试文件。直接运行yarn test可以运行。但是使用es modules的import和export方法会报错。上网查阅解决办法，说是要用babel，但是尝试了几种方案都报错，要注意babel的版本。按照官网建议jest配置文件设置用babel-jest进行transform，babel配置如下解决： 1234// babel.config.jsmodule.exports = &#123;    presets: [[&#x27;@babel/preset-env&#x27;, &#123; targets: &#123; node: &#x27;current&#x27; &#125; &#125;]],&#125;    另外一个问题是引用模块的路径问题。我们项目的根路径是&#x...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/12/31/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%81%E5%B7%A5%E7%A8%8B%E5%8C%96%E3%80%91gulp%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%B7%A5%E7%A8%8B%E6%9E%84%E5%BB%BA/" title="【小程序、工程化】gulp介绍及小程序工程构建">【小程序、工程化】gulp介绍及小程序工程构建</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2020-12-31T10:53:45.000Z" title="更新于 2020-12-31 18:53:45">2020-12-31</time></span></div><div class="content">从零开始介绍下gulp的使用，及小程序的工程化搭建。 gulp介绍gulp是一款基于流的思想，执行一系列预设任务的工具。将工作拆解为一个个的任务，并通过流的传递来链式调用执行。 gulp vs webpack我们现在常用的webpack是一款打包工具，二者在思想上不同，但是又能实现很多相同的功能。webpack更适合SPA那种单一入口的项目，而gulp更适合多页面的处理。 安装及使用gulp一般全局安装即可。当然具体项目还需要安装对应的gulp插件。 1npm install -g gulp  在项目根目录新建一个gulpfile.js文件，进行相关任务的编写。其中gulp.task(‘default’)是默认任务，可以直接用 “gulp“命令执行，其他任务需要用”gulp 任务名“来执行。 12345678// gulpfile.jsconst gulp = require(&#x27;gulp&#x27;)// 默认任务gulp.task(&#x27;default&#x27;, done =&gt; &#123;  console.log(&#x27;gulp执行了&#x2...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/12/28/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E5%8F%8A%E5%88%86%E5%8C%85%E9%97%AE%E9%A2%98/" title="【小程序】小程序状态管理及分包问题">【小程序】小程序状态管理及分包问题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2021-04-09T06:19:01.000Z" title="更新于 2021-04-09 14:19:01">2021-04-09</time></span></div><div class="content">当前小程序项目全局状态及逻辑判断太复杂，尝试引入状态管理优化逻辑，同时将重复的逻辑判断放到getters中。这里我们使用mobx4，因为mobx使用了小程序不兼容的proxy。 mobx4介绍主要是这几个api：  observable get autorun action  我们引入observable创建一个store，创建一些观察对象 12345678910111213141516171819202122import &#123;observable, autorun&#125; from &#x27;mobx&#x27;const store = observable(&#123;  // 响应状态  value: 1,  list: [],  // computed  get count () &#123;  	return this.list.count   &#125;  // actions  setValue (val) &#123;		this.value = val		&#125;	addItem (item) &#123;  	this.list.push...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/09/04/%E3%80%90%E5%B7%A5%E7%A8%8B%E5%8C%96%E3%80%91%E9%80%9A%E8%BF%87shell%E5%90%8C%E6%97%B6%E5%90%AF%E5%8A%A8%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE/" title="【工程化】通过shell同时启动多个项目">【工程化】通过shell同时启动多个项目</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2020-09-04T01:39:07.000Z" title="更新于 2020-09-04 09:39:07">2020-09-04</time></span></div><div class="content">近期做了一个h5页面拼装demo项目，里面包含了前台、后台、简易服务端三个子项目。其中后台用iframe嵌套了前台h5页面做预览用，前后台又依赖服务端，每次启动都要依次运行三个服务。那么能否一次开启这三个服务呢？ 需求分析 需要在根目录中执行子目录的npm命令开启服务 我们希望开启三个cmd窗口来监听，而非在一个窗口内，不然开发时调试信息就无法查看。 npm脚本是支持使用&amp;&amp;串联多个命令的。但是我们的目的是并行，而非依次执行。 开发时启动监听服务，服务不会结束，不会走到下一个服务。  前两点可以通过使用shell脚本来解决。 shell脚本npm脚本中可以直接运行shell脚本。在项目根目录新建三个shell脚本，分别对应三个子项目。内容如下： 123# startPC.shcd ./pcnpm run serve  123# startH5.shcd ./h5npm run serve  12345# startServer.shcd ./servernpm run startwait# 这里加个wait，防止窗口一闪就关闭了  再在package.json编辑...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/07/20/%E3%80%90vue%E3%80%91%E5%9F%BA%E4%BA%8Evue-cli%E7%9A%84%E5%90%8E%E5%8F%B0%E9%A1%B9%E7%9B%AE%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA/" title="【vue】基于vue-cli的后台项目框架搭建">【vue】基于vue-cli的后台项目框架搭建</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2020-08-10T08:07:55.000Z" title="更新于 2020-08-10 16:07:55">2020-08-10</time></span></div><div class="content">最近搭建了一套基于vue-cli的后台项目。  vue-cli3，安装vue全家桶 UI采用的是ant-design-vue 考虑到主题切换需求，css采用了vue-styled-components npm scripts配置多环境 引入immer.js操作对象 安装mockjs方便开发 引入了storybook管理组件 使用webpack-dll-plugin优化打包  1. 目录结构12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455.├── .ci├── .git├── .storybook ........................................storybook配置文件│   ├── main.js│   ├── manager.js│   └── preview.js├── dist├── node_modules├── public│   ├── vendor ...................</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/06/18/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E9%95%BF%E5%88%97%E8%A1%A8%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E2%80%94%E2%80%94%E6%97%A0%E9%99%90%E4%B8%8B%E6%8B%89%E5%8A%A0%E8%BD%BD/" title="【小程序】长列表组件实现——无限下拉加载">【小程序】长列表组件实现——无限下拉加载</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2020-06-19T02:53:46.000Z" title="更新于 2020-06-19 10:53:46">2020-06-19</time></span></div><div class="content">移动端的列表页加载，一般是下拉加载更多，当翻页较多时，页面渲染节点太多，就会造成页面卡顿。需要对长列表进行优化，达到无限下拉。在微信小程序的扩展组件有一个recycle-view实现的长列表，支付宝没有长列表组件，需要我们自己开发。 实现原理长列表渲染节点过多造成卡顿。 实际上我们只需要渲染可视区域即可，对视口以外的部分，可以用padding或者一个指定高度的view来合并代替。监听页面滚动，修改渲染部分。这样不管我们怎么滚动，页面中渲染的节点数量是固定的。实际上考虑到用户感受，前后页面也进行渲染。 此时的问题就是计算了。列表还是那个列表，我们要根据scrollTop计算从哪个到哪个元素显示，计算顶部和底部高度。另外，列表的元素高度可能不固定，要传入函数动态计算。 组件设计模板我们设计成这样，通过具名slot传入元素。外部传入list用于计算，同时通过recycle-item-{{index}}的slot来传入列表元素渲染。通过控制渲染的index，来控制渲染部分，同时通过pt和pb的值控制上下空间。 微信的recycle-view还有一个recycle-item组件，这就造成了...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/06/18/%E3%80%90%E9%83%A8%E7%BD%B2%E3%80%91ssl%E8%AF%81%E4%B9%A6%E9%85%8D%E7%BD%AE/" title="【部署】ssl证书配置">【部署】ssl证书配置</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2021-06-06T09:31:09.000Z" title="更新于 2021-06-06 17:31:09">2021-06-06</time></span></div><div class="content">1. 相关说明SSL证书分为个人DV、企业OV、企业EV三类。免费SSL证书都是DV。 个人的一般三个月就要续期，且安全性较差。EV最安全，适合银行等客户使用。 证书的域名又有单域名和通配。 购买证书网站：https://www.getssl.cn/ 2. 购买证书这里以阿里云为例。 登录阿里云，菜单选择安全（云盾）-&gt;SSL证书（应用安全），点击购买免费证书。  选择免费证书，购买。  到证书控制台，找到未签发的证书。点击证书申请，填写资料。  这里域名验证方式要选手工，因为我们的域名解析不在阿里云上。提交审核得到验证信息，去域名管理添加记录。  等待解析生效，点击验证。验证成功，提交审核。可以看到现在状态是申请审核中。  审核通过，下载nginx证书，点击帮助可以看到nginx相关SSL配置。  3. 配置nginx服务器下载后，登录服务器，在nginx目录新建cert文件夹，放入解压后的两个文件。 再找到nginx配置文件，对应的server建立443端口server，加入ssl配置。ssl证书的路径对应刚刚的cert路径。 之前的80端口加入重定向。  最后，重启n...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/06/18/ssl%E8%AF%81%E4%B9%A6%E9%85%8D%E7%BD%AE/" title="ssl证书配置">ssl证书配置</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2020-06-18T01:23:31.000Z" title="更新于 2020-06-18 09:23:31">2020-06-18</time></span></div><div class="content">1. 相关说明SSL证书分为个人DV、企业OV、企业EV三类。免费SSL证书都是DV。 个人的一般三个月就要续期，且安全性较差。EV最安全，适合银行等客户使用。 证书的域名又有单域名和通配。 购买证书网站：https://www.getssl.cn/ 2. 购买证书这里以阿里云为例。 登录阿里云，菜单选择安全（云盾）-&gt;SSL证书（应用安全），点击购买免费证书。  选择免费证书，购买。  到证书控制台，找到未签发的证书。点击证书申请，填写资料。  这里域名验证方式要选手工，因为我们的域名解析不在阿里云上。提交审核得到验证信息，去域名管理添加记录。  等待解析生效，点击验证。验证成功，提交审核。可以看到现在状态是申请审核中。  审核通过，下载nginx证书，点击帮助可以看到nginx相关SSL配置。  3. 配置nginx服务器下载后，登录服务器，在nginx目录新建cert文件夹，放入解压后的两个文件。 再找到nginx配置文件，对应的server建立443端口server，加入ssl配置。ssl证书的路径对应刚刚的cert路径。 之前的80端口加入重定向。  最后，重启n...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/06/13/%E3%80%90vue%E3%80%91vue%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE%E4%BC%98%E5%8C%96/" title="【vue】vue项目配置优化">【vue】vue项目配置优化</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2020-06-13T16:33:37.000Z" title="更新于 2020-06-14 00:33:37">2020-06-14</time></span></div><div class="content">1. 环境变量vue-cli支持环境变量，vur-cli-service命令可以通过–mode读取不同的配置文件，从而读取不同的变量。 在项目根目录新建.env.开头的配置文件：  .env.build-prod文件： 12NODE_ENV=productionVUE_APP_ENV=prod  在package.json中通过–mode传入配置文件的名字： 12345678910111213141516&#123;  &quot;scripts&quot;: &#123;    &quot;start&quot;: &quot;vue-cli-service serve --mode dev-test&quot;,    &quot;serve&quot;: &quot;vue-cli-service serve --mode dev-test&quot;,    &quot;dev&quot;: &quot;vue-cli-service serve --mode dev-test&quot;,    &quot;dev:test&quot;: &quot;vue-cli-s...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/06/08/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%BC%80%E5%8F%91%E5%8F%8A%E5%85%BC%E5%AE%B9%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB(%E6%AC%A2%E8%BF%8E%E8%A1%A5%E5%85%85)/" title="【小程序】开发及兼容问题汇总(欢迎补充)">【小程序】开发及兼容问题汇总(欢迎补充)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2021-05-22T03:43:47.000Z" title="更新于 2021-05-22 11:43:47">2021-05-22</time></span></div><div class="content">1. 框架问题组件中使用setData等api报错在多层组件嵌套中，有些异步操作时页面已经销毁，此时组件执行相关代码就会报错。因此，在深层组件中，最好对一些操作尤其是异步操作，先判断this.$page是否存在。 修改导航栏文字颜色导航栏文字颜色不可直接设置，但是可以通过my.setNavigationBar设置背景色，颜色会根据背景色是深色还是浅色自动控制。即使导航栏设置为透明，依然可以设置背景色来控制右侧收藏和退出按钮的颜色。 隐藏页面标题可以通过my.setNavigationBar将页面标题设置为空来隐藏，同时设置页面背景色可改变文字和右侧组件颜色（反色黑或白）。但是实际发现标题为空在ios不生效，会显示小程序标题。 解决办法：设置为’ ‘。有个空格就不会判空了。 12345 my.setNavigationBar(&#123;  title: &#x27; &#x27;,  backgroundColor: &#x27;#000&#x27;,  borderBottomColor: &#x27;#000&#x27;,&#125;)  组件createSelectorQu...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/6/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#content-inner">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/#content-inner">8</a><a class="extend next" rel="next" href="/page/8/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-07-03T08:09:12.000Z" title="更新于 2026-07-03 16:09:12">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/03/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84PPT%20skill/" title="发现一个不错的PPT skill">发现一个不错的PPT skill</a><time datetime="2026-07-03T07:26:41.000Z" title="更新于 2026-07-03 15:26:41">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI/"><span class="card-category-list-name">AI</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/VPS%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/"><span class="card-category-list-name">VPS服务器配置</span><span class="card-category-list-count">13</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/VPS%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/frp%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE/"><span class="card-category-list-name">frp服务配置</span><span class="card-category-list-count">2</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/esim/"><span class="card-category-list-name">esim</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"><span class="card-category-list-name">开源项目</span><span class="card-category-list-count">3</span></a></li>
+          </ul></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      <a class="card-more-btn" href="/archives/"
+            title="查看更多">
+            <i class="fas fa-angle-right"></i>
+          </a>
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/07/">
+            <span class="card-archive-list-date">
+              七月 2026
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/06/">
+            <span class="card-archive-list-date">
+              六月 2026
+            </span>
+            <span class="card-archive-list-count">17</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/05/">
+            <span class="card-archive-list-date">
+              五月 2026
+            </span>
+            <span class="card-archive-list-count">3</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/03/">
+            <span class="card-archive-list-date">
+              三月 2026
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/12/">
+            <span class="card-archive-list-date">
+              十二月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/11/">
+            <span class="card-archive-list-date">
+              十一月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/05/">
+            <span class="card-archive-list-date">
+              五月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/11/">
+            <span class="card-archive-list-date">
+              十一月 2024
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">79</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-07-24T08:45:41.426Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

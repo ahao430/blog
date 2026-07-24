@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>小程序本地iconfont工具开发 | ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="npm包：https:&#x2F;&#x2F;www.npmjs.com&#x2F;package&#x2F;miniapp-svg2iconfont github: https:&#x2F;&#x2F;github.com&#x2F;ahao430&#x2F;miniapp-svg2iconfont#readme 基于svgtofont开发。  背景： 平时小程序开发过程中，UI给的是一个个的svg，没有系统的iconfont维护。小程序端使用iconfont的话，首先要上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小程序本地iconfont工具开发">
+<meta property="og:url" content="https://blog.ahao430.site/2023/09/07/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9C%AC%E5%9C%B0iconfont%E5%B7%A5%E5%85%B7%E5%BC%80%E5%8F%91/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="npm包：https:&#x2F;&#x2F;www.npmjs.com&#x2F;package&#x2F;miniapp-svg2iconfont github: https:&#x2F;&#x2F;github.com&#x2F;ahao430&#x2F;miniapp-svg2iconfont#readme 基于svgtofont开发。  背景： 平时小程序开发过程中，UI给的是一个个的svg，没有系统的iconfont维护。小程序端使用iconfont的话，首先要上">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:published_time" content="2023-09-07T07:38:10.000Z">
+<meta property="article:modified_time" content="2023-09-07T08:13:32.000Z">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "小程序本地iconfont工具开发",
+  "url": "https://blog.ahao430.site/2023/09/07/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9C%AC%E5%9C%B0iconfont%E5%B7%A5%E5%85%B7%E5%BC%80%E5%8F%91/",
+  "image": "https://blog.ahao430.site/img/butterfly-icon.png",
+  "datePublished": "2023-09-07T07:38:10.000Z",
+  "dateModified": "2023-09-07T08:13:32.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ahao430",
+      "url": "https://blog.ahao430.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/2023/09/07/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9C%AC%E5%9C%B0iconfont%E5%B7%A5%E5%85%B7%E5%BC%80%E5%8F%91/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '小程序本地iconfont工具开发',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">小程序本地iconfont工具开发</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">小程序本地iconfont工具开发</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-09-07T07:38:10.000Z" title="发表于 2023-09-07 15:38:10">2023-09-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-07T08:13:32.000Z" title="更新于 2023-09-07 16:13:32">2023-09-07</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>npm包：<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/miniapp-svg2iconfont">https://www.npmjs.com/package/miniapp-svg2iconfont</a></p>
+<p>github: <a target="_blank" rel="noopener" href="https://github.com/ahao430/miniapp-svg2iconfont#readme">https://github.com/ahao430/miniapp-svg2iconfont#readme</a></p>
+<p>基于<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/svgtofont">svgtofont</a>开发。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2023/gif/373268/1694074125468-188fb792-e49e-449e-a7ff-f906669c1ceb.gif"></p>
+<p>背景：</p>
+<p>平时小程序开发过程中，UI给的是一个个的svg，没有系统的iconfont维护。小程序端使用iconfont的话，首先要上传维护iconfont仓库，然后每次要转base63再下载，在项目中更新，比较麻烦。</p>
+<p>在web端直接使用svg更加方便，如svg-sprite-loader，项目本地维护svg即可；但是小程序端svg只能作为图片使用。</p>
+<p>思路：</p>
+<p>svgtofont可以将本地的svg转成iconfont，但是看了文档，没有转成base64格式的选项，转base64的话，还是需要去iconmoon等网站工具。想到基于svgtofont生成的文件，继续转base64，再替换到css中，试验可行。</p>
+<p>实现：</p>
+<ol>
+<li>svg转font</li>
+</ol>
+<p>从<a target="_blank" rel="noopener" href="https://www.iconfont.cn/">https://www.iconfont.cn/</a>下载了几个svg图片，引入svgtofont，传入src和dist路径，运行报错，发现下下来的svg代码中包含xml的头部，删掉就成功运行。</p>
+<p>安装svgo，先遍历svg目录，优化后svg头部去掉了。</p>
+<p>再次运行，成果在dist目录生成iconfont的html，css，字体文件。</p>
+<ol start="2">
+<li>font转base64</li>
+</ol>
+<p>用fs.readFileSync读取ttf字体文件，再用Buffer.from(file).toString(‘base64‘)转成base64字符串。</p>
+<p>查看网上手动转的base64格式iconfont的css，发现@font-face中，src的url换成了src: url(“data:font&#x2F;ttf;charset&#x3D;utf-8;base64,xxxx”)。读取css文件，用刚刚生成的base64字符串替换src中的部分，写到本地文件。</p>
+<p>引入这个base64格式的iconfont.css文件，发现在小程序中可以正常使用class展示图片。也可以通过fontSize和color修改大小和颜色，说明转的base64格式可以正常使用。</p>
+<ol start="3">
+<li>导出base64的css</li>
+</ol>
+<p>将刚刚写到本地的base64格式的字体css文件，复制到指定目录和文件名。</p>
+<p>详细代码见github仓库。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site">ahao430</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site/2023/09/07/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9C%AC%E5%9C%B0iconfont%E5%B7%A5%E5%85%B7%E5%BC%80%E5%8F%91/">https://blog.ahao430.site/2023/09/07/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9C%AC%E5%9C%B0iconfont%E5%B7%A5%E5%85%B7%E5%BC%80%E5%8F%91/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.ahao430.site" target="_blank">ahao430 的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2023/10/08/%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%9B%BE%E6%A0%87%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E7%AE%A1%E7%90%86/" title="前端项目中图标的使用和管理"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">前端项目中图标的使用和管理</div></div><div class="info-2"><div class="info-item-1">在前端项目中，会用到很多小图标，这些图标很小，但是数量会很多，比如导航、按钮等等，其中很多在不同项目还会重复用到。  使用方式直接使用图片最简单的图片使用方式，就是UI给出的图片，在代码中使用img标签，或者background属性来引用。 引用的图片可以维护在项目本地，也可以放到cdn。 雪碧图直接使用图片，会有很多并发的网络请求，因此可以讲这些小图标合并成一张大图，通过background-position定位来展示不同的图标。这样多个请求合并成一个，优化了性能，但是使用和维护起来麻烦。 关于雪碧图的维护，我们可以通过插件在编译阶段解决，自动生成雪碧图，并且生成css文件，开发的时候，按照文件名的class命名去引用。 123456789101112131415161718192021222324252627282930313233343536373839//webpack.config.jsvar path = require(&#x27;path&#x27;); var SpritesmithPlugin = require(&#x27;webpack-spritesmi...</div></div></div></a><a class="pagination-related" href="/2023/08/16/SVGA%E5%8A%A8%E7%94%BB%E6%9B%BF%E6%8D%A2%E5%9B%BE%E5%B1%82%E5%85%83%E7%B4%A0/" title="SVGA动画替换图层元素"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">SVGA动画替换图层元素</div></div><div class="info-2"><div class="info-item-1">之前写了一篇关于SVGA和Lottie动画使用的，现在有一个新的需求，要实现一个效果比较炫的引导动画，想用SVGA实现，但是要求里面的一些数字是动态可配的。查了下SVGA支持替换图层，跟UI配合调研成功替换，用了两种SVGA库来实现。 UI准备： UI在出图的时候，对图层做好命名，导出SVGA后，告诉开发可配置图层的名称。 PS: 在这里预览SVGA文件，也可以查看所有图层的key。 联调过程： 引入svga，根据图层的key动态替换元素，再播放动画。 这里我先用的svgaplayer-web-lite去做，因为之前的svga动画也是用的这个库。但是当时跟UI还在调研，以为新建的图层要用文本框，出了一个有问题的svga文件，用这个库报错，换成svgaplayer-web就可以正常渲染。另外网上看的替换svga图层的教程都是用的svgaplayer-web，就先用这个实现了。 后来发现不用文本框，普通图层就行，又用lite实现了一下，相比较起来，lite更轻量，性能更好。 参考文章：https://blog.csdn.net/weixin_44309374&#x2F;article...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-07-03T08:09:12.000Z" title="更新于 2026-07-03 16:09:12">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/03/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84PPT%20skill/" title="发现一个不错的PPT skill">发现一个不错的PPT skill</a><time datetime="2026-07-03T07:26:41.000Z" title="更新于 2026-07-03 15:26:41">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+  const getUtterancesTheme = theme => theme === 'dark' ? 'photon-dark' : 'github-light'
+
+  const loadUtterances = (el = document, key) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyUtterances = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const config = {
+      src: 'https://utteranc.es/client.js',
+      repo: 'ahao430/blog',
+      theme: getUtterancesTheme(document.documentElement.getAttribute('data-theme')),
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      'issue-term': isShuoshuo ? key : (option && option['issue-term']) || 'pathname'
+    }
+
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => ele.setAttribute(key, value))
+    el.querySelector('#utterances-wrap').appendChild(ele)
+  }
+
+  const changeUtterancesTheme = theme => {
+    const iframe = document.querySelector('#utterances-wrap iframe')
+    if (iframe) {
+      const message = {
+        type: 'set-theme',
+        theme: getUtterancesTheme(theme)
+      };
+      iframe.contentWindow.postMessage(message, 'https://utteranc.es')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeUtterancesTheme, 'utterances')
+
+  if (isShuoshuo) {
+    'Utterances' === 'Utterances'
+      ? window.shuoshuoComment = { loadComment: loadUtterances }
+      : window.loadOtherComment = loadUtterances
+    return
+  }
+  
+  if ('Utterances' === 'Utterances' || !true) {
+    if (true) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+    else loadUtterances()
+  } else {
+    window.loadOtherComment = loadUtterances
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

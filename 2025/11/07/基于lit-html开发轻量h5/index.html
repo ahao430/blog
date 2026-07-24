@@ -1,0 +1,308 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>基于lit-html开发轻量h5 | ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="lit-html介绍什么是lit-htmllit-html是一个轻量的模板引擎，是lit框架的一部分。lit-html是基于原生es6模板字符串，可以单独在原生js中使用，是一个轻量高效的模板引擎。 lit-html的特性lit-html的核心特性：  高效的更新：lit-html 只更新变化的部分，而不是整个模板。 声明式渲染：使用普通的 JavaScript 表达式来声明 UI。 轻量级：只包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于lit-html开发轻量h5">
+<meta property="og:url" content="https://blog.ahao430.site/2025/11/07/%E5%9F%BA%E4%BA%8Elit-html%E5%BC%80%E5%8F%91%E8%BD%BB%E9%87%8Fh5/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="lit-html介绍什么是lit-htmllit-html是一个轻量的模板引擎，是lit框架的一部分。lit-html是基于原生es6模板字符串，可以单独在原生js中使用，是一个轻量高效的模板引擎。 lit-html的特性lit-html的核心特性：  高效的更新：lit-html 只更新变化的部分，而不是整个模板。 声明式渲染：使用普通的 JavaScript 表达式来声明 UI。 轻量级：只包">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:published_time" content="2025-11-07T03:20:16.000Z">
+<meta property="article:modified_time" content="2026-05-07T16:00:44.000Z">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "基于lit-html开发轻量h5",
+  "url": "https://blog.ahao430.site/2025/11/07/%E5%9F%BA%E4%BA%8Elit-html%E5%BC%80%E5%8F%91%E8%BD%BB%E9%87%8Fh5/",
+  "image": "https://blog.ahao430.site/img/butterfly-icon.png",
+  "datePublished": "2025-11-07T03:20:16.000Z",
+  "dateModified": "2026-05-07T16:00:44.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ahao430",
+      "url": "https://blog.ahao430.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/2025/11/07/%E5%9F%BA%E4%BA%8Elit-html%E5%BC%80%E5%8F%91%E8%BD%BB%E9%87%8Fh5/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '基于lit-html开发轻量h5',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">基于lit-html开发轻量h5</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">基于lit-html开发轻量h5</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-11-07T03:20:16.000Z" title="发表于 2025-11-07 11:20:16">2025-11-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-05-07T16:00:44.000Z" title="更新于 2026-05-08 00:00:44">2026-05-08</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="lit-html介绍"><a href="#lit-html介绍" class="headerlink" title="lit-html介绍"></a>lit-html介绍</h2><h3 id="什么是lit-html"><a href="#什么是lit-html" class="headerlink" title="什么是lit-html"></a>什么是lit-html</h3><p>lit-html是一个轻量的模板引擎，是lit框架的一部分。lit-html是基于原生es6模板字符串，可以单独在原生js中使用，是一个轻量高效的模板引擎。</p>
+<h3 id="lit-html的特性"><a href="#lit-html的特性" class="headerlink" title="lit-html的特性"></a>lit-html的特性</h3><p>lit-html的核心特性：</p>
+<ol>
+<li><font style="color:rgb(25, 27, 31);">高效的更新：lit-html 只更新变化的部分，而不是整个模板。</font></li>
+<li><font style="color:rgb(25, 27, 31);">声明式渲染：使用普通的 JavaScript 表达式来声明 UI。</font></li>
+<li><font style="color:rgb(25, 27, 31);">轻量级：只包含必要的功能，没有额外的抽象层。</font></li>
+</ol>
+<p>可以看到，lit-html既轻量、不依赖框架，又能做到针对性只渲染更新的部分。我们在开发一些轻量的h5时，想要提升性能，不想引入过重的框架，就可以用lit-html来开发。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/373268/1762427173735-6d1e6366-7fd0-479b-8f43-d06d957ef1a7.png"></p>
+<p>在项目中引入lit-html的两个核心方法，可以看到，只有8.1k，gzip压缩后只有3.4k。</p>
+<h3 id="lit-html用法"><a href="#lit-html用法" class="headerlink" title="lit-html用法"></a>lit-html用法</h3><h4 id="api"><a href="#api" class="headerlink" title="api"></a>api</h4><p>主要用到两个方法，html和render。</p>
+<p>其中html是模板字符串函数，用于构造模板。html&#96;&#96;.</p>
+<p>render是将模板渲染到指定的dom节点上。render(template, el).</p>
+<h4 id="事件绑定："><a href="#事件绑定：" class="headerlink" title="事件绑定："></a>事件绑定：</h4><p>lit-html的事件绑定跟vue很像，用@xxx在模板上绑定事件。</p>
+<h4 id="demo："><a href="#demo：" class="headerlink" title="demo："></a>demo：</h4><p>下面是一个简单的demo。可以看到html上写一个<div id="app"></div>。</p>
+<p>然后js中用html编写模板，再用render挂到app上。又写了一个update方法，把render放在里面，每当有数据变化时，就调用一次update方法。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;module&quot;</span> <span class="attr">src</span>=<span class="string">&quot;./src/main.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; html, render &#125; <span class="keyword">from</span> <span class="string">&#x27;lit-html&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 待办事项</span></span><br><span class="line"><span class="keyword">let</span> todos = [</span><br><span class="line">  &#123; <span class="attr">text</span>: <span class="string">&#x27;Learn lit-html&#x27;</span>, <span class="attr">completed</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">text</span>: <span class="string">&#x27;Write an article&#x27;</span>, <span class="attr">completed</span>: <span class="literal">false</span> &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 点击事件</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">onClick</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  todos = []</span><br><span class="line">  <span class="title function_">update</span>()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 模板</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">template</span> = (<span class="params"></span>) =&gt; html`<span class="language-xml"></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">div</span>&gt;</span>	</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      </span><span class="subst">$&#123;todos.map(todo =&gt; html`<span class="language-xml"></span></span></span><br><span class="line"><span class="language-xml"><span class="subst">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=</span></span><span class="subst">$&#123;todo.completed ? <span class="string">&#x27;completed&#x27;</span> : <span class="string">&#x27;&#x27;</span>&#125;</span><span class="language-xml"><span class="tag">&gt;</span></span><span class="subst">$&#123;todo.text&#125;</span><span class="language-xml"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="subst">      `</span>)&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=</span></span><span class="subst">$&#123;onClick&#125;</span><span class="language-xml"><span class="tag">&gt;</span>清空列表<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">`</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 渲染</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">update</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> app = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;app&#x27;</span>);</span><br><span class="line">  <span class="title function_">render</span>(<span class="title function_">template</span>(), app);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">update</span>()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="lit-html渲染原理"><a href="#lit-html渲染原理" class="headerlink" title="lit-html渲染原理"></a>lit-html渲染原理</h3><p>没有虚拟dom，lit-html是怎么做到精确更新变化的数据所在dom，而不是全部更新呢。</p>
+<h4 id="准备阶段"><a href="#准备阶段" class="headerlink" title="准备阶段"></a>准备阶段</h4><p>针对模板中每个变量的位置，生成一个id的注释插入。生成带标记的html。记录标记数组和变量数组。</p>
+<h4 id="创建阶段"><a href="#创建阶段" class="headerlink" title="创建阶段"></a>创建阶段</h4><p><font style="color:rgb(77, 77, 77);">lit-html定义了多种</font><code>&lt;font style=&quot;color:rgb(77, 77, 77);&quot;&gt;Part&lt;/font&gt;</code><font style="color:rgb(77, 77, 77);">类型，每种类型负责不同场景下的动态值管理。准备阶段完成后，lit-html会克隆模板内容到文档片段，并根据</font><code>&lt;font style=&quot;color:rgb(77, 77, 77);&quot;&gt;TemplatePart&lt;/font&gt;</code><font style="color:rgb(77, 77, 77);">实例化对应的</font><code>&lt;font style=&quot;color:rgb(77, 77, 77);&quot;&gt;Part&lt;/font&gt;</code><font style="color:rgb(77, 77, 77);">对象。</font></p>
+<h4 id="更新阶段"><a href="#更新阶段" class="headerlink" title="更新阶段"></a>更新阶段</h4><p><font style="color:rgb(77, 77, 77);">更新阶段是lit-html性能优势的核心所在。每次状态变化时，lit-html只需遍历</font><code>&lt;font style=&quot;color:rgb(77, 77, 77);&quot;&gt;Part&lt;/font&gt;</code><font style="color:rgb(77, 77, 77);">对象，对比新旧值，只更新发生变化的部分。</font></p>
+<h3 id="相关文章："><a href="#相关文章：" class="headerlink" title="相关文章："></a>相关文章：</h3><blockquote>
+<p>lit-html仓库：<a target="_blank" rel="noopener" href="https://github.com/lit/lit/tree/main/packages/lit-html">https://github.com/lit/lit/tree/main/packages/lit-html</a></p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000039754597">下一代的模板引擎：lit-html</a></p>
+</blockquote>
+<blockquote>
+<p>vue-lit仓库: <a target="_blank" rel="noopener" href="https://github.com/yyx990803/vue-lit">https://github.com/yyx990803/vue-lit</a></p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/gitblog_00843/article/details/150642503">揭秘Lit性能密码：lit-html模板引擎核心原理</a></p>
+</blockquote>
+<h2 id="基于vite-lit-html开发项目"><a href="#基于vite-lit-html开发项目" class="headerlink" title="基于vite + lit-html开发项目"></a>基于vite + lit-html开发项目</h2><p>我们的目标是利用lit-html+原生js轻量化开发项目，但是不用完全手写，可以用vite创建原生js项目，利用vite编译less和babel，并配置环境变量等。</p>
+<h3 id="初始化项目"><a href="#初始化项目" class="headerlink" title="初始化项目"></a>初始化项目</h3><p>让ai用vite初始化一个原生js项目，并安装lit-html。安装less编译、babel编译。再配置px2vw。</p>
+<p>此时目录结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">├── .babelrc</span><br><span class="line">├── .env</span><br><span class="line">├── index.html</span><br><span class="line">├── package.json</span><br><span class="line">├── postcss.config.cjs</span><br><span class="line">├── src/</span><br><span class="line">│   ├── main.js</span><br><span class="line">│   ├── api.js</span><br><span class="line">│   ├── util.js</span><br><span class="line">│   └── styles.less</span><br><span class="line">└── vite.config.js</span><br></pre></td></tr></table></figure>
+
+<p>如果页面足够简单，这样已经够用了。模板，还有所有的变量和方法都在main.js中。所有的样式都在styles.less中。</p>
+<p>再安装一个axios，新建一个api.js。再新建一个util.js存放工具方法。</p>
+<p>项目搭建完成。</p>
+<h3 id="组件划分"><a href="#组件划分" class="headerlink" title="组件划分"></a>组件划分</h3><h4 id="组件模板"><a href="#组件模板" class="headerlink" title="组件模板"></a>组件模板</h4><p>全部的代码都放到main.js，当页面稍微元素一多，维护起来还是不太方便。我们可以拆分组件。</p>
+<p>组件的写法还是一样，引入html。然后组件对外暴露一个template方法，接收一些参数，类似props，包括组件要执行的事件，也可以从参数接收。</p>
+<p>在main.js的模板中，执行组件的模板方法，并传入参数即可。</p>
+<h4 id="组件样式"><a href="#组件样式" class="headerlink" title="组件样式"></a>组件样式</h4><p>进一步的，我们可以把组件的样式和js放在一起。然后再组件的js中引入样式文件即可。</p>
+<h4 id="工具组件"><a href="#工具组件" class="headerlink" title="工具组件"></a>工具组件</h4><p>这里提一下toast组件。本来是写了一个toast组件，在main.js挂载。后来考虑到，toast样式比较单一，并且如果有弹多个toast的情况处理，还是给他抽成一个js方法了。直接创建div，写入内容和样式，插入到body上。设置2s自动移除。</p>
+<h3 id="状态管理"><a href="#状态管理" class="headerlink" title="状态管理"></a>状态管理</h3><p>新建一个store.js，其实就是一个JSON对象。将状态都放到里面。方便在main.js和不同组件之间使用数据。</p>
+<p>这里不需要像vue和react一样响应，只要lit-html的数据变化时，我们手动调用一下update方法，有点类似react的渲染逻辑了。</p>
+<p>由于lit-html本身对渲染做了优化，只会渲染数据变化的元素，不需要我们再额外处理了。</p>
+<h3 id="打包配置优化"><a href="#打包配置优化" class="headerlink" title="打包配置优化"></a>打包配置优化</h3><p>平时我们用的框架模板，一些配置优化项已经帮我们预设好了。这里我们自己简单处理下。</p>
+<p>主要是处理构建时的文件分块。现在打包一下，所有的css是一个文件，所有的js是一个文件。我们开发过程中，一般依赖包会比较大，而且不会变动。这里我们配置下，将所有的node_modules打包为一个vendor.js，将其他的js打包为一个文件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;  </span><br><span class="line">  ...</span><br><span class="line">  <span class="attr">build</span>: &#123;</span><br><span class="line">    <span class="attr">rollupOptions</span>: &#123;</span><br><span class="line">      <span class="attr">output</span>: &#123;</span><br><span class="line">        <span class="title function_">manualChunks</span>(<span class="params">id</span>) &#123;</span><br><span class="line">          <span class="comment">// 将 node_modules 中的依赖统一拆分到 vendor</span></span><br><span class="line">          <span class="keyword">if</span> (id.<span class="title function_">includes</span>(<span class="string">&#x27;node_modules&#x27;</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;vendor&#x27;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">chunkFileNames</span>: <span class="string">&#x27;assets/[name]-[hash].js&#x27;</span>,</span><br><span class="line">        <span class="attr">entryFileNames</span>: <span class="string">&#x27;assets/[name]-[hash].js&#x27;</span>,</span><br><span class="line">        <span class="attr">assetFileNames</span>: <span class="string">&#x27;assets/[name]-[hash][extname]&#x27;</span></span><br><span class="line">      &#125;,</span><br><span class="line">  </span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还做了一些其他配置，如gzip压缩、关闭sourcemap、安装bundle-analyzer。</p>
+<h3 id="项目代码"><a href="#项目代码" class="headerlink" title="项目代码"></a>项目代码</h3><h4 id="依赖分析"><a href="#依赖分析" class="headerlink" title="依赖分析"></a>依赖分析</h4><p>开发环境引入了pagespy和vconsole。生产环境没有引入。</p>
+<p>生产环境打包如下，其中vendor包含lit-html和业务sdk。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/373268/1762432044454-f629d3ec-8d34-4303-9a37-88230c72d920.png"></p>
+<p>用bundle-analyzer分析，发现大部分是axios，然后是业务sdk。剩下是业务代码和lit-html。可以考虑移除axios，手写一个简易版的ajax。</p>
+<p>axios: 95.48k, gzip后38.54k, 占比58.73%，超过一半了。</p>
+<p>业务sdk:36.19k, gzip后13.11k，占比22.26%。</p>
+<p>lit-html: 8.16k, gzip后3.35k，占比5、02%。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/373268/1762432571865-9e9eeaf1-1e30-4a32-a501-e4a7de90bbab.png"></p>
+<p>问了下轻量版的ajax库，ai推荐用redaxios代替axios，写法基本兼容，gzip后只有0.8kb。</p>
+<p>或者用原生的fetch，0依赖，但是较老的浏览器<font style="color:rgb(55, 65, 81);">（如 IE11 或 Android 4.x WebView）</font>存在兼容问题，需要引入polyfill，如<font style="color:rgb(55, 65, 81);">whatwg-fetch 或 cross-fetch 。若目标是“现代 H5 + lit-html”，通常可直接使用原生 fetch，不再考虑 IE。whatwg-fetch约8-10k，gzip后3-4k。</font></p>
+<p><font style="color:rgb(55, 65, 81);">踩坑：redaxios不支持axios的拦截器，报错。且redaxios使用的是fetch，不支持xhr，考虑兼容的话依然要引入whatwg-fetch。引入whatwg-fetch，直接用原生fetch。</font></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/373268/1762483569520-17a11c41-5601-4cd2-b4b8-1ed662b89f00.png"></p>
+<h4 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h4><p>在lighthouse分析页面，用无痕模式，避免浏览器插件影响。发现分数还是很不错的，扣分项主要是LCP，因为大图比较多。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/373268/1762483116366-096d9ec8-03c8-4b8c-8a55-2fc60c6a6505.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site">ahao430</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site/2025/11/07/%E5%9F%BA%E4%BA%8Elit-html%E5%BC%80%E5%8F%91%E8%BD%BB%E9%87%8Fh5/">https://blog.ahao430.site/2025/11/07/%E5%9F%BA%E4%BA%8Elit-html%E5%BC%80%E5%8F%91%E8%BD%BB%E9%87%8Fh5/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.ahao430.site" target="_blank">ahao430 的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/12/15/%E4%BD%BF%E7%94%A8Claude%20Code%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" title="使用Claude Code项目开发"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">使用Claude Code项目开发</div></div><div class="info-2"><div class="info-item-1">AI IDE vs AI CLI从Cursor开始，各种AI IDE层出不穷，且已经达到了生产力级别。各家的AI IDE都是基于VSCode改造，接入claude等大模型编程。 然后Anthropic公司推出了claude code，开启了AI IDE。后面open ai和谷歌也跟上，分别开发了codex和gemini cli。 既然有了AI IDE，为何又要推出Cli形式的工具呢？尤其是cursor和claude code都是基于claude大模型。     优势 劣势    IDE 符合操作习惯，上手快；代码补全； 强绑定IDE   CLI 终端运行，可以搭配任意IDE使用；CLI 形态天然适合自动化、脚本化、CI 集成、远程&#x2F;无 GUI 环境；企业侧在安全、合规、权限管理上更容易集成； 需要学习上手；不支持代码补全；   claude是目前最好的编程大模型，而claude code是Anthropic官方出品，对于claude的能力调教的更好。claude code新推出的子agents、skills等能力就很强。 目前还有一个问题，就是cursor、trae等一...</div></div></div></a><a class="pagination-related" href="/2025/05/14/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91sjs%E4%BA%8B%E4%BB%B6%E5%8A%A8%E6%80%81%E8%B0%83%E6%95%B4%E5%85%83%E7%B4%A0%E4%BD%8D%E7%BD%AE/" title="【小程序】sjs事件动态调整元素位置"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">【小程序】sjs事件动态调整元素位置</div></div><div class="info-2"><div class="info-item-1">需求描述之前写过一篇利用sjs在小程序实现无卡顿元素拖拽的分享：【小程序】小程序sjs事件及拖拽组件开发。 这次需求做了一个气泡提示的容器组件，需要在遇到屏幕边缘时动态向内调整气泡的位置，就想到利用sjs事件来实现。  要求：  气泡箭头对准该功能中间位置 当气泡箭头无法居中位于功能，靠近页面左&#x2F;右边缘时，气泡距离页面左右边距统一为16px箭头位置对准该功能  还有一个角标的组件，正常是在元素右上角，要实现到达页面右边缘时变为左上角。  事件文档sjs事件官方文档：小程序文档 - SJS 响应事件。 在 .sjs 文件中定义函数： 1234567891011121314151617181920// index.sjsfunction handleEvent(event, ownerComponent) &#123;  // currentTarget 的 Descriptor 描述对象  event.instance.setStyle(&#123;    &#x27;font-size&#x27;: &#x27;28rpx&#x27;,  &#125;);  // 不往...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#lit-html%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">lit-html介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFlit-html"><span class="toc-number">1.1.</span> <span class="toc-text">什么是lit-html</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lit-html%E7%9A%84%E7%89%B9%E6%80%A7"><span class="toc-number">1.2.</span> <span class="toc-text">lit-html的特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lit-html%E7%94%A8%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">lit-html用法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#api"><span class="toc-number">1.3.1.</span> <span class="toc-text">api</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%EF%BC%9A"><span class="toc-number">1.3.2.</span> <span class="toc-text">事件绑定：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#demo%EF%BC%9A"><span class="toc-number">1.3.3.</span> <span class="toc-text">demo：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lit-html%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86"><span class="toc-number">1.4.</span> <span class="toc-text">lit-html渲染原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E9%98%B6%E6%AE%B5"><span class="toc-number">1.4.1.</span> <span class="toc-text">准备阶段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%98%B6%E6%AE%B5"><span class="toc-number">1.4.2.</span> <span class="toc-text">创建阶段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E9%98%B6%E6%AE%B5"><span class="toc-number">1.4.3.</span> <span class="toc-text">更新阶段</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%96%87%E7%AB%A0%EF%BC%9A"><span class="toc-number">1.5.</span> <span class="toc-text">相关文章：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Evite-lit-html%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.</span> <span class="toc-text">基于vite + lit-html开发项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.1.</span> <span class="toc-text">初始化项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E5%88%92%E5%88%86"><span class="toc-number">2.2.</span> <span class="toc-text">组件划分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E6%A8%A1%E6%9D%BF"><span class="toc-number">2.2.1.</span> <span class="toc-text">组件模板</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E6%A0%B7%E5%BC%8F"><span class="toc-number">2.2.2.</span> <span class="toc-text">组件样式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E7%BB%84%E4%BB%B6"><span class="toc-number">2.2.3.</span> <span class="toc-text">工具组件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86"><span class="toc-number">2.3.</span> <span class="toc-text">状态管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%8C%85%E9%85%8D%E7%BD%AE%E4%BC%98%E5%8C%96"><span class="toc-number">2.4.</span> <span class="toc-text">打包配置优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81"><span class="toc-number">2.5.</span> <span class="toc-text">项目代码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E5%88%86%E6%9E%90"><span class="toc-number">2.5.1.</span> <span class="toc-text">依赖分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="toc-number">2.5.2.</span> <span class="toc-text">性能分析</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-07-03T08:09:12.000Z" title="更新于 2026-07-03 16:09:12">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/03/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84PPT%20skill/" title="发现一个不错的PPT skill">发现一个不错的PPT skill</a><time datetime="2026-07-03T07:26:41.000Z" title="更新于 2026-07-03 15:26:41">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+  const getUtterancesTheme = theme => theme === 'dark' ? 'photon-dark' : 'github-light'
+
+  const loadUtterances = (el = document, key) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyUtterances = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const config = {
+      src: 'https://utteranc.es/client.js',
+      repo: 'ahao430/blog',
+      theme: getUtterancesTheme(document.documentElement.getAttribute('data-theme')),
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      'issue-term': isShuoshuo ? key : (option && option['issue-term']) || 'pathname'
+    }
+
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => ele.setAttribute(key, value))
+    el.querySelector('#utterances-wrap').appendChild(ele)
+  }
+
+  const changeUtterancesTheme = theme => {
+    const iframe = document.querySelector('#utterances-wrap iframe')
+    if (iframe) {
+      const message = {
+        type: 'set-theme',
+        theme: getUtterancesTheme(theme)
+      };
+      iframe.contentWindow.postMessage(message, 'https://utteranc.es')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeUtterancesTheme, 'utterances')
+
+  if (isShuoshuo) {
+    'Utterances' === 'Utterances'
+      ? window.shuoshuoComment = { loadComment: loadUtterances }
+      : window.loadOtherComment = loadUtterances
+    return
+  }
+  
+  if ('Utterances' === 'Utterances' || !true) {
+    if (true) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+    else loadUtterances()
+  } else {
+    window.loadOtherComment = loadUtterances
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

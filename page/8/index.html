@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="个人技术博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ahao430 的博客">
+<meta property="og:url" content="https://blog.ahao430.site/page/8/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="个人技术博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/page/8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ahao430 的博客',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">ahao430 的博客</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/06/08/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AAtransition%E7%BB%84%E4%BB%B6/" title="【小程序】实现一个transition组件">【小程序】实现一个transition组件</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2020-06-12T16:11:39.000Z" title="更新于 2020-06-13 00:11:39">2020-06-13</time></span></div><div class="content">在小程序实现一个transition组件，实现类似vue和react的transition的过渡效果。 分析vue的transition是接收一个name，以这个name在过渡的几个阶段生成不同的class。然后对这几个class设置相应的css3的transition或animation动画，来实现显示和隐藏的过渡动画。  这样，我们就可以先设置初始状态（enter, leave），再在下一次渲染阶段执行相应的active来触发开始的动画。再在transitionEnd或者animationEnd时执行enter-to和leave-to来触发结束动画，达成最终状态。 另外，小程序中无法获取this.props.slots或者this.props.children，所以我们可以直接将组件的显示和隐藏状态做为参数传递进来。但是为了显示动画，不能立刻改变状态，要等待动画完成。 实现12345&lt;view class=&quot;my-transition {{name}} {{name}}-{{step}}&quot; onTransitionEnd=&quot;onTransi...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/05/21/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%9C%A8%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AAtab%E7%BB%84%E4%BB%B6/" title="【小程序】在小程序实现一个tab组件">【小程序】在小程序实现一个tab组件</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2021-03-30T08:24:36.000Z" title="更新于 2021-03-30 16:24:36">2021-03-30</time></span></div><div class="content">如图，项目迭代中需求开发一个tab页，可以左右滑动切换，全屏，上面tab可点击切换，横向超过一屏时，选中项要自动居中；内部嵌套一个分组商品组件，同样滑动切换，高度自适应（异步），下拉时要吸顶，小球要有动画效果。 支付宝小程序提供的tab组件不满足需求，自己实现功能后，对其中公共部分抽出一个tab组件来重构。  结构分析 组件包含navs和contents两部分。 navs使用view即可。但是要实现点击时自动定位，改为使用scroll-view实现，配合其scroll-into-view属性来定位。 contents部分要实现左右滑动切换，可以用swiper包裹。内部用scroll-view包裹，控制高度。  组件嵌套我们可以看到支付宝自带的tab组件使用时，tab组件内部可传入tab-content组件。这里由于上方tab导航项可定制，实际需要传入tab-nav和tab-content两部分。  vue有provide&#x2F;inject方法，可以将在子组件中获取父组件，直接在父组件写入子组件的传值。然后所有数据放在父组件计算，这样是最好的。但是小程序不支持。 支付宝小程序...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/05/21/%E3%80%90git%E3%80%91git%E6%9C%AC%E5%9C%B0%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/" title="【git】git本地代码管理">【git】git本地代码管理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2020-06-16T05:20:11.000Z" title="更新于 2020-06-16 13:20:11">2020-06-16</time></span></div><div class="content">之前使用git都是pull和push，对commit没有整理，合并提交到线上后，commit记录比较杂乱。对commit进行整理后再提交，可以更清晰的查看代码。 前期准备 一个在线关卡式的学习网址：链接，可以学习git的各项命令。 一个git commit的包：git cz。使用它代替git commit命令，可以规范commit。 使用vscode查看git分支历史  分支管理 本地分支留一个个人的dev分支，其他的删掉 每次新的需求创建临时的feature分支或fix分支 开发完成后，将所有feature分支合并到个人dev分支，再合并项目dev分支去推送远程，管理员拉取后再合并到master分支更新。  commit管理 对当前未推送的commit记录，可以通过git rebase -i进行编辑（调整顺序，合并等） 可以通过git cherry-pick挑选指定commit复制到当前分支 可以通过git commit –amend来修改之前的提交 对于同一个分支合作时别人提交了代码，可以通过git fetch先拉取，然后git rebase -i调整顺序，再通过git co...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/05/21/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%B0%8F%E7%A8%8B%E5%BA%8Fajax%E5%B7%A5%E5%85%B7%E7%B1%BB%E7%9A%84%E5%B0%81%E8%A3%85/" title="【小程序】小程序ajax工具类的封装">【小程序】小程序ajax工具类的封装</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2022-12-12T11:34:53.000Z" title="更新于 2022-12-12 19:34:53">2022-12-12</time></span></div><div class="content">之前在小程序中封装了ajax工具，并对消息队列做了处理。但是其中很多业务代码混杂再其中，故对其进一步抽象化，将业务代码分离出来。 业务代码主要存在于request的请求和响应阶段，仿照axios做一个拦截器，将其中的业务代码通过拦截器传递进来执行。 改写为类首先对Alipay工具类进行改造，将公用方法放到原型上，使用时新建一个实例。类的create方法接收一些全局参数，返回一个实例。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546class Alipay &#123;  constructor (option = &#123;&#125;) &#123;    // 入参    this.baseURL = option.baseURL || &#x27;&#x27;    this.timeout = option.timeout || 30000    this.concurrency = option.concurrency || 6 // 并发请求数  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/05/21/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%B0%8F%E7%A8%8B%E5%BA%8FCMS%E9%A1%B5%E9%9D%A2%E6%8B%BC%E8%A3%85%E7%9A%84%E5%AE%9E%E7%8E%B0/" title="【小程序】小程序CMS页面拼装的实现">【小程序】小程序CMS页面拼装的实现</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2020-05-21T08:57:17.000Z" title="更新于 2020-05-21 16:57:17">2020-05-21</time></span></div><div class="content">现在页面组件化和配置化是一个比较流行的产品设计。我们的小程序最近也有这方面的需求。 CMS原理一般的拼装页面常见于一些第三方服务平台，类似有赞等，这些平台面向的客户是商家，实际上是商家用户在商家后台拼装好页面后，保存配置，然后重新生成代码发版。客户接收到更新后，看到新的小程序页面。  而我们做为自身的小程序开发，需要的是运营修改页面配置后，在前端实时渲染展示。  这种方式的优点是运营可以实时修改页面（当然如果更新组件，依然需要发版）。缺点是所有组件都在前端，代码体积较大；同时所有配置都是通过请求获取，再进行一层层的渲染，性能要差一些。这就对代码的性能优化和接口的响应速度提出了更高的要求。 结构设计目前后端提供的数据是分为以下几层。  这一期新增了秒杀页面，是一个tab页面，上面tab进行切换，下面每个tab又对应一个子页面。  页面暂定的字段，除了组件外，还有页面的标题、背景图、背景色、页面上下边距、页面通用组件间距等，本期新增了一个字段判断是否tab页。 组件首先有一个类型字段，根据这个字段对应不同的组件类型，然后渲染组件内容。有些类型的组件内容是异步再次请求的。组件中又有一个...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/05/21/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%B0%8F%E7%A8%8B%E5%BA%8Fmixin%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%92%8C%E5%85%A8%E5%B1%80%E7%BB%84%E4%BB%B6/" title="【小程序】小程序mixin的实现和全局组件">【小程序】小程序mixin的实现和全局组件</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2023-04-13T07:01:01.000Z" title="更新于 2023-04-13 15:01:01">2023-04-13</time></span></div><div class="content">mixin有时候我们需要在页面注入一些公用的数据和方法，这就需要mixin的实现。在小程序中，组件支持mixins；对页面的mixin注入，可以通过重写Page方法来实现。 如果需要按需引入mixins，我们可以在页面增加mixins属性，再在mixin中按需引入，这里我就简单的对所有页面统一引入一个公用的pageMixin了。 新建一个mixins目录用于存放mixin代码，里面新建一个page.js写要注入的代码。 在util目录实现一个pageMixin.js： 12345678910111213141516171819202122232425262728293031323334353637383940import pageMixin from &#x27;../mixins/page&#x27;// 合并mixins属性到Page的options中function merge (mixin, options, properties = []) &#123;  if (Object.prototype.toString.call(mixin).slice(8, -1) ==...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/05/21/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E5%B0%81%E8%A3%85/" title="【小程序】小程序消息队列的封装">【小程序】小程序消息队列的封装</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2020-12-16T08:05:56.000Z" title="更新于 2020-12-16 16:05:56">2020-12-16</time></span></div><div class="content">消息队列在支付宝小程序中，由于并发数量的限制，同时发送多个请求的话，有可能会造成请求的丢失，因此封装一个消息队列，对超过5条的进行中请求做排队处理。  代码实现如下： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374const MAX_COUNT = 5class Alipay &#123;  static queue = []  static count = 0  // 收到请求，放到队列  static http (options = &#123;&#125;) &#123;    return new Promise((resolve, reject) =&gt; &#123;      // console.log(&#x27;入队&#x27;)      this.queue.push(&#123;        options,       ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/05/21/%E3%80%90%E5%B7%A5%E5%85%B7%E3%80%91%E6%94%AF%E4%BB%98%E5%AE%9D%E5%B0%8F%E7%A8%8B%E5%BA%8Fanymock%E7%9A%84%E4%BD%BF%E7%94%A8/" title="【工具】支付宝小程序anymock的使用">【工具】支付宝小程序anymock的使用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2020-06-23T08:31:57.000Z" title="更新于 2020-06-23 16:31:57">2020-06-23</time></span></div><div class="content">在前后端分离开发的过程中，经常使用mock来进行开发，这方面的工具有在项目代码中开发环境下引入mockjs来做mock服务，或是使用线上mock服务平台如rap、apizza等。这些服务最大的一个问题是，要么全部接口启用mock，要么全部接口不使用mock。如果是在新项目比较方便，但是对于半路接手的项目，显然全部设置一遍mock是不现实的。 在web项目中，可以在开发环境引入mockjs，对某些接口做拦截，而非单独起一个mock服务域名。在支付宝小程序中，可以使用anymock服务。 新版本的开发工具中，新增了一个anymock的按钮，点击可以看到一个配置界面。点击前往anymock平台并登陆，可以配置项目mock代码。anymock不需要设置全部接口mock，而是对设置了mock的接口返回mock数据，对找不到mock数据的接口正常请求，这样，更方便我们在新迭代中开发。 anymock登录后，可以创建一个项目，复制token填入开发工具。  进入项目，可以创建接口，类型选择http，填入接口path，选择接口类型并保存。  可以看到，一个接口可以创建多个mock数据来选择。  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/05/21/%E3%80%90%E8%A7%84%E8%8C%83%E3%80%91%E5%89%8D%E7%AB%AF%E5%9B%A2%E9%98%9F%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83%E5%8F%8Agit%E6%8F%90%E4%BA%A4%E6%A3%80%E6%B5%8B/" title="【规范】前端团队代码规范及git提交检测">【规范】前端团队代码规范及git提交检测</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2020-06-19T03:11:31.000Z" title="更新于 2020-06-19 11:11:31">2020-06-19</time></span></div><div class="content">在团队开发中，需要对代码风格进行统一；同时，好的代码风格也有利于阅读和维护。下面从ide和eslint的配置，以及git-commit预检测来介绍。 VSCODE配置现在vscode使用最多，其他编辑器也可类似配置。 editorconfigvscode本身可以设置tab转换为空格。使用editorconfig可以更方便的对项目和文件做不同的配置。VSCODE可以安装editorconfig插件，然后在项目根目录新建一个.editorconfig文件。 123456789root = true[*]indent_style = spaceindent_size = 2charset = utf-8trim_trailing_whitespace = falseinsert_final_newline = true  这里可以在下面最近文件类型，比如设置java和python的tab为4个空格，而js的tab为2个空格。 eslinteslint是一个代码的强约束，通过一系列规则来严格控制团队代码风格。在官网可以看到详细的规则列表。 在项目中安装eslint，可以通过命令行进行校验...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/7/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#content-inner">7</a><span class="page-number current">8</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-07-03T08:09:12.000Z" title="更新于 2026-07-03 16:09:12">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/03/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84PPT%20skill/" title="发现一个不错的PPT skill">发现一个不错的PPT skill</a><time datetime="2026-07-03T07:26:41.000Z" title="更新于 2026-07-03 15:26:41">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI/"><span class="card-category-list-name">AI</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/VPS%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/"><span class="card-category-list-name">VPS服务器配置</span><span class="card-category-list-count">13</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/VPS%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/frp%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE/"><span class="card-category-list-name">frp服务配置</span><span class="card-category-list-count">2</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/esim/"><span class="card-category-list-name">esim</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"><span class="card-category-list-name">开源项目</span><span class="card-category-list-count">3</span></a></li>
+          </ul></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      <a class="card-more-btn" href="/archives/"
+            title="查看更多">
+            <i class="fas fa-angle-right"></i>
+          </a>
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/07/">
+            <span class="card-archive-list-date">
+              七月 2026
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/06/">
+            <span class="card-archive-list-date">
+              六月 2026
+            </span>
+            <span class="card-archive-list-count">17</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/05/">
+            <span class="card-archive-list-date">
+              五月 2026
+            </span>
+            <span class="card-archive-list-count">3</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/03/">
+            <span class="card-archive-list-date">
+              三月 2026
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/12/">
+            <span class="card-archive-list-date">
+              十二月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/11/">
+            <span class="card-archive-list-date">
+              十一月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/05/">
+            <span class="card-archive-list-date">
+              五月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/11/">
+            <span class="card-archive-list-date">
+              十一月 2024
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">79</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-07-24T08:45:41.426Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

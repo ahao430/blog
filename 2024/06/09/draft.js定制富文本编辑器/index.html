@@ -1,0 +1,319 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>draft.js定制富文本编辑器 | ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="有一个需求：  需要在输入框中输入&#x2F;时弹出自定义下拉弹窗，选择组件并插入到输入框。 下拉弹窗是双层，且子目录支持输入文本过滤。 同时插入的块在删除时应该整体删除。  这个弹窗和插入整体感觉跟语雀的功能很像。一般的富文本编辑器可以插入特定的样式，但是整体自定义组件显示是不支持的，尤其是插入的块退格时作为整体删除。 另外这个输入&#x2F;弹出下拉的功能，联想到很多编辑器中@人的时候的men">
+<meta property="og:type" content="article">
+<meta property="og:title" content="draft.js定制富文本编辑器">
+<meta property="og:url" content="https://blog.ahao430.site/2024/06/09/draft.js%E5%AE%9A%E5%88%B6%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="有一个需求：  需要在输入框中输入&#x2F;时弹出自定义下拉弹窗，选择组件并插入到输入框。 下拉弹窗是双层，且子目录支持输入文本过滤。 同时插入的块在删除时应该整体删除。  这个弹窗和插入整体感觉跟语雀的功能很像。一般的富文本编辑器可以插入特定的样式，但是整体自定义组件显示是不支持的，尤其是插入的块退格时作为整体删除。 另外这个输入&#x2F;弹出下拉的功能，联想到很多编辑器中@人的时候的men">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:published_time" content="2024-06-09T09:54:26.000Z">
+<meta property="article:modified_time" content="2024-06-11T10:30:47.000Z">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "draft.js定制富文本编辑器",
+  "url": "https://blog.ahao430.site/2024/06/09/draft.js%E5%AE%9A%E5%88%B6%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8/",
+  "image": "https://blog.ahao430.site/img/butterfly-icon.png",
+  "datePublished": "2024-06-09T09:54:26.000Z",
+  "dateModified": "2024-06-11T10:30:47.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ahao430",
+      "url": "https://blog.ahao430.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/2024/06/09/draft.js%E5%AE%9A%E5%88%B6%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'draft.js定制富文本编辑器',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">draft.js定制富文本编辑器</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">draft.js定制富文本编辑器</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-06-09T09:54:26.000Z" title="发表于 2024-06-09 17:54:26">2024-06-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-06-11T10:30:47.000Z" title="更新于 2024-06-11 18:30:47">2024-06-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>有一个需求：</p>
+<ul>
+<li>需要在输入框中输入&#x2F;时弹出自定义下拉弹窗，选择组件并插入到输入框。</li>
+<li>下拉弹窗是双层，且子目录支持输入文本过滤。</li>
+<li>同时插入的块在删除时应该整体删除。</li>
+</ul>
+<p>这个弹窗和插入整体感觉跟语雀的功能很像。一般的富文本编辑器可以插入特定的样式，但是整体自定义组件显示是不支持的，尤其是插入的块退格时作为整体删除。</p>
+<p>另外这个输入&#x2F;弹出下拉的功能，联想到很多编辑器中@人的时候的mention功能。 去看了react-mention，唤起键可以自定义，不一定是@，但是下拉弹窗的样式是固定的，只有单层列表，且不支持过滤。看react-mention的介绍，要唤起多个列表，就用多个不同按键唤起。这与我们的需求不符。</p>
+<h2 id="库选择"><a href="#库选择" class="headerlink" title="库选择"></a>库选择</h2><p>第一反应是用<a target="_blank" rel="noopener" href="https://tiptap.dev/docs/editor/introduction">tiptap</a>，去翻了下文档，挺复杂的，感觉对我这个功能来说有点重。</p>
+<p>再去查了下富文本实现mention，facebook开源的有一个draft.js的库，相对底层一些，可以用来实现自定义的富文本编辑器，网上的示例就有mention和插入整体的代码。参考了这篇文章：<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000041471277?utm_source=sf-similar-article">https://segmentfault.com/a/1190000041471277?utm_source&#x3D;sf-similar-article</a></p>
+<h2 id="draft-js简单介绍"><a href="#draft-js简单介绍" class="headerlink" title="draft.js简单介绍"></a>draft.js简单介绍</h2><p><a target="_blank" rel="noopener" href="https://draftjs.org/docs/getting-started">draftjs</a><font style="color:rgb(33, 37, 41);"> 是用于 react 的富文本编辑器框架，它并不能开箱即用，但是它提供了很多用于开发富文本的 API。基于此，开发者能够搭建出定制化的富文本编辑器。draftjs 有几个重要的概念：EditorState、Entity、SelectionState、CompositeDecorator。</font></p>
+<h4 id="EditorState"><a href="#EditorState" class="headerlink" title="EditorState"></a><font style="color:rgb(33, 37, 41);">EditorState</font></h4><p><font style="color:rgb(33, 37, 41);">EditorState 是编辑器的顶级状态对象。它是一个不可变数据，表示 Draft 编辑器的整个状态，包括:</font></p>
+<ul>
+<li><font style="color:rgb(33, 37, 41);">当前文本内容状态（ContentState）</font></li>
+<li><font style="color:rgb(33, 37, 41);">当前选择状态（SelectionState）</font></li>
+<li><font style="color:rgb(33, 37, 41);">内容的装饰器（Decorator）</font></li>
+<li><font style="color:rgb(33, 37, 41);">撤销&#x2F;重做堆栈</font></li>
+<li><font style="color:rgb(33, 37, 41);">对内容所做的最新类型的更改（EditorChangeType）</font></li>
+</ul>
+<p><font style="color:rgb(33, 37, 41);">draftjs 基于不可变（immutable）数据，因此对编辑器的修改都需要新生成一个 EditorState 对象传入编辑器，以实现数据更新。</font></p>
+<p><font style="color:rgb(33, 37, 41);">静态方法支持创建、增加、撤销、恢复等操作。下面我们要用到</font>createEmpty和createWithContent来创建editorState的实例，分别用于新建和编辑时。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="title function_">createEmpty</span>(<span class="attr">decorator</span>?: <span class="title class_">DraftDecoratorType</span>): <span class="title class_">EditorState</span></span><br><span class="line">                   </span><br><span class="line"><span class="keyword">static</span> <span class="title function_">createWithContent</span>(</span><br><span class="line">  <span class="attr">contentState</span>: <span class="title class_">ContentState</span>,</span><br><span class="line">  <span class="attr">decorator</span>?: <span class="title class_">DraftDecoratorType</span></span><br><span class="line">): <span class="title class_">EditorState</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Entity"><a href="#Entity" class="headerlink" title="Entity"></a><font style="color:rgb(33, 37, 41);">Entity</font></h4><p><font style="color:rgb(33, 37, 41);">Entity 用来描述带有元数据的文本，使一段文本可以携带任意类型的数据，提供了更加丰富的功能，链接、提及和嵌入的内容都可以通过 Entity 来实现。</font></p>
+<p><strong><font style="color:rgb(33, 37, 41);">Entity的结构</font></strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: &#x27;string&#x27;, </span><br><span class="line">    // 表示Entity的类型; eg:&#x27;LINK&#x27;, &#x27;TOKEN&#x27;, &#x27;PHOTO&#x27;, &#x27;IMAGE&#x27;</span><br><span class="line">    mutability: &#x27;MUTABLE&#x27; | &#x27;IMMUTABLE&#x27; | &#x27;SEGMENTED&#x27;, </span><br><span class="line">    // 此属性表示在编辑器中编辑文本范围时使用此实体对象注释的文本范围的行为。</span><br><span class="line">    data: &#x27;object&#x27;, </span><br><span class="line">    // Entity的元数据; 用于存储你想要存储在该Entity里的任何信息</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font style="color:rgb(33, 37, 41);">其中 Mutability 这条属性三个值的含义分别是：</font></p>
+<ul>
+<li><font style="color:rgb(33, 37, 41);">Immutable：此 Entity 作为一个整体，一删则整体都删除，无法更改文本;</font></li>
+<li><font style="color:rgb(33, 37, 41);">Mutable：Entity 在编辑器中的文字可以自由修改，比如链接文本;</font></li>
+<li><font style="color:rgb(33, 37, 41);">Segmented：于 Immutable 类似，区别是可以删除部分文字;</font></li>
+</ul>
+<h4 id="SelectionState"><a href="#SelectionState" class="headerlink" title="SelectionState"></a><font style="color:rgb(33, 37, 41);">SelectionState</font></h4><p><font style="color:rgb(33, 37, 41);">SelectionState 表示编辑器中的选择范围。一个选择范围有两点：锚点（起点）和焦点（终点）。</font></p>
+<ul>
+<li><font style="color:rgb(33, 37, 41);">锚点位置 &#x3D;&#x3D;&#x3D; 焦点位置，没有选择文本；</font></li>
+<li><font style="color:rgb(33, 37, 41);">锚点位置 &gt; 焦点位置，从右至左选择文本;</font></li>
+<li><font style="color:rgb(33, 37, 41);">锚点位置 &lt; 焦点位置，从左至右选择文本;</font></li>
+</ul>
+<h4 id="CompositeDecorator"><a href="#CompositeDecorator" class="headerlink" title="CompositeDecorator"></a><font style="color:rgb(33, 37, 41);">CompositeDecorator</font></h4><p><font style="color:rgb(33, 37, 41);">Decorator 概念的基础是扫描给定 ContentBlock 的内容，根据定义的策略定位到匹配位置，然后用指定的 React 组件呈现它们。</font></p>
+<h2 id="主要技术实现"><a href="#主要技术实现" class="headerlink" title="主要技术实现"></a>主要技术实现</h2><h3 id="引入draft-js，初始化"><a href="#引入draft-js，初始化" class="headerlink" title="引入draft.js，初始化"></a>引入draft.js，初始化</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  <span class="title class_">CompositeDecorator</span>,</span><br><span class="line">  <span class="title class_">Editor</span>,</span><br><span class="line">  <span class="title class_">EditorState</span>,</span><br><span class="line">  <span class="title class_">Modifier</span>,</span><br><span class="line">  convertToRaw,</span><br><span class="line">  convertFromRaw,</span><br><span class="line">  getDefaultKeyBinding,</span><br><span class="line">  <span class="title class_">KeyBindingUtil</span>,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&quot;draft-js&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;draft-js/dist/Draft.css&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">MyEditor</span> = props =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> [editorState, setEditorState] = <span class="title class_">React</span>.<span class="title function_">useState</span>(<span class="function">() =&gt;</span></span><br><span class="line">    <span class="title class_">EditorState</span>.<span class="title function_">createEmpty</span>(),</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Editor</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">editorState</span>=<span class="string">&#123;editorState&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">placeholder</span>=<span class="string">&quot;Please input&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    /&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="设置高度，点击聚焦"><a href="#设置高度，点击聚焦" class="headerlink" title="设置高度，点击聚焦"></a>设置高度，点击聚焦</h3><p>初始化之后，发现初始只有一行，随着输入换行，会自动增加高度。但是我们看到的富文本区域，一般是有个初始高度的，有个编辑器的边框。</p>
+<p>这里在外面加一层div来模拟，当点击div时，我们要让编辑器处于编辑的状态。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">MyEditor</span> = props =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> editorRef = <span class="title function_">useRef</span>();</span><br><span class="line">  <span class="keyword">const</span> [editorState, setEditorState] = <span class="title class_">React</span>.<span class="title function_">useState</span>(<span class="function">() =&gt;</span></span><br><span class="line">    <span class="title class_">EditorState</span>.<span class="title function_">createEmpty</span>(),</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">onEditorContainerClick</span> = e =&gt; &#123;</span><br><span class="line">    editorRef.<span class="property">current</span>?.<span class="title function_">focus</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;editor-container&quot;</span> <span class="attr">onClick</span>=<span class="string">&#123;onEditorContainerClick&#125;</span>&gt;</span>	</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Editor</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">ref</span>=<span class="string">&#123;editorRef&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">editorState</span>=<span class="string">&#123;editorState&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">placeholder</span>=<span class="string">&quot;Please input&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.editor-container</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#d0d5dd</span>;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0px</span> <span class="number">1px</span> <span class="number">2px</span> <span class="number">0px</span> <span class="number">#1018280d</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="selector-class">.public-DraftEditor-content</span> &#123;</span><br><span class="line">    <span class="attribute">min-height</span>: <span class="number">140px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="点击插入entity"><a href="#点击插入entity" class="headerlink" title="点击插入entity"></a>点击插入entity</h3><p>自己实现一个下拉弹窗，先固定在页面上。</p>
+<p>点击弹窗按钮插入指定的标签元素，这里需要用到CompositeDecorator。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> compositeDecorator = <span class="keyword">new</span> <span class="title class_">CompositeDecorator</span>([</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">strategy</span>: <span class="function">(<span class="params">contentBlock, callback, contentState</span>) =&gt;</span> &#123;</span><br><span class="line">      contentBlock.<span class="title function_">findEntityRanges</span>(<span class="function">(<span class="params">character</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> entityKey = character.<span class="title function_">getEntity</span>();</span><br><span class="line">        <span class="keyword">if</span> (entityKey === <span class="literal">null</span>) &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">type</span> = contentState.<span class="title function_">getEntity</span>(entityKey).<span class="title function_">getType</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">type</span>;</span><br><span class="line">      &#125;, callback);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">component</span>: <span class="function">(<span class="params">props</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = props.<span class="property">contentState</span>.<span class="title function_">getEntity</span>(props.<span class="property">entityKey</span>).<span class="property">data</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> (</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">Tag</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">data-offset-key</span>=<span class="string">&#123;props.offsetkey&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">className</span>=<span class="string">&#123;data.type&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">color</span>=<span class="string">&#123;data.color&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        &gt;</span></span></span><br><span class="line"><span class="language-xml">          &#123;props.children&#125;</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">Tag</span>&gt;</span></span></span><br><span class="line">      );</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> [editorState, setEditorState] = <span class="title class_">React</span>.<span class="title function_">useState</span>(<span class="function">() =&gt;</span></span><br><span class="line">  <span class="title class_">EditorState</span>.<span class="title function_">createEmpty</span>(compositeDecorator),</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>上面设置了entity用Tag组件渲染，在创建entity时传入compositeDecorator。</p>
+<p>接下来，点击按钮时，插入entity，方法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">insertEntity</span> = <span class="keyword">async</span> (<span class="params">type, entityData</span>) =&gt; &#123;</span><br><span class="line">  <span class="title function_">setMentionVisible</span>(<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> contentState = editorState.<span class="title function_">getCurrentContent</span>();</span><br><span class="line">  contentState = contentState.<span class="title function_">createEntity</span>(type, <span class="string">&quot;IMMUTABLE&quot;</span>, entityData);</span><br><span class="line">  <span class="keyword">const</span> entityKey = contentState.<span class="title function_">getLastCreatedEntityKey</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> selection = editorState.<span class="title function_">getSelection</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (selection.<span class="title function_">isCollapsed</span>()) &#123;</span><br><span class="line">    contentState = <span class="title class_">Modifier</span>.<span class="title function_">insertText</span>(</span><br><span class="line">      contentState,</span><br><span class="line">      selection,</span><br><span class="line">      entityData.<span class="property">name</span>,</span><br><span class="line">      <span class="literal">undefined</span>,</span><br><span class="line">      entityKey,</span><br><span class="line">    );</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    contentState = <span class="title class_">Modifier</span>.<span class="title function_">replaceText</span>(</span><br><span class="line">      contentState,</span><br><span class="line">      selection,</span><br><span class="line">      entityData.<span class="property">name</span>,</span><br><span class="line">      <span class="literal">undefined</span>,</span><br><span class="line">      entityKey,</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> end;</span><br><span class="line">  contentState.<span class="title function_">getFirstBlock</span>().<span class="title function_">findEntityRanges</span>(</span><br><span class="line">    <span class="function">(<span class="params">character</span>) =&gt;</span> character.<span class="title function_">getEntity</span>() === entityKey,</span><br><span class="line">    <span class="function">(<span class="params">_, _end</span>) =&gt;</span> &#123;</span><br><span class="line">      end = _end;</span><br><span class="line">    &#125;,</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> newEditorState = <span class="title class_">EditorState</span>.<span class="title function_">set</span>(editorState, &#123;</span><br><span class="line">    <span class="attr">currentContent</span>: contentState,</span><br><span class="line">  &#125;);</span><br><span class="line">  selection = selection.<span class="title function_">merge</span>(&#123;</span><br><span class="line">    <span class="attr">anchorOffset</span>: end,</span><br><span class="line">    <span class="attr">focusOffset</span>: end,</span><br><span class="line">  &#125;);</span><br><span class="line">  newEditorState = <span class="title class_">EditorState</span>.<span class="title function_">forceSelection</span>(newEditorState, selection);</span><br><span class="line">  <span class="title function_">handleEditorChange</span>(newEditorState);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>其中，entity就是我们插入的标签，再删除时是作为一个整体。createEntity的第二个参数，可以是<font style="color:rgb(25, 27, 31);">Immutable、Mutable、Segmented。当entity是链接时用mutable，因为一般情况下，链接和文字并不是紧密耦合的，文字可以自由增删。这里我们用</font>.<font style="color:rgb(25, 27, 31);">Immutable，当在中间添加一个字符，整个entity消失。</font></p>
+<p><font style="color:rgb(25, 27, 31);">后面用Modifier来修改内容。</font></p>
+<p><font style="color:rgb(25, 27, 31);">selection是我们的光标操作，anchor是光标的位置，focus是当前选中的位置，从左向右选中时，focusOffset &gt; anchorOffset ; 从右向左选中时，focusOffset &lt; anchorOffset。</font></p>
+<p><font style="color:rgb(25, 27, 31);">上面创建entity并插入，然后把光标位置移动到后面，保存状态。</font></p>
+<h3 id="输入-触发下拉弹窗"><a href="#输入-触发下拉弹窗" class="headerlink" title="输入&#x2F;触发下拉弹窗"></a>输入&#x2F;触发下拉弹窗</h3><p>给下拉弹窗隐藏起来，输入&#x2F;显示，插入entity后再隐藏。</p>
+<p>这里用到Editor组件的handleBeforeInput方法，监听输入&#x2F;时，显示弹窗。当return ‘handled’，后续事件被拦截，这里触发了弹窗， 同时拦截了&#x2F;的输入。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">handleBeforeInput</span> = (<span class="params">char</span>) =&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;beforeInput&quot;</span>, char);</span><br><span class="line">  <span class="keyword">if</span> (char === <span class="string">&quot;/&quot;</span> || char === <span class="string">&quot;、&quot;</span>) &#123;</span><br><span class="line">    toInsert = char;</span><br><span class="line">    <span class="title function_">showMention</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;handled&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> selectedTextLength = <span class="title function_">getLengthOfSelectedText</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="string">&quot;not-handled&quot;</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="关闭弹窗时，插入"><a href="#关闭弹窗时，插入" class="headerlink" title="关闭弹窗时，插入&#x2F;"></a>关闭弹窗时，插入&#x2F;</h3><p>前面拦截了&#x2F;的输入，但是如果我们确实需要输入&#x2F;呢，比如http:&#x2F;&#x2F;，因此，我们需要有一个机制来输入&#x2F;。特意试验了语雀的&#x2F;是只在每行第一个输入触发弹窗菜单，在后面就不触发。另外出现弹窗后，按住ESC关闭弹窗，或者点击插入一个元素，都不会出现&#x2F;，但是继续输入其他字符，就会关闭弹窗的同时，连带&#x2F;和后面的字符一起输入。</p>
+<p>这里我们简单一点，当拦截&#x2F;时，记录有一个待插入的&#x2F;，当ESC时清空这个记录，而输入其他字符时，关闭弹窗的同时先插入这个记录。用一个flag来记录即可。</p>
+<p>插入文本的方法类似上面插入entity。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">insertText</span> = (<span class="params">text</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (!text) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> contentState = editorState.<span class="title function_">getCurrentContent</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> selection = editorState.<span class="title function_">getSelection</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (selection.<span class="title function_">isCollapsed</span>()) &#123;</span><br><span class="line">    contentState = <span class="title class_">Modifier</span>.<span class="title function_">insertText</span>(</span><br><span class="line">      contentState,</span><br><span class="line">      selection,</span><br><span class="line">      text,</span><br><span class="line">      <span class="literal">undefined</span>,</span><br><span class="line">      <span class="literal">null</span>,</span><br><span class="line">    );</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    contentState = <span class="title class_">Modifier</span>.<span class="title function_">replaceText</span>(</span><br><span class="line">      contentState,</span><br><span class="line">      selection,</span><br><span class="line">      text,</span><br><span class="line">      <span class="literal">undefined</span>,</span><br><span class="line">      <span class="literal">null</span>,</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> newEditorState = <span class="title class_">EditorState</span>.<span class="title function_">set</span>(editorState, &#123;</span><br><span class="line">    <span class="attr">currentContent</span>: contentState,</span><br><span class="line">  &#125;);</span><br><span class="line">  selection = selection.<span class="title function_">merge</span>(&#123;</span><br><span class="line">    <span class="attr">anchorOffset</span>: selection.<span class="property">anchorOffset</span> + <span class="number">1</span>,</span><br><span class="line">    <span class="attr">focusOffset</span>: selection.<span class="property">focusOffset</span> + <span class="number">1</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">  newEditorState = <span class="title class_">EditorState</span>.<span class="title function_">forceSelection</span>(newEditorState, selection);</span><br><span class="line">  <span class="title function_">handleEditorChange</span>(newEditorState);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="监听按键关闭弹窗"><a href="#监听按键关闭弹窗" class="headerlink" title="监听按键关闭弹窗"></a>监听按键关闭弹窗</h3><p>可以用handleBeforeInput，也可以用keyBindingFn+handleKeyCommand。</p>
+<p>其中handleBeforeInput是监听输入直接操作。而keyBindingFn是监听按按键，return一个事件，再用handleKeyCommand去判断事件类型来执行。</p>
+<p>当输入任何&#x2F;以外的按键，都关闭弹窗，并拦截接下来的行为。</p>
+<p>再监听document.body，当点击编辑器以外的区域，向上冒泡到页面，同样关闭弹窗。编辑器容器阻止冒泡。</p>
+<h3 id="tab键展示"><a href="#tab键展示" class="headerlink" title="tab键展示"></a>tab键展示</h3><p>当输入tab键时，没有像我们一般在vscode等编辑器中输入预期的输入\t或者几个空格效果，而是触发了浏览器本身的切换选中元素的效果。这里用keyBindingFn+handleKeyCommand来监听，插入\t。</p>
+<h3 id="弹窗位置跟随光标"><a href="#弹窗位置跟随光标" class="headerlink" title="弹窗位置跟随光标"></a>弹窗位置跟随光标</h3><p>这里我们需要实时拿到光标的坐标。每次弹窗展示的时候查询。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">FindCaretPosition</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> selection = <span class="variable language_">window</span>.<span class="title function_">getSelection</span>();</span><br><span class="line">  <span class="keyword">const</span> selectionRange = selection.<span class="title function_">getRangeAt</span>(<span class="number">0</span>).<span class="title function_">cloneRange</span>();</span><br><span class="line">  selectionRange.<span class="title function_">collapse</span>(<span class="literal">false</span>);</span><br><span class="line">  <span class="comment">//-----</span></span><br><span class="line">  <span class="keyword">const</span> caretMarker = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;span&quot;</span>);</span><br><span class="line">  caretMarker.<span class="property">id</span> = <span class="string">&quot;__caret&quot;</span>;</span><br><span class="line">  selectionRange.<span class="title function_">insertNode</span>(caretMarker);</span><br><span class="line">  <span class="keyword">const</span> caretPosition = <span class="variable language_">document</span></span><br><span class="line">    .<span class="title function_">querySelector</span>(<span class="string">&quot;#__caret&quot;</span>)</span><br><span class="line">    .<span class="title function_">getBoundingClientRect</span>();</span><br><span class="line">  <span class="comment">//-----</span></span><br><span class="line">  selectionRange.<span class="title function_">deleteContents</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; <span class="attr">x</span>: caretPosition.<span class="property">left</span>, <span class="attr">y</span>: caretPosition.<span class="property">bottom</span> &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还有一个小问题，我们的菜单以及二级菜单是从左往右的，当光标在右边时，超出屏幕的部分菜单看不到了，这个时候应该让菜单右边跟屏幕右边对齐，二级菜单向左弹出。</p>
+<h3 id="导出数据，及数据回显"><a href="#导出数据，及数据回显" class="headerlink" title="导出数据，及数据回显"></a>导出数据，及数据回显</h3><p>用convertToRaw得到导出数据，再用convertFromRaw导入。注意导入的时候，要用createWithContent，同时还要传入compositeDecorator。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">getEditorValue</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> content = editorState.<span class="title function_">getCurrentContent</span>();</span><br><span class="line">  <span class="keyword">const</span> rawData = <span class="title function_">convertToRaw</span>(content);</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(rawData);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">setEditorValue</span> = (<span class="params">val</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> newEditorState;</span><br><span class="line">  <span class="keyword">if</span> (val) &#123;</span><br><span class="line">    <span class="keyword">const</span> rawData = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(val);</span><br><span class="line">    <span class="keyword">const</span> contentState = <span class="title function_">convertFromRaw</span>(rawData);</span><br><span class="line">    newEditorState = <span class="title class_">EditorState</span>.<span class="title function_">createWithContent</span>(</span><br><span class="line">      contentState,</span><br><span class="line">      compositeDecorator,</span><br><span class="line">    );</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    newEditorState = <span class="title class_">EditorState</span>.<span class="title function_">createEmpty</span>(compositeDecorator);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">setEditorState</span>(newEditorState);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="完整代码和demo"><a href="#完整代码和demo" class="headerlink" title="完整代码和demo"></a>完整代码和demo</h2><p>在线代码及预览: <a target="_blank" rel="noopener" href="https://codesandbox.io/p/devbox/objective-bohr-fkjlxl?file=/src/App.tsx:14,1">https://codesandbox.io/p/devbox/objective-bohr-fkjlxl?file=%2Fsrc%2FApp.tsx%3A14%2C1</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site">ahao430</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site/2024/06/09/draft.js%E5%AE%9A%E5%88%B6%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8/">https://blog.ahao430.site/2024/06/09/draft.js%E5%AE%9A%E5%88%B6%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.ahao430.site" target="_blank">ahao430 的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/07/17/gulp-replace%E9%A2%84%E7%BC%96%E8%AF%91%E6%B3%A8%E5%85%A5%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" title="gulp-replace预编译注入环境变量"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">gulp-replace预编译注入环境变量</div></div><div class="info-2"><div class="info-item-1">需求：在小程序使用pagespy，不希望带入到生产环境。期望在编译时而非运行时，动态判断环境注入代码。 要动态注入的代码： 1234567891011121314import PageSpy from &#x27;@huolala-tech/page-spy-alipay&#x27;;(function () &#123;  const uid = my.getStorageSync(&#123; key: &#x27;uid&#x27; &#125;).data;  const map = &#123;    &#x27;xxxxxxxxxxxxxxxx&#x27;: &#x27;xx&#x27;,  &#125;  // eslint-disable-next-line  new PageSpy(&#123;    api: &#x27;xxx&#x27;,    project: &#x27;xxx小程序&#x27;,    title: map[uid] || uid || new Date().toLocaleTimeString(),  &#125;);&#125;)...</div></div></div></a><a class="pagination-related" href="/2024/05/11/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E5%9C%A8%E5%89%8D%E7%AB%AF%E7%9A%84%E5%BA%94%E7%94%A8/" title="贝塞尔曲线在前端的应用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">贝塞尔曲线在前端的应用</div></div><div class="info-2"><div class="info-item-1">贝塞尔曲线介绍贝塞尔曲线（Bezier Curve）在计算机图形领域应用非常广泛，比如我们熟知的 CSS 动画、 Canvas 以及 Photoshop 等都可以看到贝塞尔曲线的身影。  百度百科：https://baike.baidu.com/item/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/1091769?fr=ge_ala  css中的时间函数css3的transition和animation可以实现动画效果，二者都支持贝塞尔曲线。CSS动画过渡时间函数是三阶贝塞尔曲线。动过时间函数，我们在用transition和animation做动画时，可以控制从起点到终点之间的值随时间的变化，如线性变化，先快后满，等等。  CSS animation-timing-function 属性  https://www.w3school.com.cn/cssref/pr_animation-timing-function.asp   CSS transition-timing-function属性  https://www.w3schoo...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%93%E9%80%89%E6%8B%A9"><span class="toc-number">1.</span> <span class="toc-text">库选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#draft-js%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">draft.js简单介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#EditorState"><span class="toc-number">2.1.</span> <span class="toc-text">EditorState</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Entity"><span class="toc-number">2.2.</span> <span class="toc-text">Entity</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SelectionState"><span class="toc-number">2.3.</span> <span class="toc-text">SelectionState</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CompositeDecorator"><span class="toc-number">2.4.</span> <span class="toc-text">CompositeDecorator</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">主要技术实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E5%85%A5draft-js%EF%BC%8C%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">3.1.</span> <span class="toc-text">引入draft.js，初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E9%AB%98%E5%BA%A6%EF%BC%8C%E7%82%B9%E5%87%BB%E8%81%9A%E7%84%A6"><span class="toc-number">3.2.</span> <span class="toc-text">设置高度，点击聚焦</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%82%B9%E5%87%BB%E6%8F%92%E5%85%A5entity"><span class="toc-number">3.3.</span> <span class="toc-text">点击插入entity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5-%E8%A7%A6%E5%8F%91%E4%B8%8B%E6%8B%89%E5%BC%B9%E7%AA%97"><span class="toc-number">3.4.</span> <span class="toc-text">输入&#x2F;触发下拉弹窗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%97%AD%E5%BC%B9%E7%AA%97%E6%97%B6%EF%BC%8C%E6%8F%92%E5%85%A5"><span class="toc-number">3.5.</span> <span class="toc-text">关闭弹窗时，插入&#x2F;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%91%E5%90%AC%E6%8C%89%E9%94%AE%E5%85%B3%E9%97%AD%E5%BC%B9%E7%AA%97"><span class="toc-number">3.6.</span> <span class="toc-text">监听按键关闭弹窗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tab%E9%94%AE%E5%B1%95%E7%A4%BA"><span class="toc-number">3.7.</span> <span class="toc-text">tab键展示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B9%E7%AA%97%E4%BD%8D%E7%BD%AE%E8%B7%9F%E9%9A%8F%E5%85%89%E6%A0%87"><span class="toc-number">3.8.</span> <span class="toc-text">弹窗位置跟随光标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%87%BA%E6%95%B0%E6%8D%AE%EF%BC%8C%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%9B%9E%E6%98%BE"><span class="toc-number">3.9.</span> <span class="toc-text">导出数据，及数据回显</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81%E5%92%8Cdemo"><span class="toc-number">4.</span> <span class="toc-text">完整代码和demo</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-07-03T08:09:12.000Z" title="更新于 2026-07-03 16:09:12">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/03/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84PPT%20skill/" title="发现一个不错的PPT skill">发现一个不错的PPT skill</a><time datetime="2026-07-03T07:26:41.000Z" title="更新于 2026-07-03 15:26:41">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+  const getUtterancesTheme = theme => theme === 'dark' ? 'photon-dark' : 'github-light'
+
+  const loadUtterances = (el = document, key) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyUtterances = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const config = {
+      src: 'https://utteranc.es/client.js',
+      repo: 'ahao430/blog',
+      theme: getUtterancesTheme(document.documentElement.getAttribute('data-theme')),
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      'issue-term': isShuoshuo ? key : (option && option['issue-term']) || 'pathname'
+    }
+
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => ele.setAttribute(key, value))
+    el.querySelector('#utterances-wrap').appendChild(ele)
+  }
+
+  const changeUtterancesTheme = theme => {
+    const iframe = document.querySelector('#utterances-wrap iframe')
+    if (iframe) {
+      const message = {
+        type: 'set-theme',
+        theme: getUtterancesTheme(theme)
+      };
+      iframe.contentWindow.postMessage(message, 'https://utteranc.es')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeUtterancesTheme, 'utterances')
+
+  if (isShuoshuo) {
+    'Utterances' === 'Utterances'
+      ? window.shuoshuoComment = { loadComment: loadUtterances }
+      : window.loadOtherComment = loadUtterances
+    return
+  }
+  
+  if ('Utterances' === 'Utterances' || !true) {
+    if (true) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+    else loadUtterances()
+  } else {
+    window.loadOtherComment = loadUtterances
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

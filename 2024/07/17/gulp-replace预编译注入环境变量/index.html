@@ -1,0 +1,278 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>gulp-replace预编译注入环境变量 | ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="需求：在小程序使用pagespy，不希望带入到生产环境。期望在编译时而非运行时，动态判断环境注入代码。 要动态注入的代码： 1234567891011121314import PageSpy from &#x27;@huolala-tech&#x2F;page-spy-alipay&#x27;;(function () &#123;  const uid &#x3D; my.getStorageSync(&#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gulp-replace预编译注入环境变量">
+<meta property="og:url" content="https://blog.ahao430.site/2024/07/17/gulp-replace%E9%A2%84%E7%BC%96%E8%AF%91%E6%B3%A8%E5%85%A5%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="需求：在小程序使用pagespy，不希望带入到生产环境。期望在编译时而非运行时，动态判断环境注入代码。 要动态注入的代码： 1234567891011121314import PageSpy from &#x27;@huolala-tech&#x2F;page-spy-alipay&#x27;;(function () &#123;  const uid &#x3D; my.getStorageSync(&#123;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:published_time" content="2024-07-17T07:35:09.000Z">
+<meta property="article:modified_time" content="2025-01-17T16:00:18.000Z">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "gulp-replace预编译注入环境变量",
+  "url": "https://blog.ahao430.site/2024/07/17/gulp-replace%E9%A2%84%E7%BC%96%E8%AF%91%E6%B3%A8%E5%85%A5%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/",
+  "image": "https://blog.ahao430.site/img/butterfly-icon.png",
+  "datePublished": "2024-07-17T07:35:09.000Z",
+  "dateModified": "2025-01-17T16:00:18.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ahao430",
+      "url": "https://blog.ahao430.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/2024/07/17/gulp-replace%E9%A2%84%E7%BC%96%E8%AF%91%E6%B3%A8%E5%85%A5%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'gulp-replace预编译注入环境变量',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">gulp-replace预编译注入环境变量</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">gulp-replace预编译注入环境变量</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-07-17T07:35:09.000Z" title="发表于 2024-07-17 15:35:09">2024-07-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-17T16:00:18.000Z" title="更新于 2025-01-18 00:00:18">2025-01-18</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="需求："><a href="#需求：" class="headerlink" title="需求："></a>需求：</h2><p>在小程序使用pagespy，不希望带入到生产环境。期望在编译时而非运行时，动态判断环境注入代码。</p>
+<p>要动态注入的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">PageSpy</span> <span class="keyword">from</span> <span class="string">&#x27;@huolala-tech/page-spy-alipay&#x27;</span>;</span><br><span class="line"></span><br><span class="line">(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> uid = my.<span class="title function_">getStorageSync</span>(&#123; <span class="attr">key</span>: <span class="string">&#x27;uid&#x27;</span> &#125;).<span class="property">data</span>;</span><br><span class="line">  <span class="keyword">const</span> map = &#123;</span><br><span class="line">    <span class="string">&#x27;xxxxxxxxxxxxxxxx&#x27;</span>: <span class="string">&#x27;xx&#x27;</span>,</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// eslint-disable-next-line</span></span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">PageSpy</span>(&#123;</span><br><span class="line">    <span class="attr">api</span>: <span class="string">&#x27;xxx&#x27;</span>,</span><br><span class="line">    <span class="attr">project</span>: <span class="string">&#x27;xxx小程序&#x27;</span>,</span><br><span class="line">    <span class="attr">title</span>: map[uid] || uid || <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">toLocaleTimeString</span>(),</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h2><p>之前我们用gulp做了环境变量，编译时输出不同的json配置到dist&#x2F;config.json文件。而运行时的代码都是import config from ‘&#x2F;config.json’。这次我们在生产环境不能把pagespy的包打包进去，因此需要在编译时修改代码。需要在编译阶段动态控制代码的注入。</p>
+<ul>
+<li>之前有用过<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/gulp-file-include">gulp-file-include</a>，需要注入时引入单独的一个文件，然后注入这个文件的路径。</li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/gulp-inject">gulp-inject</a>也需要引入单的文件来注入，不过支持注入时从注入路径，转换为注入内容。</li>
+</ul>
+<p>我们用过vite，可以直接将环境变量注入到代码，我们这里有专门的不同环境的配置文件，想实现类似的效果，直接注入变量。所以选择<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/gulp-replace">gulp-replace</a>来自己实现。</p>
+<h2 id="gulp-replace介绍"><a href="#gulp-replace介绍" class="headerlink" title="gulp-replace介绍"></a>gulp-replace介绍</h2><p><font style="color:rgb(17, 17, 17);">gulp-replace可以将gulp.src读取的文件的某个字符串进行替换，类似字符串的replace方法，后面可以是字符串，也可以是个函数。</font></p>
+<p><font style="color:rgb(17, 17, 17);">replace插件方法：replace(string, replacement[, options])</font></p>
+<p><font style="color:rgb(17, 17, 17);">replacement参数： string &#x2F; function</font></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> replace = <span class="built_in">require</span>(<span class="string">&#x27;gulp-replace&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; src, dest &#125; = <span class="built_in">require</span>(<span class="string">&#x27;gulp&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">replaceTemplate</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">src</span>([<span class="string">&#x27;file.txt&#x27;</span>])</span><br><span class="line">    .<span class="title function_">pipe</span>(<span class="title function_">replace</span>(<span class="string">&#x27;bar&#x27;</span>, <span class="string">&#x27;foo&#x27;</span>))</span><br><span class="line">    .<span class="title function_">pipe</span>(<span class="title function_">dest</span>(<span class="string">&#x27;build/&#x27;</span>));</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// or replace multiple strings</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">replaceTemplate</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">src</span>([<span class="string">&#x27;file.txt&#x27;</span>])</span><br><span class="line">    .<span class="title function_">pipe</span>(<span class="title function_">replace</span>(<span class="string">&#x27;bar&#x27;</span>, <span class="string">&#x27;foo&#x27;</span>))</span><br><span class="line">    .<span class="title function_">pipe</span>(<span class="title function_">replace</span>(<span class="string">&#x27;baz&#x27;</span>, <span class="string">&#x27;fuz&#x27;</span>))</span><br><span class="line">    .<span class="title function_">pipe</span>(<span class="title function_">dest</span>(<span class="string">&#x27;build/&#x27;</span>));</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">replaceTemplate</span> = replaceTemplate;</span><br></pre></td></tr></table></figure>
+
+<p><font style="color:rgb(17, 17, 17);">当replacement为function时：replace(regex, replacement[, options])</font></p>
+<p><font style="color:rgb(17, 17, 17);">options: { skipBinary: Boolean }</font></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> replace = <span class="built_in">require</span>(<span class="string">&#x27;gulp-replace&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; src, dest &#125; = <span class="built_in">require</span>(<span class="string">&#x27;gulp&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">replaceTemplate</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">src</span>([<span class="string">&#x27;file.txt&#x27;</span>])</span><br><span class="line">    <span class="comment">// See https://mdn.io/string.replace#Specifying_a_string_as_a_parameter</span></span><br><span class="line">    .<span class="title function_">pipe</span>(<span class="title function_">replace</span>(<span class="regexp">/foo(.&#123;3&#125;)/g</span>, <span class="string">&#x27;$1foo&#x27;</span>))</span><br><span class="line">    .<span class="title function_">pipe</span>(<span class="title function_">dest</span>(<span class="string">&#x27;build/&#x27;</span>));</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">replaceTemplate</span> = replaceTemplate;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><ol>
+<li>我们把要注入的代码放到环境配置中，prod为空字符串，其余如下：</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;pagespy&quot;</span><span class="punctuation">:</span> `</span><br><span class="line">  import PageSpy from &#x27;@huolala-tech/page-spy-alipay&#x27;;</span><br><span class="line"></span><br><span class="line">  (function () <span class="punctuation">&#123;</span></span><br><span class="line">    const uid = my.getStorageSync(<span class="punctuation">&#123;</span> key<span class="punctuation">:</span> &#x27;uid&#x27; <span class="punctuation">&#125;</span>).data;</span><br><span class="line">  const map = <span class="punctuation">&#123;</span></span><br><span class="line">    &#x27;xxxxxxxxxxxxxxxx&#x27;<span class="punctuation">:</span> &#x27;xx&#x27;<span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="comment">// eslint-disable-next-line</span></span><br><span class="line">  new PageSpy(<span class="punctuation">&#123;</span></span><br><span class="line">  api<span class="punctuation">:</span> &#x27;xxx&#x27;<span class="punctuation">,</span></span><br><span class="line">  project<span class="punctuation">:</span> &#x27;xxx小程序&#x27;<span class="punctuation">,</span></span><br><span class="line">  title<span class="punctuation">:</span> map<span class="punctuation">[</span>uid<span class="punctuation">]</span> || uid || new Date().toLocaleTimeString()<span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span>);</span><br><span class="line"><span class="punctuation">&#125;</span>)();</span><br><span class="line">`<span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="2">
+<li>在app.js加入注释，用于注入代码，这里用注释包裹，不影响代码高亮和eslint，也不影响代码静态检查。内部格式自己约定。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="comment">/** replace:pagespy */</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>改造gulpfile.js，在js文件加入replace方法，正则方法解析之前约定的格式，从环境config读取对应变量字段写入。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> replace = <span class="built_in">require</span>(<span class="string">&#x27;gulp-replace&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">`./config/config.<span class="subst">$&#123;ENV&#125;</span>.json`</span>);</span><br><span class="line"></span><br><span class="line">gulp.<span class="title function_">task</span>(<span class="string">&#x27;js&#x27;</span>, <span class="function">(<span class="params">done</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> gulp</span><br><span class="line">        .<span class="title function_">src</span>([</span><br><span class="line">            <span class="variable constant_">SOURCE_CODE_PATH</span> + <span class="string">&#x27;/**/*.js&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;!&#x27;</span> + <span class="variable constant_">SOURCE_CODE_PATH</span> + <span class="string">&#x27;/node_modules/**/*&#x27;</span>,</span><br><span class="line">        ])</span><br><span class="line">        .<span class="title function_">pipe</span>(<span class="title function_">replace</span>(<span class="regexp">/\/\*+\s*replace\:([^\*\/\s]+)\s*\*+\//</span>, <span class="function">(<span class="params">match, $1</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> config[$1] || <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">        &#125;))</span><br><span class="line">        .<span class="title function_">pipe</span>(gulp.<span class="title function_">dest</span>(<span class="variable constant_">OUTPUT_PATH</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site">ahao430</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site/2024/07/17/gulp-replace%E9%A2%84%E7%BC%96%E8%AF%91%E6%B3%A8%E5%85%A5%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">https://blog.ahao430.site/2024/07/17/gulp-replace%E9%A2%84%E7%BC%96%E8%AF%91%E6%B3%A8%E5%85%A5%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.ahao430.site" target="_blank">ahao430 的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/11/22/%E5%BA%8F%E5%88%97%E5%B8%A7%E5%8A%A8%E7%94%BBcss%E5%AE%9E%E7%8E%B0/" title="序列帧动画css实现"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">序列帧动画css实现</div></div><div class="info-2"><div class="info-item-1">实现原理雪碧图（sprite）雪碧图也叫精灵图， 是一种CSS图像合成技术。通俗来说：将小图标合并在一起之后的图片称作雪碧图，每个小图标的使用配合background-position来获取。 雪碧图的作用有两个：  减少图片资源的请求数，提升页面加载速度 制作序列帧动画  这里我们要用第二种方式。假如我们有如下的一系列图片：  现在我们将它合到一张图片中。这时我们可以用ps一张一张拼，也可以用工具直接生成，如textpacker。  https://www.codeandweb.com/texturepacker   如下，我们可以拼成一个几行几列的图，或者都放在一行。  css实现序列帧动画我们都用过css的transition和animation实现动画。这里我们要像幻灯片一样，在每一帧停顿一下，再切换到下一帧。 这里要用到animation的一个属性steps。 animation的工作原理是通过将元素的CSS样式从一个状态改变为另一个状态（我们称为线性变化）。默认情况下，它以&lt;font style=&quot;color:rgb(199, 37, 78);back...</div></div></div></a><a class="pagination-related" href="/2024/06/09/draft.js%E5%AE%9A%E5%88%B6%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8/" title="draft.js定制富文本编辑器"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">draft.js定制富文本编辑器</div></div><div class="info-2"><div class="info-item-1">有一个需求：  需要在输入框中输入&#x2F;时弹出自定义下拉弹窗，选择组件并插入到输入框。 下拉弹窗是双层，且子目录支持输入文本过滤。 同时插入的块在删除时应该整体删除。  这个弹窗和插入整体感觉跟语雀的功能很像。一般的富文本编辑器可以插入特定的样式，但是整体自定义组件显示是不支持的，尤其是插入的块退格时作为整体删除。 另外这个输入&#x2F;弹出下拉的功能，联想到很多编辑器中@人的时候的mention功能。 去看了react-mention，唤起键可以自定义，不一定是@，但是下拉弹窗的样式是固定的，只有单层列表，且不支持过滤。看react-mention的介绍，要唤起多个列表，就用多个不同按键唤起。这与我们的需求不符。 库选择第一反应是用tiptap，去翻了下文档，挺复杂的，感觉对我这个功能来说有点重。 再去查了下富文本实现mention，facebook开源的有一个draft.js的库，相对底层一些，可以用来实现自定义的富文本编辑器，网上的示例就有mention和插入整体的代码。参考了这篇文章：https://segmentfault.com/a/1190000041471...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9C%80%E6%B1%82%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">需求：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gulp-replace%E4%BB%8B%E7%BB%8D"><span class="toc-number">3.</span> <span class="toc-text">gulp-replace介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.</span> <span class="toc-text">实现</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-07-03T08:09:12.000Z" title="更新于 2026-07-03 16:09:12">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/03/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84PPT%20skill/" title="发现一个不错的PPT skill">发现一个不错的PPT skill</a><time datetime="2026-07-03T07:26:41.000Z" title="更新于 2026-07-03 15:26:41">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+  const getUtterancesTheme = theme => theme === 'dark' ? 'photon-dark' : 'github-light'
+
+  const loadUtterances = (el = document, key) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyUtterances = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const config = {
+      src: 'https://utteranc.es/client.js',
+      repo: 'ahao430/blog',
+      theme: getUtterancesTheme(document.documentElement.getAttribute('data-theme')),
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      'issue-term': isShuoshuo ? key : (option && option['issue-term']) || 'pathname'
+    }
+
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => ele.setAttribute(key, value))
+    el.querySelector('#utterances-wrap').appendChild(ele)
+  }
+
+  const changeUtterancesTheme = theme => {
+    const iframe = document.querySelector('#utterances-wrap iframe')
+    if (iframe) {
+      const message = {
+        type: 'set-theme',
+        theme: getUtterancesTheme(theme)
+      };
+      iframe.contentWindow.postMessage(message, 'https://utteranc.es')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeUtterancesTheme, 'utterances')
+
+  if (isShuoshuo) {
+    'Utterances' === 'Utterances'
+      ? window.shuoshuoComment = { loadComment: loadUtterances }
+      : window.loadOtherComment = loadUtterances
+    return
+  }
+  
+  if ('Utterances' === 'Utterances' || !true) {
+    if (true) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+    else loadUtterances()
+  } else {
+    window.loadOtherComment = loadUtterances
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

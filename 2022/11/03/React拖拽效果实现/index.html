@@ -1,0 +1,280 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>React拖拽效果实现 | ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="原生js中，我们可以通过onDrag和onDrop事件来实现拖拽效果。而在react中，有一个强大的库，react-dnd，对拖拽相关能力进行了封装。react-dnd强大的好处是高度自由性，但是各种代码需要去手动实现。 我们海星二期装修页面需要实现一个拖拽（排序和复制），这里我们选择一个基于react-dnd二次封装的库，react-smooth-dnd。  文档安装1npm i react-s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React拖拽效果实现">
+<meta property="og:url" content="https://blog.ahao430.site/2022/11/03/React%E6%8B%96%E6%8B%BD%E6%95%88%E6%9E%9C%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="原生js中，我们可以通过onDrag和onDrop事件来实现拖拽效果。而在react中，有一个强大的库，react-dnd，对拖拽相关能力进行了封装。react-dnd强大的好处是高度自由性，但是各种代码需要去手动实现。 我们海星二期装修页面需要实现一个拖拽（排序和复制），这里我们选择一个基于react-dnd二次封装的库，react-smooth-dnd。  文档安装1npm i react-s">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:published_time" content="2022-11-03T10:54:59.000Z">
+<meta property="article:modified_time" content="2022-11-03T10:55:22.000Z">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "React拖拽效果实现",
+  "url": "https://blog.ahao430.site/2022/11/03/React%E6%8B%96%E6%8B%BD%E6%95%88%E6%9E%9C%E5%AE%9E%E7%8E%B0/",
+  "image": "https://blog.ahao430.site/img/butterfly-icon.png",
+  "datePublished": "2022-11-03T10:54:59.000Z",
+  "dateModified": "2022-11-03T10:55:22.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ahao430",
+      "url": "https://blog.ahao430.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/2022/11/03/React%E6%8B%96%E6%8B%BD%E6%95%88%E6%9E%9C%E5%AE%9E%E7%8E%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'React拖拽效果实现',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">React拖拽效果实现</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">React拖拽效果实现</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-03T10:54:59.000Z" title="发表于 2022-11-03 18:54:59">2022-11-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-03T10:55:22.000Z" title="更新于 2022-11-03 18:55:22">2022-11-03</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>原生js中，我们可以通过onDrag和onDrop事件来实现拖拽效果。而在react中，有一个强大的库，<a target="_blank" rel="noopener" href="https://github.com/react-dnd/react-dnd/">react-dnd</a>，对拖拽相关能力进行了封装。react-dnd强大的好处是高度自由性，但是各种代码需要去手动实现。</p>
+<p>我们海星二期装修页面需要实现一个拖拽（排序和复制），这里我们选择一个基于react-dnd二次封装的库，<a target="_blank" rel="noopener" href="https://github.com/kutlugsahin/react-smooth-dnd#readme">react-smooth-dnd</a>。</p>
+<hr>
+<h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i react-smooth-dnd</span><br></pre></td></tr></table></figure>
+
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; <span class="title class_">Component</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Container</span>, <span class="title class_">Draggable</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;react-smooth-dnd&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SimpleSortableList</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Component</span> &#123;</span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Container</span> <span class="attr">onDrop</span>=<span class="string">&#123;this.props.onDrop&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          &#123;this.props.items.map(item =&gt; &#123;</span></span><br><span class="line"><span class="language-xml">            return (</span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;<span class="name">Draggable</span> <span class="attr">key</span>=<span class="string">&#123;item.id&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                &#123;this.props.renderItem(item)&#125;</span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;/<span class="name">Draggable</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            );</span></span><br><span class="line"><span class="language-xml">          &#125;)&#125;</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">Container</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="API"><a href="#API" class="headerlink" title="API"></a>API</h4><p>组件包括Container和Draggable两个。其中Draggable是被拖拽的元素，Container是这些元素的父容器。试验了一下，Draggable必须是Container的子元素。Draggable没有什么属性，相关的属性和方法都在container上设置。</p>
+<p>常用的有这些：</p>
+<ul>
+<li>behaviour，设置这个容器是接收draggable的<font style="color:#E8323C;">move</font>，还是接收其他容器draggable的<font style="color:#E8323C;">copy</font>行为。默认move。</li>
+<li>orientation，决定内部draggable的排布方向，是水平还是垂直，这个比较死板，只有这两种排列方式。</li>
+<li>groupName，这个属性很重要，只有相同groupName之间才可以互相拖拽。</li>
+<li>dropPlaceholder，设置放置时占位元素的样式</li>
+<li><font style="color:rgb(36, 41, 47);background-color:rgb(246, 248, 250);">dragBeginDelay，拖拽生效延时，以避免点击事件触发拖拽</font></li>
+<li><font style="color:rgb(36, 41, 47);">getChildPayload，被拖拽元素要传递的payload数据。</font></li>
+<li>onDrop，放置函数，接收一个事件，里面包含addedIndex，removedIndex，payload。这样我们就可以根据这些数据去修改列表的值，实现排序或插入。</li>
+<li><font style="color:rgb(36, 41, 47);">shouldAcceptDrop， 可以过滤一些不可放置的元素</font></li>
+<li><font style="color:rgb(36, 41, 47);background-color:rgb(246, 248, 250);">getGhostParent，这个也很重要，不同container之间可能所处的层级不同，通过这个都挂到body上，可以防止拖拽效果被遮挡。</font></li>
+</ul>
+<h4 id="官方demo"><a href="#官方demo" class="headerlink" title="官方demo"></a>官方demo</h4><p><a target="_blank" rel="noopener" href="https://kutlugsahin.github.io/smooth-dnd-demo/">https://kutlugsahin.github.io/smooth-dnd-demo/</a></p>
+<h4 id="拖拽排序"><a href="#拖拽排序" class="headerlink" title="拖拽排序"></a>拖拽排序</h4><p>很显然，拖拽排序是默认设置，一个container自身的draggable拖拽即可。无需设置groupName，只需设置onDrop即可，通过addedIndex和removedIndex去修改列表。<img src="https://cdn.nlark.com/yuque/0/2022/gif/373268/1652065378606-491a337c-f87e-403c-b69a-02ad9d444183.gif"></p>
+<h4 id="拖拽移动"><a href="#拖拽移动" class="headerlink" title="拖拽移动"></a>拖拽移动</h4><p>两个或多个container，设置相同的groupName，这样除了自身的拖拽排序，还可以拖拽到另一个container实现跨container的移动。通过onDrop设置移动后的行为，因为groupName相同，我们除了addedIndex和removedIndex，还要知道元素是从哪个container来的，可以在<font style="color:rgb(36, 41, 47);">getChildPayload设置。</font><img src="https://cdn.nlark.com/yuque/0/2022/gif/373268/1652065388357-973b8a51-cc62-405a-82c8-c8e83c7d7f07.gif"></p>
+<h4 id="拖拽复制"><a href="#拖拽复制" class="headerlink" title="拖拽复制"></a>拖拽复制</h4><p>同上面拖拽复制，但是其中一个container的behaviour要设置为copy。这样这个container自身的draggable就只能拖到另一个container去实现复制插入，而它本身拖拽无效。<img src="https://cdn.nlark.com/yuque/0/2022/gif/373268/1652065395596-7c40ef99-e110-4d04-84d7-d90be230d9ee.gif"></p>
+<hr>
+<h2 id="海星的拖拽实现"><a href="#海星的拖拽实现" class="headerlink" title="海星的拖拽实现"></a>海星的拖拽实现</h2><p>海星的可视化组件装修页面需求，我们有几个拖拽区域：页面列表自身的拖拽排序；组件列表自身的拖拽排序；从组件库拖拽组件到组件列表进行复制插入。</p>
+<p>其中页面列表是独立的，按照前面拖拽排序的实现即可。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=<span class="string">&quot;page-list&quot;</span>&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">Container</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">onDrop</span>=<span class="string">&#123;onDropPage&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">dropPlaceholder</span>=<span class="string">{{</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">className:</span> &#x27;<span class="attr">page-item</span> <span class="attr">placeholder</span>&#x27;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    }}</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">dragBeginDelay</span>=<span class="string">&#123;100&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;props.pages &amp;&amp; props.pages.map((item,index) =&gt; (</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Draggable</span> <span class="attr">key</span>=<span class="string">&#123;item.path&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;page-item&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            ...</span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">Draggable</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      ))&#125;</span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">Container</span>&gt;</span></span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">onDropPage</span> = (<span class="params">e</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;addedIndex, removedIndex&#125; = e</span><br><span class="line">  props.<span class="title function_">dispatch</span>(&#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&#x27;appDecorate/MOVE_PAGE&#x27;</span>,</span><br><span class="line">    <span class="attr">payload</span>: &#123;</span><br><span class="line">      <span class="attr">fromIndex</span>: removedIndex,</span><br><span class="line">      <span class="attr">toIndex</span>: addedIndex</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">MOVE_PAGE</span>(<span class="params">state, &#123;payload&#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;fromIndex, toIndex&#125; = payload</span><br><span class="line">  <span class="keyword">const</span> pages = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(state.<span class="property">config</span>.<span class="property">pages</span>))</span><br><span class="line">  <span class="keyword">const</span> page = pages[fromIndex]</span><br><span class="line">  <span class="comment">// 交换</span></span><br><span class="line">  <span class="keyword">if</span> (fromIndex &gt; toIndex) &#123;</span><br><span class="line">    pages.<span class="title function_">splice</span>(fromIndex, <span class="number">1</span>)</span><br><span class="line">    pages.<span class="title function_">splice</span>(toIndex, <span class="number">0</span>, page)</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (fromIndex &lt; toIndex) &#123;</span><br><span class="line">    pages.<span class="title function_">splice</span>(fromIndex, <span class="number">1</span>)</span><br><span class="line">    pages.<span class="title function_">splice</span>(toIndex, <span class="number">0</span>, page)</span><br><span class="line">  &#125;</span><br><span class="line">  state.<span class="property">config</span>.<span class="property">pages</span> = pages</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>组件列表和组件库要设置相同的groupName，组件库behoviour设置为copy。并且组件列表container的onDrop事件，在payload要区分Draggable对象来源，做不同的处理。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="title class_">Container</span></span><br><span class="line">  dragBeginDelay=&#123;<span class="number">100</span>&#125;</span><br><span class="line">  groupName=<span class="string">&quot;modules&quot;</span></span><br><span class="line">  getChildPayload=&#123;<span class="function"><span class="params">i</span> =&gt;</span> (&#123;</span><br><span class="line">    <span class="attr">source</span>: <span class="string">&#x27;selected-module-list&#x27;</span>,</span><br><span class="line">  &#125;)&#125;</span><br><span class="line">  dropPlaceholder={{</span><br><span class="line">    <span class="attr">className</span>: <span class="string">&#x27;module-item placeholder&#x27;</span></span><br><span class="line">  }}</span><br><span class="line">  getGhostParent=&#123;<span class="function">() =&gt;</span></span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">body</span></span><br><span class="line">  &#125;</span><br><span class="line">  onDrop=&#123;onDropModule&#125;&gt;</span><br><span class="line">    &#123;props.<span class="property">curPageModules</span> &amp;&amp; props.<span class="property">curPageModules</span>.<span class="title function_">map</span>(<span class="function">(<span class="params">item,index</span>) =&gt;</span> (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">Draggable</span> <span class="attr">key</span>=<span class="string">&#123;index</span> + &#x27;<span class="attr">-</span>&#x27; + <span class="attr">item.value</span>&#125;&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;module-item&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          ...</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Draggable</span>&gt;</span></span></span><br><span class="line">    ))&#125;</span><br><span class="line">&lt;/<span class="title class_">Container</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="title class_">Drawer</span></span><br><span class="line">  className=<span class="string">&quot;module-drawer&quot;</span></span><br><span class="line">  title=<span class="string">&quot;选择组件&quot;</span></span><br><span class="line">  width=<span class="string">&quot;840px&quot;</span></span><br><span class="line">  placement=&#123;props.<span class="property">placement</span> || <span class="string">&#x27;right&#x27;</span>&#125;</span><br><span class="line">  closable=&#123;<span class="literal">false</span>&#125;</span><br><span class="line">  onClose=&#123;props.<span class="property">onClose</span>&#125;</span><br><span class="line">  visible=&#123;props.<span class="property">visible</span>&#125;</span><br><span class="line">  destroyOnClose</span><br><span class="line">  closable</span><br><span class="line">  mask=&#123;<span class="literal">false</span>&#125;</span><br><span class="line">&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">p</span> <span class="attr">className</span>=<span class="string">&quot;tip&quot;</span>&gt;</span>拖拽到页面组件区域添加<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Tabs</span> <span class="attr">tabPosition</span>=<span class="string">&quot;left&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;</span></span><br><span class="line"><span class="language-xml">        props.moduleList &amp;&amp; props.moduleList.map((group, groupIndex) =&gt; (</span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">Tabs.TabPane</span> <span class="attr">tab</span>=<span class="string">&#123;group.name&#125;</span> <span class="attr">key</span>=<span class="string">&#123;groupIndex&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;module-list&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;<span class="name">Container</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">              <span class="attr">behaviour</span>=<span class="string">&quot;copy&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">              <span class="attr">groupName</span>=<span class="string">&quot;modules&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">              <span class="attr">getChildPayload</span>=<span class="string">&#123;i</span> =&gt;</span> (&#123;</span></span><br><span class="line"><span class="language-xml">                source: &#x27;module-to-select&#x27;,</span></span><br><span class="line"><span class="language-xml">                data: group.children[i]</span></span><br><span class="line"><span class="language-xml">              &#125;)&#125;</span></span><br><span class="line"><span class="language-xml">              getGhostParent=&#123;() =&gt; document.body</span></span><br><span class="line"><span class="language-xml">              &#125;&gt;</span></span><br><span class="line"><span class="language-xml">              &#123;</span></span><br><span class="line"><span class="language-xml">                group.children &amp;&amp; group.children.map((module, moduleIndex) =&gt; (</span></span><br><span class="line"><span class="language-xml">                  <span class="tag">&lt;<span class="name">Draggable</span> <span class="attr">key</span>=<span class="string">&#123;groupIndex</span> + &#x27;<span class="attr">-</span>&#x27; + <span class="attr">moduleIndex</span>&#125;&gt;</span></span></span><br><span class="line"><span class="language-xml">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;module-item&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                      ...</span></span><br><span class="line"><span class="language-xml">                    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                  <span class="tag">&lt;/<span class="name">Draggable</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                ))</span></span><br><span class="line"><span class="language-xml">              &#125;</span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;/<span class="name">Container</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">Tabs.TabPane</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        ))</span></span><br><span class="line"><span class="language-xml">      &#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">Tabs</span>&gt;</span></span></span><br><span class="line">&lt;/<span class="title class_">Drawer</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">onDropModule</span> = (<span class="params">e</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;addedIndex, removedIndex, payload&#125; = e</span><br><span class="line">  <span class="keyword">const</span> &#123;source, data&#125; = payload</span><br><span class="line">  <span class="keyword">if</span> (source === <span class="string">&#x27;module-to-select&#x27;</span>) &#123;</span><br><span class="line">    props.<span class="title function_">dispatch</span>(&#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&#x27;appDecorate/ADD_MODULE&#x27;</span>,</span><br><span class="line">      <span class="attr">payload</span>: &#123;</span><br><span class="line">        <span class="attr">moduleIndex</span>: addedIndex,</span><br><span class="line">        <span class="attr">module</span>: data</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (source === <span class="string">&#x27;selected-module-list&#x27;</span>) &#123;</span><br><span class="line">    props.<span class="title function_">dispatch</span>(&#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&#x27;appDecorate/MOVE_MODULE&#x27;</span>,</span><br><span class="line">      <span class="attr">payload</span>: &#123;</span><br><span class="line">        <span class="attr">fromModuleIndex</span>: removedIndex,</span><br><span class="line">        <span class="attr">toModuleIndex</span>: addedIndex,</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终实现效果如下：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/gif/373268/1652066350969-14618526-d0b2-4689-a01b-79a315509717.gif"></p>
+<p>其中，组件库只能水平或垂直，这里直接通过class名设置了换行效果。另外，copy的时候，组件列表的container高度初始很小，不好拖放，也是通过class名设置了container高度100%。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site">ahao430</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.ahao430.site/2022/11/03/React%E6%8B%96%E6%8B%BD%E6%95%88%E6%9E%9C%E5%AE%9E%E7%8E%B0/">https://blog.ahao430.site/2022/11/03/React%E6%8B%96%E6%8B%BD%E6%95%88%E6%9E%9C%E5%AE%9E%E7%8E%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.ahao430.site" target="_blank">ahao430 的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2022/12/16/Svga%E5%92%8Clottie%E5%8A%A8%E7%94%BB%E5%9C%A8h5%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Svga和lottie动画在h5的使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Svga和lottie动画在h5的使用</div></div><div class="info-2"><div class="info-item-1"> 需求需要在h5页面中做复杂动效，调研了几种常用的方案，跟UI一起尝试。 调研占用内存对比：从大到小： 视频＞序列帧＞GIF＞APNG&#x2F;WEBP＞LOTTIE&#x2F;SVGA 质量稳定对比：从差到好： 视频＜GIF＜序列帧＜APNG&#x2F;WEBP＜LOTTIE&#x2F;SVGA 支持AE动效对比：从多到少：视频＞GIF＞序列帧＞APNG&#x2F;WEBP＞LOTTIE&#x2F;SVGA 业务方案： gif虽然体积小、兼容性好、但效果差、不推荐使用、除非非常在意多端兼容性与性能！  简单的动图采用webp、比如简单的聊天表情动图（骰子、石头剪刀布等）  lottie适合一些复杂的动画、比如复杂的加载动画、引导动画等、不适合做直播间大礼物特效  直播间复杂的大礼物动可以用效用svga,webp还有apng  MP4不建议做直播间礼物动画防范   这里我们的需求是需要较复杂的动效，并且希望可配置，一键替换动效文件，svga和lottie比较符合我们的需求。gif图文件太大，并且不好精细操作；而序列帧也是一样的问题，并且不适合做配置替换。 另外调研阶段发现腾讯出...</div></div></div></a><a class="pagination-related" href="/2022/08/09/%E9%81%8D%E5%8E%86%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BB%A3%E7%A0%81%E9%83%A8%E7%BD%B2/" title="遍历项目打包代码部署"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">遍历项目打包代码部署</div></div><div class="info-2"><div class="info-item-1">原项目是在webpack里配置entry为列表，遍历多个活动页面打包。现改造项目拆分为独立的项目，又想能够在需要时遍历所有项目打包，所以在根目录加了一个build命令，并写了一个脚本去执行。 命令：1234567891011121314&#123;  &quot;name&quot;: &quot;@mono/dsp&quot;,  &quot;version&quot;: &quot;0.1.0&quot;,  &quot;private&quot;: true,  &quot;type&quot;: &quot;module&quot;,  &quot;scripts&quot;: &#123;    &quot;build&quot;: &quot;npm run build:prod&quot;,    &quot;build:dev&quot;: &quot;cross-env NODE_ENV=production VUE_APP_ENV=dev node build/index.mjs&quot;,    &quot;build:test&quot;: &quot;...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%A1%A3"><span class="toc-number">1.</span> <span class="toc-text">文档</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.2.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#API"><span class="toc-number">1.3.</span> <span class="toc-text">API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%98%E6%96%B9demo"><span class="toc-number">1.4.</span> <span class="toc-text">官方demo</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8B%96%E6%8B%BD%E6%8E%92%E5%BA%8F"><span class="toc-number">1.5.</span> <span class="toc-text">拖拽排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8B%96%E6%8B%BD%E7%A7%BB%E5%8A%A8"><span class="toc-number">1.6.</span> <span class="toc-text">拖拽移动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8B%96%E6%8B%BD%E5%A4%8D%E5%88%B6"><span class="toc-number">1.7.</span> <span class="toc-text">拖拽复制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%B7%E6%98%9F%E7%9A%84%E6%8B%96%E6%8B%BD%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">海星的拖拽实现</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-07-03T08:09:12.000Z" title="更新于 2026-07-03 16:09:12">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/03/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84PPT%20skill/" title="发现一个不错的PPT skill">发现一个不错的PPT skill</a><time datetime="2026-07-03T07:26:41.000Z" title="更新于 2026-07-03 15:26:41">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+  const getUtterancesTheme = theme => theme === 'dark' ? 'photon-dark' : 'github-light'
+
+  const loadUtterances = (el = document, key) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyUtterances = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const config = {
+      src: 'https://utteranc.es/client.js',
+      repo: 'ahao430/blog',
+      theme: getUtterancesTheme(document.documentElement.getAttribute('data-theme')),
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      'issue-term': isShuoshuo ? key : (option && option['issue-term']) || 'pathname'
+    }
+
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => ele.setAttribute(key, value))
+    el.querySelector('#utterances-wrap').appendChild(ele)
+  }
+
+  const changeUtterancesTheme = theme => {
+    const iframe = document.querySelector('#utterances-wrap iframe')
+    if (iframe) {
+      const message = {
+        type: 'set-theme',
+        theme: getUtterancesTheme(theme)
+      };
+      iframe.contentWindow.postMessage(message, 'https://utteranc.es')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeUtterancesTheme, 'utterances')
+
+  if (isShuoshuo) {
+    'Utterances' === 'Utterances'
+      ? window.shuoshuoComment = { loadComment: loadUtterances }
+      : window.loadOtherComment = loadUtterances
+    return
+  }
+  
+  if ('Utterances' === 'Utterances' || !true) {
+    if (true) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+    else loadUtterances()
+  } else {
+    window.loadOtherComment = loadUtterances
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

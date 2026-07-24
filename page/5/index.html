@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ahao430 的博客</title><meta name="author" content="ahao430"><meta name="copyright" content="ahao430"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="个人技术博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ahao430 的博客">
+<meta property="og:url" content="https://blog.ahao430.site/page/5/index.html">
+<meta property="og:site_name" content="ahao430 的博客">
+<meta property="og:description" content="个人技术博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ahao430.site/img/butterfly-icon.png">
+<meta property="article:author" content="ahao430">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ahao430.site/img/butterfly-icon.png"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.ahao430.site/page/5/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ahao430 的博客',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="referrer" content="no-referrer"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ahao430 的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/ahao430/blog"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.yuque.com/ahao430/zsnfd6"><i class="fa-fw fas fa-book"></i><span> 语雀</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">ahao430 的博客</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/08/07/%E4%B8%80%E6%AC%A1code%20review%E5%8F%91%E7%8E%B0%E7%9A%84%E5%AF%B9%E8%B1%A1%E6%8E%92%E5%BA%8F%E9%97%AE%E9%A2%98/" title="一次code review发现的对象排序问题">一次code review发现的对象排序问题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2023-08-07T02:30:21.000Z" title="更新于 2023-08-07 10:30:21">2023-08-07</time></span></div><div class="content">问题一次代码review中，发现代码如下： 1234567891011121314151617181920export const sortByASCII = (obj) =&gt; &#123;    let arr = Object.keys(obj);    let sortArr = arr.sort();    let sortObj = &#123;&#125;;    for (let i in sortArr) &#123;        sortObj[sortArr[i]] = obj[sortArr[i]];    &#125;    return sortObj;&#125;;export const qs = &#123;  stringify: (obj = &#123;&#125;) =&gt; &#123;        const arr = [];        for (const key in obj) &#123;            arr.push(key + &quot;=&quot; + obj[key]);        &#...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/05/17/%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E5%A9%9A%E7%A4%BC%E8%AF%B7%E6%9F%AC%E5%B0%8F%E7%A8%8B%E5%BA%8F/" title="开发一个婚礼请柬小程序">开发一个婚礼请柬小程序</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2023-05-17T08:32:54.000Z" title="更新于 2023-05-17 16:32:54">2023-05-17</time></span></div><div class="content">前段时间给自己开发了一个婚礼请柬微信小程序，后端直接采用微信小程序的云开发能力。 项目代码：https://github.com/ahao430/wedding-miniapp 小程序码： 因为服务已经过期了，图片都看不了了，所以就放心挂出来了😁 初始化项目，测试云函数在微信小程序开发工具中，创建项目，选择微信云开发，模板选择邀请函，填写注册的appId。  打开项目，弹出提示上传云函数。  可以看到项目代码包含cloundfunctions和miniprogram两部分。在cloudfunctions中，右键文件夹上传云函数。如果还是报错，可能是云函数的数据表在云服务上不存在，点击云开发按钮，进去查看数据库。  查看模板代码，可以看到云函数的js文件代码很简单，语法类似mongodb。然后小程序端在app.js中初始化数据库连接，传入云端的环境id，这个id可以在云开发概览查看。然后app.js中call方法封装了cloud.callFunction方法，可以请求云函数。 123456789101112131415161718192021222324252627const c...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/05/09/%E7%BB%88%E7%AB%AF%E4%BA%A4%E4%BA%92%E5%AE%9E%E7%8E%B0%E5%A4%9A%E9%A1%B9%E7%9B%AE%E7%BC%96%E8%AF%91/" title="终端交互实现多项目编译">终端交互实现多项目编译</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2023-05-12T04:29:16.000Z" title="更新于 2023-05-12 12:29:16">2023-05-12</time></span></div><div class="content">需要在一套小程序代码中输出多个小程序。之前是通过在npm srcipts配置环境变量，然后编译代码中通过process.env获取： 12345678scripts: &#123;  &quot;dev:dev&quot;: &quot;cross-env NODE-ENV=dev gulp-dev&quot;,  &quot;dev:test&quot;: &quot;cross-env NODE-ENV=test gulp-dev&quot;,  &quot;dev:prod&quot;: &quot;cross-env NODE-ENV=prod gulp-dev&quot;,  &quot;build:dev&quot;: &quot;cross-env NODE-ENV=dev gulp-build&quot;,  &quot;build:test&quot;: &quot;cross-env NODE-ENV=test gulp-build&quot;,  &quot;build:prod&quot;: &quot;cross-env NODE-ENV=prod gu...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/27/%E5%B0%81%E8%A3%85%E4%B8%80%E4%B8%AAjs%E4%B8%9A%E5%8A%A1sdk/" title="封装一个js业务sdk">封装一个js业务sdk</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2023-03-27T10:39:47.000Z" title="更新于 2023-03-27 18:39:47">2023-03-27</time></span></div><div class="content">github: https://github.com/ahao430/sdk-demo npm仓库：https:&#x2F;&#x2F;www.npmjs.com&#x2F;package&#x2F;@ahao430&#x2F;sdk-demo 1. 需求开发一个sdk，将业务接口都放进去，活动项目和小程序通过npm安装，实现快速调用。 2. 分析 sdk是纯js，一般采用rollup打包，体积更小。 要同时适配h5和小程序，公用部分提出来，剩下不同的部分分开写。 通过sdk.模块名.接口名方式来调用 导出ts注释，通过npm引入，可以在vscode看到代码提示  3. 开发3.1 目录结构初始化项目，src目录存放源码，里面index.js作为入口，根目录新建rollup.config.js文件。 然后考虑到我们的sdk主要目的是存放api接口。在src新建一个modules目录，里面存放各个接口模块，再在每个模块目录编写一个个接口文件。 再考虑我们的项目要同时兼顾h5段和小程序端，应该有两个入口文件，分别打包各自的sdk。两个环境各发起请求的方式不同，需要分开写兼容代码，新建...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/17/%E5%9C%A8mac%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E8%84%9A%E6%9C%AC%E6%89%A7%E8%A1%8CFFMpeg%E7%BC%96%E8%AF%91/" title="在mac开发一个脚本执行FFMpeg编译">在mac开发一个脚本执行FFMpeg编译</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2023-03-17T04:43:50.000Z" title="更新于 2023-03-17 12:43:50">2023-03-17</time></span></div><div class="content">项目中采用JSMpeg方案播放视频，需要用到FFMpeg转码。调研了市面上FFMpeg封装的应用，要么收费，要么配置不够，为了方便产品运营（避免以后转换视频的工作都落到自己头上），研究了下用bash写了个脚本，又用mac的command双击执行。  1. FFMpeg命令安装FFMpeg，配置环境变量。打开终端，执行FFMpeg命令编译视频。（这里我配置的环境变量可能有点问题，又在视频目录放了一份ffmpeg文件。） JSMpeg所需要的命令如下： 1ffmpeg -y -i in.mp4 -f mpegts -codec:v mpeg1video -codec:a mp2 out.ts  其中-i是指定输入文件，最后面是输出文件。-f mpegts -codec:v mpeg1video -codec:a mp2这个是JSMpeg指定的编码、视频、音频格式。-y是当输出文件已存在同名文件时，不要询问直接覆盖。此外，可以加参数指定分辨率，截取时长等。 如下面的b:v指定了码率，scale指定了分辨率。 1ffmpeg -i in.mp4 -f mpegts -codec:v mp...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/14/h5%E6%92%AD%E6%94%BE%E8%A7%86%E9%A2%91/" title="h5播放视频">h5播放视频</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2023-03-23T06:17:09.000Z" title="更新于 2023-03-23 14:17:09">2023-03-23</time></span></div><div class="content">一个在h5页面播放视频的需求。最先采用了video标签的方案，后改为使用JSMpeg。 video标签方案使用html原生的video标签播放。 video标签文档：https://www.runoob.com/tags/tag-video.html 使用如下： 1234567891011121314151617&lt;template&gt;  &lt;video     id=&quot;video&quot; ref=&quot;myVideo&quot;     preload=&quot;auto&quot;     :controls=&quot;config.controls&quot;     :poster=&quot;config.poster&quot;     :autoplay=&quot;config.autoplay&quot;     :muted=&quot;config.muted&quot;     :loop=&quot;config.loop&quot;    x-webkit-airplay=&quot;allow&quot;    w...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/16/%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E7%BD%91%E9%A1%B5%E7%89%88%E8%8A%82%E6%8B%8D%E5%99%A8/" title="开发一个网页版节拍器">开发一个网页版节拍器</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2023-01-17T09:20:00.000Z" title="更新于 2023-01-17 17:20:00">2023-01-17</time></span></div><div class="content"> 平时练尤克里里经常用到节拍器，突发奇想自己用js开发一个。 最后实现的效果如下：https://ahao430.github.io/metronome/。 代码见github仓库：https://github.com/ahao430/metronome。  1. 需求分析节拍器主要是可以设定不同的速度和节奏打拍子。看各种节拍器，有简单的，也有复杂的。  设定不同的速度，每分钟多少拍 选择节拍，比如4&#x2F;4拍、3&#x2F;4拍、6&#x2F;8拍等等。 选择节拍的节奏型，一拍一个，一拍两个，一拍三个（三连音），一拍四个，swing，等等。这个很多简易节拍器就没有了。 切换不同的音色，比如敲击声、鼓声、人声等等。   这里拍速是指一分钟有多少拍。 而节拍是以几分音符为1拍，每小节几拍。这个不影响拍速，观察各种节拍器，这里会展示几个小点，每一拍一个点，其中第一拍第一下重声，后面的轻声。 节奏型决定每一拍响几下，以及这几下之前的节奏。比如这一拍响一下、响两下、响三下、响四下；如果是一个swing就是前8后16分音符的时长；也可能这个节奏型的时长是两拍，比如民谣扫弦的下—-，下...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/16/%E5%88%A9%E7%94%A8%E9%98%BF%E9%87%8Coss%E5%A4%84%E7%90%86%E5%9B%BE%E7%89%87/" title="利用阿里oss处理图片">利用阿里oss处理图片</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2023-01-16T06:40:50.000Z" title="更新于 2023-01-16 14:40:50">2023-01-16</time></span></div><div class="content">oss图片处理能力我们平时存储图片一般都是用的阿里oss服务，阿里oss除了存储文件外，还有很多其他功能。比如可以通过拼接url后缀，来对图片进行处理。 官方文档在这里：https://help.aliyun.com/document_detail&#x2F;144582.html。 可以看到，支持很多处理方式，如修改图片的分辨率，给图片添加水印，转换图片格式，压缩图片等等。 下面简单介绍下拼接的规则：  必须是上传到oss的图片链接 后面拼接参数?x-oss-process&#x3D;image，再继续按照不同的功能拼接 类似旋转、亮度这种，参数说明只有一个[value]的，直接&#x2F;[key],[val]。如https://oss-console-img-demo-cn-hangzhou.oss-cn-hangzhou.aliyuncs.com/example.jpg?x-oss-process=image&#x2F;rotate,90 如果参数说明是一个对象，对象又有很多子key，拼接方式是&#x2F;[key],[subKey1][subVal1],[subKey2...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/12/github%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%88%86%E6%94%AF%E5%88%B0pages/" title="github自动部署分支到pages">github自动部署分支到pages</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2023-01-12T02:15:35.000Z" title="更新于 2023-01-12 10:15:35">2023-01-12</time></span></div><div class="content">在代码根目录新建.github&#x2F;workflows&#x2F;目录，新建一个任意名称后缀yml的文件。 内容如下： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566name: CIon:  push:    branches:    - main  # 这里是要自动部署的分支名，有提交的时候就会触发actionjobs:  job:    name: Deployment    runs-on: macos-latest    permissions:      pages: write      id-token: write    environment:      name: github-pages      url: ${{ steps.deployment.outputs.page_url }}    steps:      - name: Checkout   ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/12/16/Svga%E5%92%8Clottie%E5%8A%A8%E7%94%BB%E5%9C%A8h5%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Svga和lottie动画在h5的使用">Svga和lottie动画在h5的使用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2022-12-16T10:14:00.000Z" title="更新于 2022-12-16 18:14:00">2022-12-16</time></span></div><div class="content"> 需求需要在h5页面中做复杂动效，调研了几种常用的方案，跟UI一起尝试。 调研占用内存对比：从大到小： 视频＞序列帧＞GIF＞APNG&#x2F;WEBP＞LOTTIE&#x2F;SVGA 质量稳定对比：从差到好： 视频＜GIF＜序列帧＜APNG&#x2F;WEBP＜LOTTIE&#x2F;SVGA 支持AE动效对比：从多到少：视频＞GIF＞序列帧＞APNG&#x2F;WEBP＞LOTTIE&#x2F;SVGA 业务方案： gif虽然体积小、兼容性好、但效果差、不推荐使用、除非非常在意多端兼容性与性能！  简单的动图采用webp、比如简单的聊天表情动图（骰子、石头剪刀布等）  lottie适合一些复杂的动画、比如复杂的加载动画、引导动画等、不适合做直播间大礼物特效  直播间复杂的大礼物动可以用效用svga,webp还有apng  MP4不建议做直播间礼物动画防范   这里我们的需求是需要较复杂的动效，并且希望可配置，一键替换动效文件，svga和lottie比较符合我们的需求。gif图文件太大，并且不好精细操作；而序列帧也是一样的问题，并且不适合做配置替换。 另外调研阶段发现腾讯出...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/4/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/#content-inner">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/#content-inner">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/#content-inner">8</a><a class="extend next" rel="next" href="/page/6/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ahao430</div><div class="author-info-description">个人技术博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ahao430"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ahao430/blog" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">记录技术学习与踩坑经验</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/30/otty%E7%BB%88%E7%AB%AFapp/" title="otty终端app">otty终端app</a><time datetime="2026-07-03T08:09:12.000Z" title="更新于 2026-07-03 16:09:12">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/03/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84PPT%20skill/" title="发现一个不错的PPT skill">发现一个不错的PPT skill</a><time datetime="2026-07-03T07:26:41.000Z" title="更新于 2026-07-03 15:26:41">2026-07-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/01/%E3%80%90%E5%BC%80%E6%BA%90%E3%80%91cc-statusline/" title="【开源】cc-statusline">【开源】cc-statusline</a><time datetime="2026-07-01T08:17:33.000Z" title="更新于 2026-07-01 16:17:33">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/29/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%94%99%E7%9A%84ssh%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="发现一个不错的ssh客户端">发现一个不错的ssh客户端</a><time datetime="2026-06-29T02:11:07.000Z" title="更新于 2026-06-29 10:11:07">2026-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/28/%E3%80%90%E5%BC%80%E6%BA%90-%E6%B5%8F%E8%A7%88%E5%99%A8AI%E4%BE%A7%E8%BE%B9%E6%A0%8F%E6%8F%92%E4%BB%B6%E3%80%91/" title="【开源-浏览器AI侧边栏插件】">【开源-浏览器AI侧边栏插件】</a><time datetime="2026-06-28T13:32:47.000Z" title="更新于 2026-06-28 21:32:47">2026-06-28</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI/"><span class="card-category-list-name">AI</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/VPS%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/"><span class="card-category-list-name">VPS服务器配置</span><span class="card-category-list-count">13</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/VPS%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/frp%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE/"><span class="card-category-list-name">frp服务配置</span><span class="card-category-list-count">2</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/esim/"><span class="card-category-list-name">esim</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"><span class="card-category-list-name">开源项目</span><span class="card-category-list-count">3</span></a></li>
+          </ul></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      <a class="card-more-btn" href="/archives/"
+            title="查看更多">
+            <i class="fas fa-angle-right"></i>
+          </a>
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/07/">
+            <span class="card-archive-list-date">
+              七月 2026
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/06/">
+            <span class="card-archive-list-date">
+              六月 2026
+            </span>
+            <span class="card-archive-list-count">17</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/05/">
+            <span class="card-archive-list-date">
+              五月 2026
+            </span>
+            <span class="card-archive-list-count">3</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/03/">
+            <span class="card-archive-list-date">
+              三月 2026
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/12/">
+            <span class="card-archive-list-date">
+              十二月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/11/">
+            <span class="card-archive-list-date">
+              十一月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/05/">
+            <span class="card-archive-list-date">
+              五月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/11/">
+            <span class="card-archive-list-date">
+              十一月 2024
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">79</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-07-24T08:45:41.426Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By ahao430</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
